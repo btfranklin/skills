@@ -1,0 +1,6 @@
+interface:
+  display_name: "Integrate DaisyUI into Django"
+  short_description: "Django + Tailwind/DaisyUI integration playbook"
+  icon_small: "./assets/integrate-daisyui-into-django.svg"
+  icon_large: "./assets/integrate-daisyui-into-django.png"
+  default_prompt: "Use $integrate-daisyui-into-django to set up a maintainable Django + Tailwind/DaisyUI stack."

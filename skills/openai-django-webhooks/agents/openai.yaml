@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenAI Django Webhooks"
+  short_description: "OpenAI Responses webhooks for Django apps"
+  default_prompt: "Use $openai-django-webhooks to implement OpenAI Responses webhooks and async flows in Django."

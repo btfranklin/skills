@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-step Extraction and Post-processing Workflows — Pydantic AI / Structured Output Patterns
+Covers extracting structured, validated data from LLM responses. Would include:
+
+Pydantic model design for LLM outputs
+Instructor library patterns (if using OpenAI)
+Error handling and retry strategies for malformed responses
+Multi-step extraction workflows</title>
+</head>
+<body>
+<header>
+  <h1>Multi-step Extraction and Post-processing Workflows</h1>
+  <p>Part of <em>Pydantic AI / Structured Output Patterns
+Covers extracting structured, validated data from LLM responses. Would include:
+
+Pydantic model design for LLM outputs
+Instructor library patterns (if using OpenAI)
+Error handling and retry strategies for malformed responses
+Multi-step extraction workflows</em></p>
+</header>
+<main>
+<nav>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li>Sections:
+      <ul>
+        <li><a href="../sections/schema-design.html">Schema and Model Design for LLM Outputs</a></li>
+        <li><a href="../sections/structured-libraries.html">Structured Output Mechanisms &amp; Libraries</a></li>
+        <li><a href="../sections/validation-retries.html">Validation, Error Handling, and Retry Strategies</a></li>
+        <li><a href="../sections/multistep-workflows.html">Multi-step Extraction and Post-processing Workflows</a></li>
+        <li><a href="../sections/production-hardening.html">Testing, Evaluation, and Production Hardening</a></li>
+      </ul>
+    </li>
+    <li><a href="../citations.html">Citations</a></li>
+    <li><a href="../open-questions.html">Open Questions</a></li>
+  </ul>
+</nav>
+<section id="summary">
+  <h2>Summary</h2>
+  <p>For complex extraction tasks (long documents or many fields), a single prompt might not suffice. This section explores breaking the task into multiple steps – for example, processing a document in sections or using one LLM pass to verify another’s output. It examines strategies like chunking inputs, using one model to check another’s results, iterative refinement of answers, and integrating human review for critical data points.</p>
+</section>
+<section id="key-terms">
+  <h2>Key Terms</h2>
+  <ul>
+    <li>chunking</li>
+    <li>iterative extraction</li>
+    <li>dual LLM verification</li>
+    <li>human-in-the-loop</li>
+    <li>LangChain pipeline</li>
+    <li>deterministic output</li>
+  </ul>
+</section>
+<section id="guiding-questions">
+  <h2>Guiding Questions</h2>
+  <ul>
+    <li>How can we improve extraction accuracy by splitting the task into smaller parts or multiple model calls?</li>
+    <li>What are the benefits of a second validation model or step checking the first model’s output?</li>
+    <li>When should a human be looped in, and how can we minimize that need over time?</li>
+    <li>How do tools like LangChain assist in orchestrating multi-step extraction processes?</li>
+  </ul>
+</section>
+<section id="insights">
+  <h2>Insights</h2>
+  <article>
+    <h3>Chunking content and preserving structure enhances extraction</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Dividing a large input (like a long document) into logical sections can lead to better accuracy. Microsoft’s approach with Document Intelligence involves splitting documents into sections and subsections (using semantic layout) before feeding to the LLM (<a href="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/maximizing-data-extraction-precision-with-dual-llms-integration-and-human-in-the/4236728#:~:text=While%20improving%20data%20extraction%20accuracy,more%20details%20on%20this%20concept">techcommunity.microsoft.com</a>). By doing so, the model can focus on one part at a time with relevant context, and the relationships between sections (headings, paragraphs, tables) are maintained. This contextual chunking prevents the model from getting overwhelmed and helps it extract data more precisely from each segment.</dd>
+      <dt>Implications</dt>
+      <dd>Processing text in smaller, structured chunks reduces the chance of the model missing details or mixing up information from different parts. It also aligns with token limits – each chunk stays within size bounds. The trade-off is that chunking requires post-processing to merge results and ensure nothing was duplicated or skipped, but the overall reliability of extraction is higher than a single-pass sweep of a huge text.</dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Dual-model validation setup can guarantee higher accuracy</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>For critical extractions, one pattern is to use a second model or process to validate the first model’s output. In a dual-LLM pipeline, the first LLM extracts data into JSON, and then a second call (or different model) cross-checks those values against the source document or an alternate extractor (<a href="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/maximizing-data-extraction-precision-with-dual-llms-integration-and-human-in-the/4236728#:~:text=This%20article%20proposes%20a%20dual,UI%20for%20the%20human%20validation">techcommunity.microsoft.com</a>). Any discrepancies trigger flags. Microsoft’s implementation of this sends the conflicting results to a human interface for review (<a href="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/maximizing-data-extraction-precision-with-dual-llms-integration-and-human-in-the/4236728#:~:text=than%20one,UI%20for%20the%20human%20validation">techcommunity.microsoft.com</a>), acknowledging that even with automation, a human-in-the-loop may be needed for edge cases. This approach recognizes that while one LLM might err, a combination of two (and a human for final arbitration) can reach near 100% accuracy (<a href="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/maximizing-data-extraction-precision-with-dual-llms-integration-and-human-in-the/4236728#:~:text=However%2C%20our%20customers%20continue%20to,out%20human%20intervention%20if%20needed">techcommunity.microsoft.com</a>).</dd>
+      <dt>Implications</dt>
+      <dd>By incorporating a validation stage, we catch mistakes that a single-pass system might silently overlook. It’s essentially redundancy for quality assurance. The cost is doubled AI usage and added complexity, but for domains like finance or healthcare, the improved precision is often worth it. Over time, if the LLMs prove consistently accurate, the human involvement can be dialed back – but having that safety net initially builds trust in the system.</dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Orchestrating multi-step chains brings modularity and control</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Frameworks like LangChain allow developers to compose multi-step workflows (prompt → model → output parser → another model, etc.) in a clear, testable manner (<a href="https://blog.thegenairevolution.com/article/structured-data-extraction-with-llms-how-to-build-a-pipeline-3#:~:text=LangChain%20Orchestrates%20Composable%20Pipelines%20Here%27s,first%20extraction%20system%20without%20it">blog.thegenairevolution.com</a>). For example, one can define a chain that first calls an LLM to extract a list of entities, then calls another chain for each entity to get details, and finally validates all outputs. By using such pipelines, it’s easier to swap models or adjust prompts for one step without affecting others (<a href="https://blog.thegenairevolution.com/article/structured-data-extraction-with-llms-how-to-build-a-pipeline-3#:~:text=LangChain%20Orchestrates%20Composable%20Pipelines%20Here%27s,first%20extraction%20system%20without%20it">blog.thegenairevolution.com</a>). Another best practice is running the model at temperature 0 when consistency is paramount – this makes the output deterministic for the same input (<a href="https://blog.thegenairevolution.com/article/structured-data-extraction-with-llms-how-to-build-a-pipeline-3#:~:text=Deterministic%20Output%20With%20Temperature%20Zero,mysteries">blog.thegenairevolution.com</a>), which is crucial for testing and debugging multi-step logic.</dd>
+      <dt>Implications</dt>
+      <dd>Modular pipelines increase maintainability of complex extraction systems. If one part of the extraction fails or changes (say we replace GPT-4 with an open model for cost reasons), a well-structured chain containing that step can be updated in isolation. Deterministic behavior (no randomness) in non-creative tasks means if something worked once, it will continue to work, which is exactly what you want in a production data pipeline.</dd>
+    </dl>
+  </article>
+</section>
+</main>
+<footer>
+  <p><a href="../index.html">← Back to Home</a></p>
+</footer>
+</body>
+</html>

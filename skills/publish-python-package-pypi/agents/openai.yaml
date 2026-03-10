@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Python Package"
+  short_description: "PyPI release workflow with trusted publishing"
+  default_prompt: "Use $publish-python-package-pypi to configure GitHub Actions and PyPI Trusted Publishing for a PDM package, then validate release/tag flow end-to-end."

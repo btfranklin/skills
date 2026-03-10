@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pydantic AI / Structured Output Patterns</title>
+</head>
+<body>
+<header>
+  <h1>Pydantic AI / Structured Output Patterns</h1>
+  <p><time>2025-12-27T00:09:30+00:00</time></p>
+</header>
+<main>
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li>Sections:
+      <ul>
+        <li><a href="sections/schema-design.html">Schema and Model Design for LLM Outputs</a></li>
+        <li><a href="sections/structured-libraries.html">Structured Output Mechanisms &amp; Libraries</a></li>
+        <li><a href="sections/validation-retries.html">Validation, Error Handling, and Retry Strategies</a></li>
+        <li><a href="sections/multistep-workflows.html">Multi-step Extraction and Post-processing Workflows</a></li>
+        <li><a href="sections/production-hardening.html">Testing, Evaluation, and Production Hardening</a></li>
+      </ul>
+    </li>
+    <li><a href="citations.html">Citations</a></li>
+    <li><a href="open-questions.html">Open Questions</a></li>
+  </ul>
+</nav>
+<section id="overview">
+  <h2>Overview</h2>
+  <p>Large language models (LLMs) often produce free-form text, making it challenging to integrate them into systems that require consistent structure. <strong>Pydantic AI / Structured Output Patterns</strong> explores methods to constrain LLM outputs into reliable, validated formats such as JSON. This compendium covers designing rigorous schemas for LLM responses, leveraging tools like Pydantic and OpenAI’s structured outputs, and implementing robust validation, error-handling, and multi-step workflows to achieve trustworthy, structured data from AI.</p>
+</section>
+<section id="methodology">
+  <h2>Methodology</h2>
+  <ol>
+    <li>Reviewed official documentation (Pydantic, OpenAI API) on structured output capabilities and schema definitions.</li>
+    <li>Surveyed technical articles and case studies (Medium posts, engineering blogs) about validating LLM outputs with Pydantic, including common failure modes and solutions.</li>
+    <li>Comparatively analyzed libraries and frameworks (PydanticAI, Instructor, LangChain) that facilitate structured outputs, examining their guarantees, ergonomics, and multi-provider support.</li>
+    <li>Collected and studied code examples demonstrating schema-driven prompts, JSON parsing, and iterative extraction loops; measured their effectiveness on sample data.</li>
+    <li>Considered production deployment aspects (unit testing with expected outputs, monitoring validation error rates, fallback strategies, and security measures) from an LLM-Ops perspective.</li>
+  </ol>
+</section>
+<section id="sections">
+  <h2>Sections</h2>
+  <ul>
+    <li>
+      <a href="sections/schema-design.html"><strong>Schema and Model Design for LLM Outputs</strong></a>
+      <p>Effective schema design is the foundation for extracting structured data from LLMs. This section discusses how to define Pydantic models for expected outputs, choose appropriate types and constraints, and balance strict validation with the model’s variability. It also covers handling nested data structures and planning for schema changes over time.</p>
+    </li>
+    <li>
+      <a href="sections/structured-libraries.html"><strong>Structured Output Mechanisms &amp; Libraries</strong></a>
+      <p>Multiple approaches have emerged to get structured JSON-like outputs from LLMs. This section compares using Pydantic-based validation versus model-native features (like OpenAI’s function calling with JSON schemas) and purpose-built libraries (like Instructor). It examines their reliability guarantees, ease of use, and compatibility across different model providers.</p>
+    </li>
+    <li>
+      <a href="sections/validation-retries.html"><strong>Validation, Error Handling, and Retry Strategies</strong></a>
+      <p>LLM output parsing is not always smooth – models might produce invalid JSON or omit expected fields. This section covers typical failure modes and how to handle them: from parsing errors (like extra text around JSON) to content validation failures. It details strategies like robust parsing functions, prompting the model to correct its output, iterative retries with error feedback, and policies for when to give up or fallback to defaults.</p>
+    </li>
+    <li>
+      <a href="sections/multistep-workflows.html"><strong>Multi-step Extraction and Post-processing Workflows</strong></a>
+      <p>For complex extraction tasks (long documents or many fields), a single prompt might not suffice. This section explores breaking the task into multiple steps – for example, processing a document in sections or using one LLM pass to verify another’s output. It examines strategies like chunking inputs, using one model to check another’s results, iterative refinement of answers, and integrating human review for critical data points.</p>
+    </li>
+    <li>
+      <a href="sections/production-hardening.html"><strong>Testing, Evaluation, and Production Hardening</strong></a>
+      <p>Finally, we consider how to ensure these structured output pipelines work reliably in the real world. This section covers testing strategies (from unit tests on the schema to end-to-end evaluations with known ground truth), monitoring and logging in production (to catch schema violations or model drifts), and safety aspects. It highlights what metrics to track and how to handle exceptional cases securely (like outputs that might be malicious or refused by the model).</p>
+    </li>
+  </ul>
+</section>
+</main>
+<footer>
+  <p>Generated by Compendium Scribe</p>
+</footer>
+</body>
+</html>

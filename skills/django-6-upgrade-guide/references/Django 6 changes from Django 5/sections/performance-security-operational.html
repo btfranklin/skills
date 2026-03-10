@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Performance, Security &amp; Operational Impact — Django 6 changes from 5.x</title>
+</head>
+<body>
+<header>
+  <h1>Performance, Security &amp; Operational Impact</h1>
+  <p>Part of <em>Django 6 changes from 5.x</em></p>
+</header>
+<main>
+<nav>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li>Sections:
+      <ul>
+        <li><a href="../sections/release-overview.html">Release Overview &amp; Compatibility Matrix</a></li>
+        <li><a href="../sections/deprecations-and-breaking-changes.html">Backwards-Incompatible Changes &amp; Deprecation Removals</a></li>
+        <li><a href="../sections/new-features.html">New Features &amp; Framework Enhancements</a></li>
+        <li><a href="../sections/upgrade-playbook.html">Upgrade Playbook &amp; Migration Checklist</a></li>
+        <li><a href="../sections/performance-security-operational.html">Performance, Security &amp; Operational Impact</a></li>
+      </ul>
+    </li>
+    <li><a href="../citations.html">Citations</a></li>
+    <li><a href="../open-questions.html">Open Questions</a></li>
+  </ul>
+</nav>
+<section id="summary">
+  <h2>Summary</h2>
+  <p>Analyzes how Django 6.0 might affect application performance and security, and what operational changes are needed. Discusses improvements or regressions in speed, scalability considerations (like task offloading and async support), enhancements in security defaults, and changes that operators of Django deployments should note (like updated dependencies or required services).</p>
+</section>
+<section id="key-terms">
+  <h2>Key Terms</h2>
+  <ul>
+    <li>performance</li>
+    <li>security</li>
+    <li>CSP</li>
+    <li>password hashing</li>
+    <li>asgi/wsgi</li>
+    <li>background tasks (ops)</li>
+  </ul>
+</section>
+<section id="guiding-questions">
+  <h2>Guiding Questions</h2>
+  <ul>
+    <li>Does Django 6.0 introduce any performance improvements or considerations compared to 5.x?</li>
+    <li>What security enhancements come with Django 6.0 and how might they impact application security posture out-of-the-box?</li>
+    <li>What operational or deployment changes are necessary (e.g., new services for background tasks, dependency updates, or configuration changes)?</li>
+  </ul>
+</section>
+<section id="insights">
+  <h2>Insights</h2>
+  <article>
+    <h3>Security hardening by default</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Django 6.0 brings notable security-oriented defaults. The inclusion of CSP support encourages developers to set strict content loading policies, significantly reducing XSS risk (<a href="https://django.readthedocs.io/en/latest/releases/6.0.html#:~:text=Built,other%20resources%20can%20be%20loaded" rel="noopener noreferrer">django.readthedocs.io</a>). Furthermore, Django increased the default iteration count for the PBKDF2 password hasher from 1,000,000 to 1,200,000, making password hashes more resilient to brute-force attacks (<a href="https://docs.djangoproject.com/es/6.0/releases/6.0/#:~:text=" rel="noopener noreferrer">docs.djangoproject.com</a>).</dd>
+      <dt>Implications</dt>
+      <dd>Applications upgraded to 6.0 can achieve better security with less effort: simply enabling CSP middleware and defining allowed sources can preempt whole classes of attacks. The trade-off with stronger password hashing is a slight increase in CPU usage during user authentication and password changes, but the security benefit is usually well worth it (the change represents a minor slowdown to login or password set operations). Overall, Django 6.0 continues the trend of secure-by-default configurations, meaning some prior opt-in security practices are now part of the framework’s baseline behavior.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-notes">django-6-release-notes</a></dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Offloading tasks to improve responsiveness</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>By allowing work to be moved out of the request/response cycle, Django 6.0’s background tasks can improve perceived application performance. For example, instead of a user waiting while an email is sent or a report is generated, the view can enqueue a task and return immediately, while the actual processing happens asynchronously in the background (<a href="https://django.readthedocs.io/en/latest/releases/6.0.html#:~:text=Django%20now%20includes%20a%20built,processing%20data%2C%20to%20background%20workers" rel="noopener noreferrer">django.readthedocs.io</a>). This can dramatically reduce latency for end-user actions that trigger expensive operations.</dd>
+      <dt>Implications</dt>
+      <dd>Projects that implement the new task framework can see faster response times for requests that previously did heavy lifting synchronously. However, true performance gains will depend on provisioning background workers to run these tasks—without enough worker capacity, tasks might queue up and complete with delay. There’s also a new dimension to performance tuning: one must balance how much work to offload versus handle inline, since excessive offloading without proper resources could simply move the bottleneck elsewhere. In effect, Django 6.0 gives developers more flexibility to design for performance, but it also introduces the need to manage asynchronous workload processing.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-notes">django-6-release-notes</a></dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Operational considerations for new features</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Some Django 6.0 features require operational setup or changes. Notably, the new tasks framework does <em>not</em> include a built-in task runner – “execution must be managed by external infrastructure, such as a separate process or service” (<a href="https://django.readthedocs.io/en/latest/releases/6.0.html#:~:text=Backends%20are%20configured%20via%20the,intended%20for%20development%20and%20testing" rel="noopener noreferrer">django.readthedocs.io</a>). This means deploying Django 6.0 apps that use tasks will involve running a worker process (similar to how one would run Celery workers) or scheduling tasks via an external system. Additionally, environment upgrades like the move to Python 3.12 and updated database drivers (e.g., switching to the supported <code>oracledb</code> driver for Oracle) are part of the upgrade’s operational impact.</dd>
+      <dt>Implications</dt>
+      <dd>DevOps teams should plan for the deployment of one or more background worker processes if the application starts using Django’s task queue – this could be as simple as running <code>manage.py run_tasks</code> (if provided) or integrating with an existing job queue system. Monitoring also needs to cover these background processes: they should be supervised and their resource usage observed in production. Moreover, upgrading the Python runtime and database connectors as required by Django 6.0 might necessitate changes in container images, build processes, or server configurations. In short, while Django 6.0 doesn’t drastically change how you deploy a web app, taking advantage of its new capabilities safely will likely involve some adjustments to your infrastructure and deployment scripts.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-notes">django-6-release-notes</a></dd>
+    </dl>
+  </article>
+</section>
+</main>
+<footer>
+  <p><a href="../index.html">← Back to Home</a></p>
+</footer>
+</body>
+</html>

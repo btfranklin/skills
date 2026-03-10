@@ -1,0 +1,6 @@
+interface:
+  display_name: "Structured LLM Output"
+  short_description: "Pydantic/Instructor schema and validation patterns"
+  icon_small: "./assets/structured-llm-output.svg"
+  icon_large: "./assets/structured-llm-output.png"
+  default_prompt: "Use $structured-llm-output to design a schema and validation workflow for structured outputs."

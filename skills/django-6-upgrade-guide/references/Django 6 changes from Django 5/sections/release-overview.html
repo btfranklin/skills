@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release Overview &amp; Compatibility Matrix — Django 6 changes from 5.x</title>
+</head>
+<body>
+<header>
+  <h1>Release Overview &amp; Compatibility Matrix</h1>
+  <p>Part of <em>Django 6 changes from 5.x</em></p>
+</header>
+<main>
+<nav>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li>Sections:
+      <ul>
+        <li><a href="../sections/release-overview.html">Release Overview &amp; Compatibility Matrix</a></li>
+        <li><a href="../sections/deprecations-and-breaking-changes.html">Backwards-Incompatible Changes &amp; Deprecation Removals</a></li>
+        <li><a href="../sections/new-features.html">New Features &amp; Framework Enhancements</a></li>
+        <li><a href="../sections/upgrade-playbook.html">Upgrade Playbook &amp; Migration Checklist</a></li>
+        <li><a href="../sections/performance-security-operational.html">Performance, Security &amp; Operational Impact</a></li>
+      </ul>
+    </li>
+    <li><a href="../citations.html">Citations</a></li>
+    <li><a href="../open-questions.html">Open Questions</a></li>
+  </ul>
+</nav>
+<section id="summary">
+  <h2>Summary</h2>
+  <p>Provides a high-level overview of Django 6.0, including its major themes and new capabilities relative to 5.x. Outlines supported Python and database versions, whether 6.0 is an LTS, and how the release fits into Django’s support lifecycle.</p>
+</section>
+<section id="key-terms">
+  <h2>Key Terms</h2>
+  <ul>
+    <li>Django 6.0</li>
+    <li>release cycle</li>
+    <li>Python 3.12+</li>
+    <li>LTS</li>
+    <li>support policy</li>
+    <li>modernization</li>
+  </ul>
+</section>
+<section id="guiding-questions">
+  <h2>Guiding Questions</h2>
+  <ul>
+    <li>What are the headline goals and features of Django 6.0, and how do they compare to Django 5.x?</li>
+    <li>Which Python versions and databases are supported in Django 6.0, and what compatibility shifts occurred?</li>
+    <li>Is Django 6.0 a Long-Term Support (LTS) release, and what is the support timeline for Django 5.x and 6.x?</li>
+  </ul>
+</section>
+<section id="insights">
+  <h2>Insights</h2>
+  <article>
+    <h3>Modern toolkit and new capabilities</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Django 6.0 emphasizes a “mosaic of modern tools and thoughtful design,” introducing features like template partials for modular templates, a background task framework, built-in Content Security Policy support, and a modernized email API (<a href="https://www.djangoproject.com/weblog/2025/dec/03/django-60-released/#:~:text=The%20release%20notes%20assembles%20a,A%20few%20highlights%20are" rel="noopener noreferrer">www.djangoproject.com</a>) (<a href="https://www.djangoproject.com/weblog/2025/dec/03/django-60-released/#:~:text=,friendly%20interface.%20%28Mike%20Edmunds" rel="noopener noreferrer">www.djangoproject.com</a>). These additions signal a focus on security and developer productivity, bringing into core some functionalities that previously required third-party apps.</dd>
+      <dt>Implications</dt>
+      <dd>Teams upgrading to Django 6.0 can leverage these built-in features (instead of custom or third-party solutions) to improve code maintainability and security. The overall theme is modernization: Django 6.0’s new tools aim to simplify common tasks (like background processing and template reuse) and enforce safer defaults.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-blog">django-6-release-blog</a></dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Updated Python and database requirements</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Django 6.0 supports Python 3.12, 3.13, and 3.14 – Django 5.2.x was the last series to support Python 3.10 and 3.11 (<a href="https://docs.djangoproject.com/es/6.0/releases/6.0/#:~:text=Python%20compatibility%C2%B6" rel="noopener noreferrer">docs.djangoproject.com</a>). Similarly, Django 6.0 drops support for older databases (for example, MariaDB 10.5 is no longer supported, requiring MariaDB 10.6+) (<a href="https://docs.djangoproject.com/es/6.0/releases/6.0/#:~:text=Dropped%20support%20for%20MariaDB%2010" rel="noopener noreferrer">docs.djangoproject.com</a>). Projects must ensure their runtime environment meets these updated minimums before upgrading.</dd>
+      <dt>Implications</dt>
+      <dd>Organizations will likely need to upgrade their Python runtime to 3.12+ as part of the Django 6.0 transition. Likewise, any production database at an unsupported version (such as MariaDB 10.5) should be upgraded to a supported release. Failing to meet these requirements will block the upgrade, so planning for environment updates is a crucial first step.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-notes">django-6-release-notes</a></dd>
+    </dl>
+  </article>
+  <article>
+    <h3>Standard release with defined support timeline</h3>
+    <dl>
+      <dt>Evidence</dt>
+      <dd>Django 6.0 is a regular feature release (not designated as an LTS). Upon its release, Django 5.2 entered extended support: Django 5.2’s mainstream support ended, and it will receive security fixes until April 2028 (<a href="https://www.djangoproject.com/weblog/2025/dec/03/django-60-released/#:~:text=With%20the%20release%20of%20Django,receiving%20fixes%20for%20security%20issues" rel="noopener noreferrer">www.djangoproject.com</a>). Django 5.1 reached end-of-life in December 2025. This implies Django 6.x will follow the usual 16-month mainstream support cycle, unless an LTS is announced for a later 6.x version.</dd>
+      <dt>Implications</dt>
+      <dd>Teams on Django 5.2 should plan to upgrade to 6.x well before security support ends in 2028. Since Django 6.0 itself is not an LTS, organizations may need to continue upgrading through the 6.x series (or to the next LTS when it arrives). Understanding the support timeline ensures that upgrade plans align with maintenance windows and compliance requirements.</dd>
+      <dt>Citations</dt>
+      <dd><a href="../citations.html#django-6-release-blog">django-6-release-blog</a></dd>
+    </dl>
+  </article>
+</section>
+</main>
+<footer>
+  <p><a href="../index.html">← Back to Home</a></p>
+</footer>
+</body>
+</html>
