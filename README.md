@@ -13,6 +13,13 @@ The skills live under `skills/` and are intended to be installable from a public
   npx skills add btfranklin/skills --skill build-production-agents-sdk -g
   ```
 
+- `deep-codebase-review`
+  Perform a comprehensive structural and maintainability review of a codebase, focused on cruft, duplication, weak boundaries, lifecycle risks, testing gaps, and design drift.
+
+  ```bash
+  npx skills add btfranklin/skills --skill deep-codebase-review -g
+  ```
+
 - `design-html-first-web-uis`
   Design modern interactive web interfaces with HTML-first patterns, native browser features, progressive enhancement, and minimal JavaScript.
 
@@ -41,6 +48,13 @@ The skills live under `skills/` and are intended to be installable from a public
   npx skills add btfranklin/skills --skill llms-txt-authoring -g
   ```
 
+- `make-repo-agent-legible`
+  Improve a repository's legibility for coding agents by moving implicit knowledge into discoverable in-repo artifacts, tightening `AGENTS.md`, and making constraints mechanically enforceable.
+
+  ```bash
+  npx skills add btfranklin/skills --skill make-repo-agent-legible -g
+  ```
+
 - `openai-django-webhooks`
   Implement OpenAI Responses API async workflows in Django, including background jobs, webhook verification, HTMX polling, and metadata fallback handling.
 
@@ -53,6 +67,13 @@ The skills live under `skills/` and are intended to be installable from a public
 
   ```bash
   npx skills add btfranklin/skills --skill publish-python-package-pypi -g
+  ```
+
+- `skill-icon-workflow`
+  Create or update skill icon assets and wire `icon_small` and `icon_large` correctly in `agents/openai.yaml`, especially when icon generation is part of skill creation.
+
+  ```bash
+  npx skills add btfranklin/skills --skill skill-icon-workflow -g
   ```
 
 - `structured-llm-output`

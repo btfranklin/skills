@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Icon Workflow"
+  short_description: "Create or wire skill icons correctly"
+  default_prompt: "Apply the Codex skill icon workflow and wire icon_small and icon_large correctly in agents/openai.yaml."

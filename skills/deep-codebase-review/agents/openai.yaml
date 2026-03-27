@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deep Codebase Review"
+  short_description: "Deep structural and debt review"
+  default_prompt: "Use $deep-codebase-review to perform a comprehensive structural review of this codebase."
