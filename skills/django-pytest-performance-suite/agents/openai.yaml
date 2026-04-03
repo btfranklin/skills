@@ -1,0 +1,6 @@
+interface:
+  display_name: "Pytest Django Performance"
+  short_description: "Build reliable Django perf regression lanes"
+  icon_small: "./assets/django-pytest-performance-suite.svg"
+  icon_large: "./assets/django-pytest-performance-suite.png"
+  default_prompt: "Use $django-pytest-performance-suite to design or implement a Postgres-backed pytest performance regression suite for Django views and read models."

@@ -34,6 +34,13 @@ The skills live under `skills/` and are intended to be installable from a public
   npx skills add btfranklin/skills --skill django-6-upgrade-guide -g
   ```
 
+- `django-pytest-performance-suite`
+  Build Postgres-backed Django performance regression suites with pytest, pytest-django, RequestFactory, timing budgets, query caps, and reproducible artifact reports.
+
+  ```bash
+  npx skills add btfranklin/skills --skill django-pytest-performance-suite -g
+  ```
+
 - `integrate-daisyui-into-django`
   Build and maintain a Django + Tailwind/DaisyUI setup with clear separation of concerns, reusable template patterns, and sustainable theming decisions.
 
