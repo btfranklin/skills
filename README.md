@@ -14,7 +14,7 @@ The skills live under `skills/` and are intended to be installable from a public
   ```
 
 - `deep-codebase-review`
-  Perform a comprehensive structural and maintainability review of a codebase, focused on cruft, duplication, weak boundaries, lifecycle risks, testing gaps, and design drift.
+  Perform a comprehensive structural and maintainability review of a codebase, focused on cruft, duplication, clean code shape, weak boundaries, lifecycle risks, testing gaps, and design drift.
 
   ```bash
   npx skills add btfranklin/skills --skill deep-codebase-review -g

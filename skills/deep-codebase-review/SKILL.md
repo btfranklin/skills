@@ -1,11 +1,11 @@
 ---
 name: deep-codebase-review
-description: Comprehensive structural and maintainability review for codebases, focused on cruft, duplication, unclear boundaries, anti-patterns, missing reuse opportunities, lifecycle/concurrency risks, testing gaps, and roadmap or design drift. Use when asked to do a deep-dive review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or to verify that recent implementation still aligns with long-term design.
+description: Comprehensive structural and maintainability review for codebases, focused on cruft, duplication, unclear boundaries, anti-patterns, missing reuse opportunities, clean and elegant code structure, lifecycle/concurrency risks, testing gaps, and roadmap or design drift. Use when asked to do a deep-dive review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or to verify that recent implementation still aligns with long-term design.
 ---
 
 # Deep Codebase Review
 
-Perform a broad structural review rather than a narrow bug hunt. Look for the places where the codebase is starting to bend: duplicated patterns, weak boundaries, missing shared abstractions, stale plans, hidden lifecycle risks, and shortcuts that will compound later.
+Perform a broad structural review rather than a narrow bug hunt. Look for the places where the codebase is starting to bend: duplicated patterns, weak boundaries, missing shared abstractions, stale plans, hidden lifecycle risks, inelegant local structure, and shortcuts that will compound later.
 
 ## Review Workflow
 
@@ -26,7 +26,8 @@ Perform a broad structural review rather than a narrow bug hunt. Look for the pl
 
 - Load [references/review-lenses.md](references/review-lenses.md) and use the sections that fit the codebase.
 - Prioritize behavioral and structural risks over cosmetic cleanup.
-- Treat duplication, implicit contracts, and misplaced concepts as first-class review concerns, not secondary polish.
+- Treat duplication, implicit contracts, unnecessary complexity, and misplaced concepts as first-class review concerns, not secondary polish.
+- Look for code whose local shape obscures the simple idea underneath: awkward naming, needless indirection, over- or under-abstraction, repeated ceremony, tangled conditionals, and modules that are correct but hard to read or extend.
 - Treat compatibility shims, facade layers, re-export modules, and backwards-compatible wrappers as structural costs unless they serve a concrete current need.
 - Prefer the forward-looking end-state when judging refactors; if a compatibility layer makes ownership or behavior less obvious, call that out.
 
@@ -65,6 +66,7 @@ When the user asked for a review, keep findings primary. If there are no concret
 - Prefer a small number of high-signal findings over a long list of nits.
 - Look for repeated transactional patterns, lifecycle code, adapter glue, and state transitions that want a shared helper or contract.
 - Look for god modules early; they are easier to split before more features land.
+- Look for elegant reductions: places where a small, well-named helper, value object, table-driven shape, or clearer boundary would make the code shorter, more obvious, and less error-prone.
 - Look for domain leakage where adapter-specific or UI-specific concepts have crept into the core model.
 - Look for stale abstractions that were right one milestone ago but now force awkward workarounds.
 - Look for refactors that stopped halfway and left compatibility surfaces behind; do not treat preserving old import paths or old module shapes as inherently positive.
