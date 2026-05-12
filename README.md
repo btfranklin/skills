@@ -6,11 +6,11 @@ The skills live under `skills/` and are intended to be installable from a public
 
 ## Skills
 
-- `build-production-agents-sdk`
-  Design, implement, evaluate, and operate production-ready AI agents using OpenAI's Agents SDK, including architecture choices, tool reliability, testing, tracing, and operational guardrails.
+- `review-agent-production-readiness`
+  Review and harden OpenAI Agents SDK systems for production readiness, including architecture risk, tool safety, eval coverage, tracing, monitoring, rollout, cost/latency, privacy, compliance, and human oversight.
 
   ```bash
-  npx skills add btfranklin/skills --skill build-production-agents-sdk -g
+  npx skills add btfranklin/skills --skill review-agent-production-readiness -g
   ```
 
 - `deep-codebase-review`

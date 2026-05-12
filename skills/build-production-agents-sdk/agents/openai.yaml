@@ -1,6 +1,0 @@
-interface:
-  display_name: "Build Production Agents SDK"
-  short_description: "Production-ready Agents SDK guidance"
-  icon_small: "./assets/build-production-agents-sdk.svg"
-  icon_large: "./assets/build-production-agents-sdk.png"
-  default_prompt: "Use $build-production-agents-sdk to design a production-ready agent workflow with evaluation and monitoring."
