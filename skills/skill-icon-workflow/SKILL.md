@@ -1,6 +1,7 @@
 ---
 name: skill-icon-workflow
-description: Create or update skill icon assets and wire them correctly in `agents/openai.yaml`, especially when a Codex skill needs `icon_small` and `icon_large`, or when icon generation is part of skill creation. Use alongside `skill-creator` when the broader task is creating or updating a skill.
+description: >-
+  Use when creating, updating, validating, or wiring Codex skill icon assets, especially `icon_small` SVG and `icon_large` 100x100 PNG entries in `agents/openai.yaml`, or when icon generation is part of skill creation/maintenance. Do not use for general app icons, favicons, README badges, non-skill artwork, or broader skill authoring without an icon task; pair with `skill-creator` when the skill itself also needs changes. Output correctly placed assets, relative YAML paths, render/size checks, and narrowly scoped metadata changes.
 ---
 
 # Skill Icon Workflow

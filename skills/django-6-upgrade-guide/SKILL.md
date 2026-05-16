@@ -1,6 +1,7 @@
 ---
 name: django-6-upgrade-guide
-description: Django 6 upgrade guidance covering breaking changes, new features, compatibility considerations, and migration checklists from Django 5. Use when planning or executing a Django 6 upgrade.
+description: >-
+  Use when planning, auditing, or executing a Django 5.x to Django 6 upgrade, including compatibility checks, deprecation cleanup, dependency/runtime requirements, migration planning, and Django 6 feature adoption. Do not use for generic Django feature work, Django 4-to-5 upgrades, non-Django Python maintenance, HTMX/webhook implementation, or UI styling tasks unless the upgrade itself is central. Output a concrete upgrade checklist or patch plan with current-version baseline, deprecation-warning pass, dependency/runtime changes, migration risks, test commands, and release/rollback notes.
 ---
 
 # Django 6 Upgrade Guide

@@ -1,6 +1,7 @@
 ---
 name: llms-txt-authoring
-description: Create or review `llms.txt` files at a site root, including recommended format, structure, and content. Use when authoring, validating, or updating llms.txt guidance.
+description: >-
+  Use when the user asks to create, update, validate, or review a site-root `llms.txt` file or related LLM-facing site guidance. Do not use for robots.txt, sitemap.xml, SEO metadata, general README writing, OpenAPI docs, or repo-local AGENTS.md guidance unless `llms.txt` is explicitly part of the task. Output a standards-aligned `llms.txt` draft or review with required sections, concise links to canonical docs, optional sections only when useful, and clear validation notes.
 ---
 
 # llms.txt Authoring
@@ -11,3 +12,4 @@ description: Create or review `llms.txt` files at a site root, including recomme
 
 ## Reference map
 - `references/llms.txt.md`
+- `templates/llms.txt`: starter structure for new files.

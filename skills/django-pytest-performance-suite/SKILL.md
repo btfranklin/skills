@@ -1,6 +1,7 @@
 ---
 name: django-pytest-performance-suite
-description: Design and implement Postgres-backed Django performance regression suites using pytest, pytest-django, RequestFactory, and pytest-benchmark. Use when Codex needs to benchmark or guard Django view, read-model, or request-surface performance; create a separate performance test lane; seed deterministic large datasets; enforce timing or query budgets; generate benchmark reports; or keep new read-only GET surfaces covered by structural tests.
+description: >-
+  Use when the user needs a repeatable PostgreSQL-backed Django performance regression suite with pytest, pytest-django, RequestFactory, pytest-benchmark, deterministic large datasets, query caps, timing budgets, reports, and registration for read-only GET surfaces. Do not use for one-off profiling, frontend/browser rendering benchmarks, generic unit tests, SQLite-only checks, production APM setup, or non-Django services. Output a separate performance lane with settings, scenarios, correctness snapshots or hashes, query-count guards, benchmark budgets, local/CI commands, and refresh/baseline-accept documentation.
 ---
 
 # Django Pytest Performance Suite
@@ -67,6 +68,8 @@ When building the suite, create these pieces:
 - A manual CI workflow that runs the strict lane and uploads artifacts.
 
 For a detailed implementation checklist and the non-obvious stability techniques, read [references/patterns.md](references/patterns.md).
+
+For a compact example of the expected plan/report shape, read [examples/performance-suite-plan.md](examples/performance-suite-plan.md).
 
 ## What To Avoid
 

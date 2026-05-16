@@ -1,0 +1,17 @@
+# Project or Site Name
+
+> One-sentence description of the site, product, project, or documentation set.
+
+## Docs
+
+- [Canonical Documentation](https://example.com/docs): Short description of the primary docs.
+- [API Reference](https://example.com/api): Short description if applicable.
+
+## Optional
+
+- [Examples](https://example.com/examples): Short description if useful.
+- [Changelog](https://example.com/changelog): Short description if useful.
+
+## Notes
+
+Brief constraints or guidance for LLM use, only if the site has specific caveats.

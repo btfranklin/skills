@@ -1,6 +1,7 @@
 ---
 name: design-html-first-web-uis
-description: Design and implement modern interactive web UIs using HTML-first, native browser features and progressive enhancement, adding only minimal JavaScript when needed. Use this when replacing SPA frameworks with semantic HTML patterns (dialogs, popovers, forms, view transitions) and server-driven partial updates while maintaining accessibility, performance, and maintainability.
+description: >-
+  Use when the user wants to design or implement a modern web UI with semantic HTML, native browser features, progressive enhancement, server-rendered or server-driven partial updates, and minimal JavaScript. Especially use when replacing SPA-style widgets with dialogs, popovers, forms, details/summary, view transitions, URL-backed state, or lightweight enhancement libraries. Do not use for visual redesign from whole cloth, heavy React/Vue/Svelte app architecture, canvas/WebGL games, Django+DaisyUI integration, or browser-only debugging after a UI already exists. Output an implementation plan or patch that names the native patterns used, accessibility behavior, graceful degradation, testing implications, and any necessary JavaScript.
 ---
 
 - Read references/modern-web-uis-without-frameworks-advanced-html-first-patterns-for-2026_20260110_070702.md first; treat it as the authoritative source of truth for all technical details, tradeoffs, and recommendations.

@@ -1,6 +1,7 @@
 ---
 name: review-agent-production-readiness
-description: Review and harden OpenAI Agents SDK systems for production readiness. Use when Codex needs to audit an agent design, prototype, eval harness, or deployment plan for architecture risk, tool safety, guardrails, approvals, failure modes, eval coverage, tracing, monitoring, rollout, cost/latency, privacy, compliance, and human oversight. Prefer the official OpenAI Agents SDK skill/docs for building or changing current SDK code; use this skill as the production-readiness review layer.
+description: >-
+  Use when reviewing or hardening an OpenAI Agents SDK design, prototype, eval harness, or deployment plan for production readiness: architecture fit, tool safety, guardrails, approvals, failure modes, eval coverage, tracing, monitoring, rollout, cost/latency, privacy, compliance, and human oversight. Do not use as the primary source for building current SDK code, checking latest API syntax, generic OpenAI API troubleshooting, or non-agent application reviews; prefer official Agents SDK docs/skill first for implementation details. Output severity-ordered launch blockers, eval gaps, operations gaps, architecture-fit notes, and an ordered hardening plan.
 ---
 
 # Review Agent Production Readiness
@@ -34,3 +35,5 @@ For reviews, lead with findings ordered by severity and include file or artifact
 - Next actions: a short, ordered hardening plan.
 
 For design/planning requests, produce a production-readiness checklist tailored to the workflow rather than a generic essay.
+
+For a worked review shape, read [examples/readiness-review-output.md](examples/readiness-review-output.md) when producing a full report.

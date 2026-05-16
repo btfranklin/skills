@@ -1,6 +1,7 @@
 ---
 name: deep-codebase-review
-description: Comprehensive structural and maintainability review for codebases, focused on cruft, duplication, unclear boundaries, anti-patterns, missing reuse opportunities, clean and elegant code structure, lifecycle/concurrency risks, testing gaps, and roadmap or design drift. Use when asked to do a deep-dive review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or to verify that recent implementation still aligns with long-term design.
+description: >-
+  Use when the user asks for a broad codebase review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or verification that recent implementation still aligns with long-term design. Focus on cruft, duplication, unclear boundaries, anti-patterns, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. Do not use for a narrow bug fix, ordinary code review focused only on a small diff, frontend visual QA, repo-onboarding docs, or production-readiness review of an OpenAI Agents SDK system. Output findings first with file/line evidence, then structural pressure points, roadmap/design alignment notes, open questions, and concrete follow-through.
 ---
 
 # Deep Codebase Review
@@ -60,6 +61,8 @@ Default output order:
 4. Open questions or residual risk.
 
 When the user asked for a review, keep findings primary. If there are no concrete findings, say so explicitly and still report the most important pressure points and testing gaps.
+
+For a worked report shape, read [examples/review-output.md](examples/review-output.md) when producing a full written audit.
 
 ## Practical Heuristics
 

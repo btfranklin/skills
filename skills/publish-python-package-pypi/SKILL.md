@@ -1,6 +1,7 @@
 ---
 name: publish-python-package-pypi
-description: Configure and maintain GitHub Actions workflows for publishing Python packages to PyPI with PDM and Trusted Publishing (OIDC). Use when setting up a new package release pipeline, migrating from token/Twine publish flows, auditing `.github/workflows/python-publish.yml`, or troubleshooting release/tag-to-PyPI delivery for Python package repositories.
+description: >-
+  Use when configuring, auditing, migrating, or troubleshooting PyPI publishing for Python package repositories that use PDM and GitHub Actions, especially Trusted Publishing/OIDC, release-triggered publish workflows, draft release notes, and tag-to-release delivery. Do not use for application/service repos that are not published to PyPI, non-Python packages, container deployments, manual Twine token setup unless explicitly requested, or generic CI unrelated to release publishing. Output exact workflow patches plus PyPI/GitHub settings, local build validation, event sanity checks, and any release-path steps that cannot be verified locally.
 ---
 
 # Publish Python Package Pypi

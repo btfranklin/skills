@@ -1,6 +1,7 @@
 ---
 name: openai-django-webhooks
-description: Implementing OpenAI Responses API async workflows in Django, including background responses, webhook signature verification with svix, HTMX polling, and metadata fallback handling. Use when building or debugging OpenAI async response handling in Django.
+description: >-
+  Use when building, wiring, or debugging OpenAI Responses API async workflows in Django, including background responses, webhook endpoints, svix signature verification, metadata correlation, service-layer handling, and HTMX polling/status updates. Do not use for generic OpenAI API usage, non-Django webhook consumers, synchronous chat completions, Stripe/GitHub webhooks, or frontend-only polling UI without OpenAI response handling. Output Django code or a concrete implementation/debug plan covering endpoint security, response metadata, persistence, polling lifecycle, failure handling, and validation steps.
 ---
 
 # OpenAI Django Webhooks

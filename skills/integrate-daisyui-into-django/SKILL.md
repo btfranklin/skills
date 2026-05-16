@@ -1,6 +1,7 @@
 ---
 name: integrate-daisyui-into-django
-description: Design and implement a maintainable Django + Tailwind/DaisyUI setup, including clean separation of templates/styles/scripts, asset build pipeline choices, reusable template component patterns, and custom theming with optional theme switching. Use when starting or refactoring a Django app to standardize UI, reduce class duplication, and establish long-term UI quality checks (accessibility, linting, visual testing).
+description: >-
+  Use when starting or refactoring a Django app to use Tailwind and DaisyUI in a maintainable way: asset build pipeline, template/style/script separation, reusable component patterns, custom themes, optional theme switching, and long-term UI checks. Do not use for non-Django frontend work, pure HTML-first design without Tailwind/DaisyUI, one-off template tweaks, product/visual redesign from scratch, or backend-only Django tasks. Output a repo-specific integration plan or patch covering pipeline choice, file ownership, component conventions, theme tokens, accessibility/lint/visual checks, and migration steps.
 ---
 
 - Consult references/django-daisyui-maintainable-integration-separation-of-concerns-and-custom-theming_20260117_224519.md before answering; treat it as the authoritative source of truth for all domain details.

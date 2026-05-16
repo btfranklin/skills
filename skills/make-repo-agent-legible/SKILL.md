@@ -1,6 +1,7 @@
 ---
 name: make-repo-agent-legible
-description: Improve a software repository's legibility for coding agents by turning implicit knowledge into discoverable, versioned in-repo artifacts; keeping AGENTS.md as a short map; structuring docs or other repo-local references as the system of record; and encoding architecture, quality, and operational constraints mechanically. Use when auditing or refactoring a repo for better agent autonomy, when tightening AGENTS.md and repo documentation, or when agent output suffers from missing context, architectural drift, stale docs, hidden conventions, or weak validation loops.
+description: >-
+  Use when auditing or refactoring a software repo so coding agents can navigate, modify, and validate it autonomously: short AGENTS.md map, repo-local docs as system of record, architecture/operations/quality artifacts, indexes, cross-links, and mechanical checks for hidden conventions. Do not use for a general code-quality review, a public README rewrite, product documentation, narrow bug fixes, or framework-specific implementation work unless the core issue is missing agent-readable repo context. Output repo-local artifacts or a legibility audit that identifies missing knowledge, added maps/docs/checks, remaining off-repo context, and the next highest-leverage improvement.
 ---
 
 # Make Repo Agent Legible
@@ -74,3 +75,7 @@ Make a repository easier for coding agents to navigate, modify, and validate. Tr
 
 - `legibility-rubric.md`: audit dimensions, failure modes, and prioritization checklist.
 - `artifact-patterns.md`: recommended document set, layout patterns, and enforcement ideas.
+
+### examples/
+
+- `legibility-audit-output.md`: worked shape for reporting a full audit.
