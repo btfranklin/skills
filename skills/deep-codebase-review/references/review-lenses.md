@@ -2,6 +2,8 @@
 
 Use these lenses selectively. Do not force every lens onto every repository, but do enough passes that the review covers correctness, clean code quality, and long-term maintainability.
 
+In council mode, these lenses can guide specialist assignments, but the coordinator must synthesize the results into one report. Do not expose raw specialist notes as separate review sections.
+
 ## 1. System Intent
 
 - What is the intended shape of the system?
@@ -114,3 +116,4 @@ Common review triggers:
 - Pressure points should be explicit about why they are not yet findings.
 - Keep cleanup suggestions scoped to the likely next refactor, not a full rewrite.
 - Preserve the user’s architectural goals; do not recommend abstractions that fight the intended system shape.
+- For council reviews, reconcile duplicate or conflicting claims before reporting them.

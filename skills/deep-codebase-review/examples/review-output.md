@@ -2,6 +2,12 @@
 
 Use this as a shape, not boilerplate. Keep the real report grounded in the repository under review.
 
+For council reviews, do not paste raw sub-agent reports. The final output should read as one consolidated review from the lead reviewer. Include a brief review-method note only when it helps the user understand scope or residual risk.
+
+## Review Method
+
+- Optional: state whether this was a solo multi-pass review or a council review, and name any important scope limits.
+
 ## Findings
 
 1. `[Severity] Short finding title` - `path/to/file.ext:line`

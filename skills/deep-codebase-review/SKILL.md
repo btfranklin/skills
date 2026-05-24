@@ -1,7 +1,7 @@
 ---
 name: deep-codebase-review
 description: >-
-  Use when the user asks for a broad codebase review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or verification that recent implementation still aligns with long-term design. Focus on cruft, duplication, unclear boundaries, anti-patterns, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. Do not use for a narrow bug fix, ordinary code review focused only on a small diff, frontend visual QA, repo-onboarding docs, or production-readiness review of an OpenAI Agents SDK system. Output findings first with file/line evidence, then structural pressure points, roadmap/design alignment notes, open questions, and concrete follow-through.
+  Use when the user asks for a broad codebase review, substantial PR or branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or verification that recent implementation still aligns with long-term design. Focus on cruft, duplication, unclear boundaries, anti-patterns, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. When the user explicitly asks for a council, sub-agent, delegated, or parallel review, coordinate specialist review passes and synthesize them into one coherent report. Do not use for a narrow bug fix, ordinary code review focused only on a small diff, frontend visual QA, repo-onboarding docs, or production-readiness review of an OpenAI Agents SDK system. Output findings first with file/line evidence, then structural pressure points, roadmap/design alignment notes, open questions, and concrete follow-through.
 ---
 
 # Deep Codebase Review
@@ -50,6 +50,14 @@ Perform a broad structural review rather than a narrow bug hunt. Look for the pl
 - Check whether tests reinforce the intended architecture or quietly encode the wrong shape.
 - Check whether roadmap or design documents are stale, misleading, or still missing key work that the code now depends on.
 - Note when docs imply a cleaner or more complete state than the code actually provides.
+
+## Council Mode
+
+Use council mode only when the user explicitly asks for a council, sub-agent, delegated, or parallel review and the current runtime supports sub-agents. Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating.
+
+In council mode, the main agent is the coordinator. Specialist outputs are evidence inputs, not report sections. Assign distinct scopes, require concrete file/line evidence, reconcile contradictions, verify important claims yourself, and then produce one consolidated review.
+
+If sub-agents are unavailable or not explicitly authorized, do not simulate delegation. Run the same role-based passes locally: correctness and lifecycle, architecture and boundaries, tests and contracts, and local simplicity and maintainability.
 
 ## Output Standard
 
