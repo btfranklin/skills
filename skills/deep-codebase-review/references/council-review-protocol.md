@@ -16,7 +16,7 @@ Use this protocol when a deep review should be split across specialist reviewers
 - `Correctness and Lifecycle Reviewer`: Review behavior, edge cases, state transitions, persistence, cleanup, retries, idempotency, concurrency, and async continuation risks.
 - `Architecture and Boundary Reviewer`: Review domain boundaries, coupling, module shape, ownership, adapter leakage, stale abstractions, and half-finished refactors.
 - `Tests and Contract Reviewer`: Review whether tests encode the right contract, miss risk-heavy scenarios, overfit implementation details, or preserve the wrong structure.
-- `Local Simplicity and Maintainability Reviewer`: Review duplicated ceremony, naming, noisy plumbing, tangled conditionals, needless wrappers, and whether the next change has an obvious home.
+- `Code Aesthetics, Local Simplicity, and Maintainability Reviewer`: Review whether the code is clean, intelligent, and elegantly organized, including duplicated ceremony, naming, noisy plumbing, tangled conditionals, needless wrappers, and whether the next change has an obvious home.
 
 ## Optional Specialists
 

@@ -57,7 +57,7 @@ Use council mode only when the user explicitly asks for a council, sub-agent, de
 
 In council mode, the main agent is the coordinator. Specialist outputs are evidence inputs, not report sections. Assign distinct scopes, require concrete file/line evidence, reconcile contradictions, verify important claims yourself, and then produce one consolidated review.
 
-If sub-agents are unavailable or not explicitly authorized, do not simulate delegation. Run the same role-based passes locally: correctness and lifecycle, architecture and boundaries, tests and contracts, and local simplicity and maintainability.
+If sub-agents are unavailable or not explicitly authorized, do not simulate delegation. Run the same role-based passes locally: correctness and lifecycle, architecture and boundaries, tests and contracts, and code aesthetics, local simplicity, and maintainability.
 
 ## Output Standard
 

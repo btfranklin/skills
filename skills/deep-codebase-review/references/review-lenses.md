@@ -46,9 +46,10 @@ In council mode, these lenses can guide specialist assignments, but the coordina
 - Would a shared helper reduce future bugs, or would it just hide healthy differences?
 - Is there an obvious seam for extraction that has not been taken yet?
 
-## 7. Local Simplicity and Elegance
+## 7. Code Aesthetics, Local Simplicity, and Elegance
 
 - Does the code express the underlying idea directly, or does ceremony hide it?
+- Is the code clean, intelligent, and elegantly organized, not just functionally correct?
 - Are names, helpers, and module boundaries aesthetically coherent enough that the next change has an obvious home?
 - Is the code DRY in the useful sense: shared concepts are represented once, while genuinely different cases remain separate?
 - Are there over-abstracted layers, clever shortcuts, or generic helpers that make the common path harder to understand?
