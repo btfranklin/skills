@@ -1,7 +1,7 @@
 ---
 name: deep-codebase-review
 description: >-
-  Use when the user asks for a broad codebase review, substantial PR or branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or verification that recent implementation still aligns with long-term design. Focus on cruft, duplication, unclear boundaries, anti-patterns, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. When the user explicitly asks for a council, sub-agent, delegated, or parallel review, coordinate specialist review passes and synthesize them into one coherent report. Do not use for a narrow bug fix, ordinary code review focused only on a small diff, frontend visual QA, repo-onboarding docs, or production-readiness review of an OpenAI Agents SDK system. Output findings first with file/line evidence, then structural pressure points, roadmap/design alignment notes, open questions, and concrete follow-through.
+  Use when the user asks for a broad codebase review, substantial PR or branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or verification that recent implementation still aligns with long-term design. By default, when sub-agents are available, run a council review with specialist agents and synthesize them into one coherent report unless the user asks for a solo review or disables sub-agents. Focus on cruft, duplication, unclear boundaries, anti-patterns, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. Do not use for a narrow bug fix, ordinary code review focused only on a small diff, frontend visual QA, repo-onboarding docs, or production-readiness review of an OpenAI Agents SDK system. Output findings first with file/line evidence, then structural pressure points, roadmap/design alignment notes, open questions, and concrete follow-through.
 ---
 
 # Deep Codebase Review
@@ -51,13 +51,17 @@ Perform a broad structural review rather than a narrow bug hunt. Look for the pl
 - Check whether roadmap or design documents are stale, misleading, or still missing key work that the code now depends on.
 - Note when docs imply a cleaner or more complete state than the code actually provides.
 
-## Council Mode
+## Default Council Mode
 
-Use council mode only when the user explicitly asks for a council, sub-agent, delegated, or parallel review and the current runtime supports sub-agents. Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating.
+Council mode is the default for broad codebase reviews and substantial PR or branch reviews when the current runtime supports sub-agents. Do not use council mode when the user asks for a solo review, disables sub-agents, or requests an ordinary small-diff review.
+
+Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating. Before spawning specialists, state briefly that council mode is being used and name the reviewer roles being delegated.
 
 In council mode, the main agent is the coordinator. Specialist outputs are evidence inputs, not report sections. Assign distinct scopes, require concrete file/line evidence, reconcile contradictions, verify important claims yourself, and then produce one consolidated review.
 
-If sub-agents are unavailable or not explicitly authorized, do not simulate delegation. Run the same role-based passes locally: correctness and lifecycle, architecture and boundaries, tests and contracts, and code aesthetics, local simplicity, and maintainability.
+No silent solo fallback: if council mode would normally apply but sub-agents cannot be spawned because the environment or tool policy blocks them, explain the blocker and ask whether to continue with a solo multi-pass review.
+
+For a user-requested solo review, run the same role-based passes locally: correctness and lifecycle, architecture and boundaries, tests and contracts, and code aesthetics, local simplicity, and maintainability.
 
 ## Output Standard
 

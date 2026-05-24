@@ -3,4 +3,4 @@ interface:
   short_description: "Deep structural, PR, and council review"
   icon_small: "./assets/deep-codebase-review.svg"
   icon_large: "./assets/deep-codebase-review.png"
-  default_prompt: "Use $deep-codebase-review to perform a comprehensive structural or council review of this codebase."
+  default_prompt: "Use $deep-codebase-review to perform a comprehensive council review of this codebase."
