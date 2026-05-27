@@ -1,7 +1,7 @@
 ---
 name: deep-codebase-review
 description: >-
-  Use when the user asks for a broad codebase review, substantial PR or branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or design-alignment review. Default to a sub-agent council review when sub-agent tools are available unless the user explicitly requests solo mode or says not to use sub-agents. Focus on cruft, duplication, weak boundaries, missed reuse, lifecycle/concurrency risks, test and roadmap drift, and locally inelegant code shape. Do not use for narrow bug fixes, ordinary small-diff reviews, frontend visual QA, repo-onboarding docs, or OpenAI Agents SDK production-readiness review. Output findings first with file/line evidence, then pressure points, design alignment, open questions, and follow-through.
+  Use when the user asks for a broad codebase review, substantial PR/branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or design-alignment review. Default workflow: use callable sub-agent tools for a council review unless the user explicitly requests solo mode or says not to use sub-agents; do not require the user to mention sub-agents. Focus on cruft, duplication, weak boundaries, missed reuse, lifecycle/concurrency risks, test/roadmap drift, and code aesthetics. Do not use for narrow bug fixes, ordinary small-diff reviews, frontend visual QA, repo-onboarding docs, or OpenAI Agents SDK production-readiness review. Output evidence-backed findings first, then pressure points, design alignment, open questions, and follow-through.
 ---
 
 # Deep Codebase Review
