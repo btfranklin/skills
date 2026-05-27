@@ -4,13 +4,15 @@ Use this protocol when a deep review should be split across specialist reviewers
 
 ## Activation Rules
 
-- Use council mode by default for broad codebase reviews and substantial PR or branch reviews when the runtime supports sub-agents.
+- Use sub-agent council mode by default for broad codebase reviews and substantial PR or branch reviews.
+- If sub-agent tools are available, use them unless the user explicitly asks for a solo review or says not to use sub-agents.
+- Do not treat the user's failure to mention sub-agents, council mode, delegation, or parallel review as an opt-out.
 - Do not use council mode when the user asks for a solo review, disables sub-agents, or requests an ordinary small-diff review.
 - Do not spawn specialists for ordinary small-diff reviews.
 - Before delegating, state that council mode is being used and name the specialist roles being assigned.
 - Keep the council small: start with three to four specialists, then add an optional specialist only when the repo or PR clearly needs that lens.
 - Give each specialist a distinct scope. Do not ask several agents to perform the same generic review.
-- No silent solo fallback: if council mode would normally apply but sub-agents are unavailable or blocked by policy, explain the blocker and ask whether to continue with a solo multi-pass review.
+- No silent solo fallback: if council mode would normally apply but sub-agents are unavailable or blocked, explain the blocker and ask whether to continue with a solo multi-pass review.
 
 ## Core Roster
 

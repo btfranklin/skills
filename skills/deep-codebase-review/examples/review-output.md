@@ -2,7 +2,7 @@
 
 Use this as a shape, not boilerplate. Keep the real report grounded in the repository under review.
 
-For default council reviews, do not paste raw sub-agent reports. The final output should read as one consolidated review from the lead reviewer. Include a brief review-method note when it helps the user understand scope, delegated roles, or residual risk.
+For default sub-agent council reviews, do not paste raw sub-agent reports. The final output should read as one consolidated review from the lead reviewer. Include a brief review-method note when it helps the user understand scope, delegated roles, or residual risk.
 
 ## Review Method
 
