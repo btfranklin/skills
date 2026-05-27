@@ -1,7 +1,7 @@
 ---
 name: deep-codebase-review
 description: >-
-  Use when the user asks for a broad codebase review, substantial PR/branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or design-alignment review. Default workflow: use callable sub-agent tools for a council review unless the user explicitly requests solo mode or says not to use sub-agents; do not require the user to mention sub-agents. Focus on cruft, duplication, weak boundaries, missed reuse, lifecycle/concurrency risks, test/roadmap drift, and code aesthetics. Do not use for narrow bug fixes, ordinary small-diff reviews, frontend visual QA, repo-onboarding docs, or OpenAI Agents SDK production-readiness review. Output evidence-backed findings first, then pressure points, design alignment, open questions, and follow-through.
+  Use when the user asks for a broad codebase review, substantial PR/branch review, architecture audit, tech-debt scan, cleanup assessment, structural sanity check, or design-alignment review. Default workflow: use sub-agents when available unless specifically forbidden; do not require the user to mention sub-agents, council mode, delegation, or parallel review. Focus on cruft, duplication, weak boundaries, missed reuse, lifecycle/concurrency risks, test/roadmap drift, and code aesthetics. Do not use for narrow bug fixes, ordinary small-diff reviews, frontend visual QA, repo-onboarding docs, or OpenAI Agents SDK production-readiness review. Output evidence-backed findings first, then pressure points, design alignment, open questions, and follow-through.
 ---
 
 # Deep Codebase Review
@@ -53,7 +53,7 @@ Perform a broad structural review rather than a narrow bug hunt. Look for the pl
 
 ## Default Council Mode
 
-Council mode with sub-agents is the default for broad codebase reviews and substantial PR or branch reviews. If the current environment exposes sub-agent tools, use them unless the user explicitly asks for a solo review, disables sub-agents, or requests an ordinary small-diff review. The user does not need to say "sub-agent", "council", "parallel", or "delegate" for this default to apply.
+Council mode with sub-agents is the default for broad codebase reviews and substantial PR or branch reviews. If sub-agents are available, use them unless the user specifically forbids sub-agents or requests an ordinary small-diff review. The user does not need to say "sub-agent", "council", "parallel", or "delegate" for this default to apply.
 
 Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating. Before spawning specialists, state briefly that council mode is being used and name the reviewer roles being delegated.
 
