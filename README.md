@@ -4,6 +4,12 @@ This repository contains a public set of useful AI agent skills designed to be r
 
 The skills live under `skills/` and are intended to be installable from a public GitHub repository via tools such as `npx skills`.
 
+Before publishing skill metadata changes, verify discovery-safe frontmatter lengths:
+
+```bash
+python3 scripts/check_skill_frontmatter_lengths.py skills
+```
+
 ## Skills
 
 - `review-agent-production-readiness`
