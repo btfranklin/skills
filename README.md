@@ -26,6 +26,13 @@ python3 scripts/check_skill_frontmatter_lengths.py skills
   npx skills add btfranklin/skills --skill deep-codebase-review -g
   ```
 
+- `deep-code-elegance-and-beauty-review`
+  Review one code project as an artifact of thought, craft, and maintenance experience, focusing on cognitive clarity, design elegance, developer joy, naming, locality, and what should be protected.
+
+  ```bash
+  npx skills add btfranklin/skills --skill deep-code-elegance-and-beauty-review -g
+  ```
+
 - `design-html-first-web-uis`
   Design modern interactive web interfaces with HTML-first patterns, native browser features, progressive enhancement, and minimal JavaScript.
 
