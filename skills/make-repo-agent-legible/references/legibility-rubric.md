@@ -14,16 +14,22 @@ Use this rubric to audit how well a repository supports coding-agent autonomy.
 ### 1. Entry-Point Map
 
 Good state:
+- `README.md` is a clear front door for first-time humans and agents.
+- The README quickly explains purpose, smallest useful loop, boundaries, and deeper navigation.
 - `AGENTS.md` is short and current.
 - It points to the real sources of truth.
 - It tells the agent where to look next by task type.
 
 Failure modes:
+- `README.md` is only a maintainer map, only marketing copy, or only implementation topology.
+- README and `AGENTS.md` duplicate or contradict each other.
 - `AGENTS.md` is huge, stale, or contradictory.
 - The only way to learn the repo is by reading lots of random files.
 - The agent must rediscover obvious navigation rules every run.
 
 High-leverage fixes:
+- Split entry-point roles: README for front-door orientation and quickstart, `AGENTS.md` for coding-agent operating instructions, docs for durable depth.
+- Add README sections for "What it is", "Quickstart", "Where it fits", "What it does not do", "Examples", and "Contributor/agent navigation" when appropriate.
 - Shrink `AGENTS.md` into a table of contents.
 - Add direct links to architecture, docs indexes, plans, and test commands.
 

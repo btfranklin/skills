@@ -6,6 +6,7 @@ Use these patterns when turning repository knowledge into durable, discoverable 
 
 Create or tighten these first:
 
+- `README.md`: front door for first-time humans and agents.
 - `AGENTS.md`: short map of the repo and how to work in it.
 - `ARCHITECTURE.md`: top-level domain and layer map.
 - `docs/`: indexed knowledge base for deeper material.
@@ -45,10 +46,17 @@ Do not create the whole tree blindly. Add only the slices the repository can kee
 
 ## Document Roles
 
+`README.md`
+- Explain what the project is, who it is for, and the smallest useful install/run/adoption loop.
+- State the project boundary clearly, including what the repo does not own.
+- Link to examples, docs indexes, validation, and contributor or agent navigation.
+- Keep it as a front door, not the full system of record.
+
 `AGENTS.md`
 - Keep it short.
 - Route by task type.
 - Link to commands, architecture maps, and deeper docs.
+- Hold coding-agent operating rules that would clutter or confuse the README.
 
 `ARCHITECTURE.md`
 - Explain domains, layers, interfaces, and dependency directions.

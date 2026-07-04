@@ -4,7 +4,7 @@ Use this as a report shape after inspecting the actual repository.
 
 ## Current State
 
-- Entry points found: `AGENTS.md`, docs index, architecture docs, CI/test config.
+- Entry points found: `README.md`, `AGENTS.md`, docs index, architecture docs, CI/test config.
 - Main legibility failure: state the highest-impact missing or stale context.
 
 ## Changes Made Or Recommended
