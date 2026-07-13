@@ -4,6 +4,3 @@ interface:
   icon_small: "./assets/deep-code-elegance-and-beauty-review.svg"
   icon_large: "./assets/deep-code-elegance-and-beauty-review.png"
   default_prompt: "Use $deep-code-elegance-and-beauty-review to review this project for elegance, beauty, and developer joy."
-
-policy:
-  allow_implicit_invocation: false

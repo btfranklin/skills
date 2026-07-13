@@ -9,7 +9,7 @@ Use this protocol when an elegance review should be split across specialist revi
 - Before delegating, state that an aesthetic council is being used and name the roles being assigned.
 - Give each reviewer a distinct lens. Do not ask several agents to perform the same generic review.
 - Keep the council small: three to four reviewers is usually enough.
-- If sub-agents are unavailable, run the same lenses yourself and state that the review is a solo multi-pass review.
+- If sub-agents are unavailable, disclose the limitation and continue with the same lenses solo unless the user explicitly required a council.
 
 ## Core Roster
 
@@ -66,5 +66,5 @@ Before writing the final report, normalize reviewer output into a private ledger
 - Deduplicate observations that describe the same experience, even if reviewers found them in different places.
 - Resolve contradictions by checking source files yourself.
 - Discard unsupported claims, generic compliments, and style preferences without a clear maintenance or cognition effect.
-- Keep the final report in one voice: first impression, what is beautiful, what disturbs the peace, council observations, guidance, and what to protect.
+- Keep the final report in one voice: first impression, what is beautiful, what disturbs the peace, lens synthesis, what to protect, and guidance.
 - Preserve the skill's purpose. Aesthetic review may mention correctness only when it affects trust, elegance, or developer experience.

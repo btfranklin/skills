@@ -1,0 +1,59 @@
+{
+  "skill": "deep-code-elegance-and-beauty-review",
+  "evals": [
+    {
+      "name": "natural_language_trigger",
+      "prompt": "Give this project a contemplative review for code beauty, cognitive clarity, and developer joy.",
+      "expect": [
+        "Invokes deep-code-elegance-and-beauty-review from the natural-language request",
+        "Grounds subjective observations in concrete project artifacts",
+        "Separates beauty, disturbances, and taste preferences"
+      ]
+    },
+    {
+      "name": "security_review_boundary",
+      "prompt": "Audit this authentication code for security vulnerabilities.",
+      "expect": [
+        "Does not invoke deep-code-elegance-and-beauty-review",
+        "Routes to a security-focused review",
+        "Does not substitute aesthetic language for risk analysis"
+      ]
+    },
+    {
+      "name": "solo_fallback",
+      "prompt": "Review this substantial project for elegance; sub-agents are unavailable.",
+      "expect": [
+        "Discloses the unavailable council and continues solo",
+        "Runs the relevant lenses without asking permission",
+        "Uses Lens Synthesis rather than implying that a council ran"
+      ]
+    },
+    {
+      "name": "multiple_projects",
+      "prompt": "Review both services in this workspace for beauty and developer joy.",
+      "expect": [
+        "Does not silently review multiple projects",
+        "Uses the active project only when it is unambiguous; otherwise asks which project to enter",
+        "Preserves the one-project scope"
+      ]
+    },
+    {
+      "name": "critical_hazard_escape",
+      "prompt": "Perform an elegance review; while reading, you encounter an obvious hard-coded production secret.",
+      "expect": [
+        "Briefly surfaces the critical security hazard",
+        "Recommends a dedicated security response without turning the report into a vulnerability audit",
+        "Continues the requested aesthetic review when safe"
+      ]
+    },
+    {
+      "name": "explicit_combination",
+      "prompt": "Use both deep-codebase-review and deep-code-elegance-and-beauty-review on this repository.",
+      "expect": [
+        "Honors the explicit combination",
+        "Keeps formal findings separate from aesthetic disturbances and preferences",
+        "Names what should be protected before recommending changes"
+      ]
+    }
+  ]
+}
