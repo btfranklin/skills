@@ -1,14 +1,17 @@
-# Workflow Templates
+# PyPI Workflow Patterns
 
-Derived from repeatable package-repository workflow patterns.
+Use these as structural patterns, not copy-paste version locks. Before implementation, verify current action references in the official repositories and apply the target repository's action-pinning policy.
 
-## Contents
-1. `python-publish.yml` (PyPI publish on release)
-2. `python-package.yml` (CI for package repos)
-3. `create-draft-release.yml` (tag-triggered release draft)
-4. Adaptation checklist
+Primary sources:
 
-## 1) python-publish.yml
+- [PyPI Trusted Publishers](https://docs.pypi.org/trusted-publishers/)
+- [GitHub OIDC security hardening](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+- [`pdm-project/setup-pdm`](https://github.com/pdm-project/setup-pdm)
+- [`pypa/gh-action-pypi-publish`](https://github.com/pypa/gh-action-pypi-publish)
+
+## Publish on an approved release event
+
+Replace every `<verified-...-ref>` after checking the current upstream release and repository policy.
 
 ```yaml
 name: Upload Python Package
@@ -21,36 +24,25 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     environment: release
     permissions:
       id-token: write
-
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@<verified-checkout-ref>
+      - uses: pdm-project/setup-pdm@<verified-setup-pdm-ref>
         with:
-          fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version: "3.14"
-      - name: Install PDM
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pdm
-      - name: Build package
-        run: pdm build
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@v1.13.0
+          python-version: "<supported-python-version>"
+      - run: pdm build
+      - uses: pypa/gh-action-pypi-publish@<verified-publish-ref>
 ```
 
-Notes:
-- `environment: release` is used consistently in package repos.
-- `id-token: write` is required for Trusted Publishing.
-- Keep `fetch-depth: 0` to ensure full history context.
+Keep `id-token: write` at job scope. Add `fetch-depth: 0` only when the build genuinely requires repository history.
 
-## 2) python-package.yml
+## Package CI
+
+Derive the Python matrix and commands from `pyproject.toml` and existing scripts.
 
 ```yaml
 name: Python package
@@ -61,81 +53,39 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.12", "3.13", "3.14"]
-
+        python-version: ["<supported-version>"]
     steps:
-      - uses: actions/checkout@v6.0.1
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6.1.0
+      - uses: actions/checkout@<verified-checkout-ref>
+      - uses: pdm-project/setup-pdm@<verified-setup-pdm-ref>
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install PDM
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pdm
-      - name: Install dependencies
-        run: pdm install --group dev
-      - name: Lint with ruff
-        run: pdm run ruff check src tests --statistics
-      - name: Test with pytest
-        run: pdm run pytest
+          cache: true
+      - run: pdm install --group dev
+      - run: pdm run <repository-check-command>
+      - run: pdm run <repository-test-command>
 ```
 
-Notes:
-- Python matrix varies per repo; align with supported versions in `pyproject.toml`.
-- Some repos call `pdm run lint`/`pdm run test` instead of direct ruff/pytest.
+Do not assume Ruff, pytest, a `src/` layout, or a particular default branch unless the repository establishes them.
 
-## 3) create-draft-release.yml
+## Optional release-note automation
 
-```yaml
-name: Create Draft Release
+Treat release-note generation as independent from publication. If requested, use the repository's established release tool and grant only the permissions it needs. Document any required secret, but never make an AI service credential a prerequisite for Trusted Publishing itself.
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+## Adaptation checklist
 
-permissions:
-  contents: write
-
-jobs:
-  draft-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6.0.1
-        with:
-          fetch-depth: 0
-      - name: Generate release notes
-        uses: btfranklin/release-notes-scribe@v0
-        with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          include_github_generated_notes: "true"
-```
-
-Notes:
-- This workflow is optional for publish itself but common in package repos here.
-- Requires `OPENAI_API_KEY` repository or organization secret.
-- `GITHUB_TOKEN` is built in to GitHub Actions and requires no manual secret.
-
-## 4) Adaptation Checklist
-
-1. Confirm repo is package/library before adding `python-publish.yml`.
-2. Set publish Python version to a supported project version.
-3. Verify `pyproject.toml` builds with `pdm build`.
-4. Configure PyPI Trusted Publisher:
-- Owner/repo
-- Workflow file name
-- Environment name (`release`)
-5. Configure GitHub secrets:
-- `OPENAI_API_KEY` for `create-draft-release.yml` (if used)
-6. Confirm GitHub environment `release` exists if approvals/policies are used.
-7. Test flow:
-- Push `vX.Y.Z` tag (release-notes workflow).
-- Publish GitHub release (PyPI publish workflow).
+- Confirm package metadata and `pdm build` output.
+- Verify supported Python versions and repository commands.
+- Verify current action references from primary upstream sources.
+- Confirm the release event and default branch behavior.
+- Match the PyPI publisher owner, repository, workflow filename, and environment.
+- Validate YAML and inspect effective job permissions.
+- Distinguish local validation from live GitHub/PyPI state.

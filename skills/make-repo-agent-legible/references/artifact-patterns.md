@@ -1,121 +1,41 @@
 # Agent-Legible Artifact Patterns
 
-Use these patterns when turning repository knowledge into durable, discoverable artifacts.
+Select the smallest durable artifact that resolves the diagnosed discovery failure. Match existing repository vocabulary and layout.
 
-## Minimal Artifact Set
+## Scale The Artifact Set
 
-Create or tighten these first:
+For a small package or service, a README, short `AGENTS.md`, and one focused operations or architecture note may be sufficient. Add an indexed docs area only when several durable topics need separate ownership. Do not create empty architecture, security, reliability, decision, or planning documents to satisfy a generic tree.
 
-- `README.md`: front door for first-time humans and agents.
-- `AGENTS.md`: short map of the repo and how to work in it.
-- `ARCHITECTURE.md`: top-level domain and layer map.
-- `docs/`: indexed knowledge base for deeper material.
-- repo-local plans for non-trivial work.
-- CI or lint checks for the most important invariants.
+## Common Artifacts
 
-## Suggested `docs/` Layout
+| Artifact | Use it when |
+|---|---|
+| README quickstart | The smallest useful install, run, or adoption loop is hard to discover. |
+| `AGENTS.md` task map | Agents repeatedly search for commands, constraints, ownership, or task-specific entry points. |
+| Architecture map | Domains, interfaces, or allowed dependency directions are not inferable safely. |
+| Operations guide | Deploy, rollback, recovery, jobs, or external ownership depend on human memory. |
+| Quality/reliability note | Important validation expectations span several tools or failure modes. |
+| Decision record | A durable non-obvious tradeoff is likely to be reopened without its rationale. |
+| Execution plan | Multi-iteration work needs versioned acceptance criteria and status. |
+| Generated reference | Agents repeatedly rediscover schemas, inventories, contracts, or external state. |
 
-Adjust to the repo size and repo type. This is an illustrative pattern, not a required tree:
-
-```text
-docs/
-├── design-docs/
-│   ├── index.md
-│   └── ...
-├── exec-plans/
-│   ├── active/
-│   ├── completed/
-│   └── tech-debt-tracker.md
-├── generated/
-│   └── ...
-├── domain-specs/
-│   ├── index.md
-│   └── ...
-├── references/
-│   └── ...
-├── ARCHITECTURE.md
-├── INTERFACES.md
-├── PLANS.md
-├── OPERATIONS.md
-├── QUALITY.md
-├── RELIABILITY.md
-└── SECURITY.md
-```
-
-Do not create the whole tree blindly. Add only the slices the repository can keep current, and rename them to fit the repository's actual shape.
-
-## Document Roles
-
-`README.md`
-- Explain what the project is, who it is for, and the smallest useful install/run/adoption loop.
-- State the project boundary clearly, including what the repo does not own.
-- Link to examples, docs indexes, validation, and contributor or agent navigation.
-- Keep it as a front door, not the full system of record.
-
-`AGENTS.md`
-- Keep it short.
-- Route by task type.
-- Link to commands, architecture maps, and deeper docs.
-- Hold coding-agent operating rules that would clutter or confuse the README.
-
-`ARCHITECTURE.md`
-- Explain domains, layers, interfaces, and dependency directions.
-- Show what is forbidden, not only what exists.
-
-`docs/design-docs/`
-- Store durable reasoning about major systems and patterns.
-- Index the documents and mark outdated material clearly.
-
-`docs/exec-plans/`
-- Store active plans, completed plans, and debt tracking.
-- Keep plans versioned when the work spans multiple iterations.
-
-`docs/generated/`
-- Store generated references the agent should not have to rediscover from live systems, builds, schemas, inventories, or external tools.
-
-`docs/references/`
-- Store external or third-party references that matter repeatedly.
+Put each fact in one authoritative place and link to it from entry points. Preserve `unknown` or `needs owner` when external knowledge cannot be verified.
 
 ## Enforcement Ladder
 
-Promote important rules through this ladder:
+Promote a recurring rule only as far as its frequency and impact justify:
 
-1. Ad-hoc review comment
-2. Repo guideline
-3. Shared helper or template
-4. Lint rule or structural test
-5. CI gate with actionable remediation text
+1. Documented convention
+2. Shared helper or template
+3. Structural test or lint rule
+4. CI gate
 
-If a problem repeats, move it up the ladder.
+Good enforcement candidates include dependency direction, boundary schemas, registries, required cross-links, generated-reference freshness, and stable naming contracts. A failure message should name the violated rule, point to its source, and give the recovery command or edit location.
 
-## Good Candidate Invariants
+## Runtime Legibility
 
-- Dependency direction between layers or packages
-- Schema validation at external boundaries
-- Structured logging shape
-- Naming rules for types and schemas
-- Maximum file size or function complexity in fragile areas
-- Required docs indexes and cross-links
-- Freshness checks for generated docs or references
+Static prose is insufficient when the work depends on behavior. Favor reproducible entrypoint scripts, deterministic fixtures, smoke tests, browser or terminal repros, and queryable logs or traces. Document required access without copying credentials or private data into the repository.
 
-## Runtime Legibility Upgrades
+## Delivery
 
-Use these when static structure is not enough:
-
-- boot or entrypoint scripts that work per worktree or branch
-- deterministic smoke tests for critical journeys
-- browser automation or terminal-driven repros when interaction matters
-- local logs, metrics, trace access, or state inspection tools
-- reproducible fixtures, test corpora, and seed data
-
-## Dependency Heuristic
-
-Prefer dependencies and abstractions that the repository can inspect, test, and explain. If a critical third-party helper is opaque and repeatedly confuses the agent, consider wrapping it tightly or replacing the small subset you actually need.
-
-## Delivery Standard
-
-Finish with a concrete before/after summary:
-
-- what the agent could not previously discover
-- what artifact or enforcement now makes it visible
-- what still requires future work
+Summarize what was previously undiscoverable, which artifact or check now exposes it, how it was validated, and what remains external or unenforced.

@@ -1,32 +1,10 @@
-# Icon Workflow
+# Skill Icon Asset Contract
 
-Use this workflow when a skill needs `icon_small` and `icon_large` in `agents/openai.yaml`.
+## Files and metadata
 
-## Constraints
-
-- Keep `icon_small` as SVG.
-- Use PNG for `icon_large` because the UI may not render gradient SVGs correctly for the large icon.
-- Use a full-bleed background to avoid inset borders in the UI.
-
-## SVG design checklist
-
-- Canvas: 512x512.
-- Background: full-bleed rect, for example `<rect x="0" y="0" width="512" height="512" rx="64" ... />`.
-- Gradients are allowed. SVG is the source of truth for the design.
-- Save to `assets/<skill-name>.svg`.
-
-## PNG export for `icon_large`
-
-Export a 100x100 PNG from the SVG and save it as `assets/<skill-name>.png`.
-
-Example on macOS with Quick Look:
-
-```bash
-qlmanage -t -s 100 -o /tmp assets/<skill-name>.svg
-mv /tmp/<skill-name>.svg.png assets/<skill-name>.png
-```
-
-## `openai.yaml` wiring
+- Store `assets/<skill-name>.svg` as the editable small icon.
+- Store `assets/<skill-name>.png` as a 100x100 large icon derived from the SVG.
+- Resolve `agents/openai.yaml` icon paths from the skill directory:
 
 ```yaml
 interface:
@@ -34,7 +12,37 @@ interface:
   icon_large: "./assets/<skill-name>.png"
 ```
 
+Confirm current path and metadata conventions in the official skill-authoring guidance before changing them.
+
+## Design
+
+- Use a square SVG view box, normally `0 0 512 512`.
+- Extend intentional backgrounds to every edge to avoid an accidental inset tile.
+- Keep the focal shape readable at 16–32 pixels.
+- Use transparency only when it is part of the design.
+- Treat the SVG as the source of truth; regenerate the PNG after SVG changes.
+
+## Export
+
+Use an available SVG renderer that preserves gradients and alpha. On macOS, Quick Look can produce a preview, but verify the result rather than assuming the conversion succeeded:
+
+```bash
+qlmanage -t -s 100 -o /tmp assets/<skill-name>.svg
+```
+
+Move the generated preview into `assets/<skill-name>.png` only after checking its format and dimensions. Other renderers are acceptable when they produce the same contract.
+
+## Deterministic validation
+
+1. Parse the SVG as XML.
+2. Confirm the SVG view box and full-bleed geometry when a background is expected.
+3. Identify the PNG by file contents and confirm it is exactly 100x100.
+4. Parse `agents/openai.yaml` and resolve both paths from the skill directory.
+5. Render or open both assets and inspect contrast, cropping, gradients, transparency, and small-size legibility.
+
 ## Troubleshooting
 
-- Gray box for the large icon: ensure `icon_large` points to the PNG, not the SVG.
-- Inset or white border: ensure the SVG background is full-bleed with no margins.
+- **Gray or flat PNG:** use a renderer with gradient support and regenerate from the SVG.
+- **Inset border:** extend the background to the full view box before re-exporting.
+- **Soft or cropped subject:** simplify the design or increase internal breathing room, then inspect at actual display size.
+- **Missing icon:** correct the skill-relative YAML path and confirm exact filename casing.

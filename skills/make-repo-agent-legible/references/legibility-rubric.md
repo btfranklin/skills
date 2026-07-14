@@ -1,148 +1,35 @@
-# Repo Legibility Rubric
+# Repository Agent-Legibility Rubric
 
-Use this rubric to audit how well a repository supports coding-agent autonomy.
+Score each relevant dimension as **clear**, **partial**, **missing**, or **not warranted at this repository's scale**. Cite files, commands, or observed gaps; do not infer undocumented knowledge.
 
-## Audit Order
+## Entry Points
 
-1. Read the entry points.
-2. Score the repo across the dimensions below.
-3. Fix the highest-leverage missing artifact or enforcement first.
-4. Prefer adding durable structure over adding more prompt text.
+Can a first-time agent learn the repository's purpose, boundary, smallest useful loop, validation commands, and next source by task type? Check whether README and agent instructions complement rather than duplicate or contradict each other.
 
-## Dimensions
+## Source Of Truth
 
-### 1. Entry-Point Map
+Can the agent locate authoritative product, domain, architecture, operational, and quality knowledge that the repository actually needs? Flag essential facts trapped in chat, external tools, workflow code, or human memory. Preserve unknown ownership explicitly.
 
-Good state:
-- `README.md` is a clear front door for first-time humans and agents.
-- The README quickly explains purpose, smallest useful loop, boundaries, and deeper navigation.
-- `AGENTS.md` is short and current.
-- It points to the real sources of truth.
-- It tells the agent where to look next by task type.
+## Architecture
 
-Failure modes:
-- `README.md` is only a maintainer map, only marketing copy, or only implementation topology.
-- README and `AGENTS.md` duplicate or contradict each other.
-- `AGENTS.md` is huge, stale, or contradictory.
-- The only way to learn the repo is by reading lots of random files.
-- The agent must rediscover obvious navigation rules every run.
+Are domains, interfaces, cross-cutting entry points, and forbidden dependency directions discoverable in proportion to the system's complexity? Folder names alone may be adequate for a tiny package but not for a multi-service system.
 
-High-leverage fixes:
-- Split entry-point roles: README for front-door orientation and quickstart, `AGENTS.md` for coding-agent operating instructions, docs for durable depth.
-- Add README sections for "What it is", "Quickstart", "Where it fits", "What it does not do", "Examples", and "Contributor/agent navigation" when appropriate.
-- Shrink `AGENTS.md` into a table of contents.
-- Add direct links to architecture, docs indexes, plans, and test commands.
+## Mechanical Enforcement
 
-### 2. Repository System Of Record
+Are repeated high-impact constraints checked by schemas, structural tests, linters, or CI? Do failures explain the rule and recovery path? Do not recommend automation where a rare low-risk convention is cheaper to document.
 
-Good state:
-- Product, domain, design, architecture, operational, reliability, and security knowledge live in versioned repo artifacts as appropriate to the repository.
-- Important decisions are documented near the codebase, not in external tools only.
-- Docs have indexes and clear ownership.
+## Task And Decision Memory
 
-Failure modes:
-- Slack, Notion, or PR comments are the actual source of truth.
-- Docs exist but have no structure, index, or freshness signal.
-- Generated references such as schemas or API contracts are missing from the repo.
+Can an agent recover the rationale and status of non-trivial ongoing work? Plans, debt tracking, and decision records should exist only where the work's duration and recurrence justify their maintenance.
 
-High-leverage fixes:
-- Create a `docs/` structure with indexes.
-- Add versioned decision logs and execution plans for non-trivial work.
-- Check in generated reference artifacts that agents repeatedly need.
+## Runtime Inspection
 
-### 3. Architecture Discoverability
+Can the agent run or reproduce the relevant path and inspect logs, state, reports, or traces without relying on hand-transcribed evidence? Identify access that must remain external and document its ownership rather than copying secrets.
 
-Good state:
-- Domains, layers, and dependency directions are explicit.
-- Cross-cutting concerns have named entry points.
-- The repository explains why the main boundaries exist.
+## Entropy Control
 
-Failure modes:
-- Folder structure is the only architecture documentation.
-- Agents can create new edges without any visible rule.
-- Important abstractions are hidden inside large utilities or framework magic.
+Does the repository catch stale links, generated artifacts, undocumented surfaces, or spreading structural drift at an appropriate cadence? Prefer one focused check over broad recurring cleanup instructions.
 
-High-leverage fixes:
-- Add `ARCHITECTURE.md` or a top-level domain map.
-- Describe permissible dependency directions and interfaces.
-- Prefer abstractions the repo can fully inspect and test.
+## Prioritization
 
-### 4. Mechanical Enforcement
-
-Good state:
-- The most important rules are enforced by linters, structural tests, or CI checks.
-- Failure messages explain the intended recovery path.
-- Boundary validation happens at system edges.
-
-Failure modes:
-- Standards are written down but never checked.
-- Enforcement exists but produces opaque failures.
-- Agents must guess data shapes from usage instead of validating boundaries.
-
-High-leverage fixes:
-- Add structural tests for dependency direction and naming rules.
-- Validate schemas at boundaries.
-- Improve lint output so it teaches the repair.
-
-### 5. Task And Decision Memory
-
-Good state:
-- Non-trivial work has execution plans, progress logs, and completed artifacts.
-- Technical debt is tracked in-repo.
-- Agents can understand why prior work happened.
-
-Failure modes:
-- Large tasks live only in issue trackers or human memory.
-- There is no durable record of tradeoffs.
-- Refactors repeat because prior decisions are invisible.
-
-High-leverage fixes:
-- Add `docs/exec-plans/active`, `completed`, and a debt tracker.
-- Version the acceptance criteria and decision notes with the code.
-
-### 6. Runtime Legibility
-
-Good state:
-- The agent can run or inspect the relevant system, reproduce issues, and inspect runtime signals.
-- Logs, metrics, traces, or test harnesses are accessible locally.
-- Validation covers the important execution paths, not only static correctness.
-
-Failure modes:
-- The relevant service, package, CLI, job runner, or app is hard to run per branch or worktree.
-- Runtime evidence is only visible to humans in remote dashboards.
-- Bug fixing depends on hand-transcribed screenshots or anecdotes.
-
-High-leverage fixes:
-- Make the relevant runtime or tooling bootable or inspectable in isolated local environments.
-- Provide scripts for repros, smoke tests, or deterministic command sequences.
-- Expose runtime signals the agent can query directly.
-
-### 7. Entropy Control
-
-Good state:
-- Golden principles are written down and enforced continuously.
-- Cleanup work happens in small recurring increments.
-- Quality grades or focused audits catch drift early.
-
-Failure modes:
-- The repo accumulates agent-generated drift until humans do a large cleanup.
-- Bad patterns spread because nothing scans for them.
-- Review feedback stays local to a single PR.
-
-High-leverage fixes:
-- Define a small set of golden principles.
-- Add recurring doc-gardening or cleanup runs.
-- Track quality scores or a short prioritized debt list.
-
-## Prioritization Rule
-
-Fix missing maps and missing enforcement before polishing prose. A shorter, better-linked repo with reliable checks usually produces more leverage than a larger body of instructions.
-
-## Output Format
-
-When reporting an audit, structure it as:
-
-1. Current legibility strengths.
-2. Highest-severity gaps.
-3. The next one to three repo changes with the best leverage.
-4. What still remains off-repo or unenforced.
+Rank findings by rediscovery cost, likelihood of incorrect changes, operational risk, and maintenance cost of the remedy. Recommend the next one to three changes with the greatest net leverage. Report existing strengths and what should remain unchanged.

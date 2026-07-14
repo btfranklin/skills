@@ -1,6 +1,6 @@
 interface:
   display_name: "Review Agent Production Readiness"
-  short_description: "Harden Agents SDK systems for production"
+  short_description: "Review Agents SDK production readiness"
   icon_small: "./assets/review-agent-production-readiness.svg"
   icon_large: "./assets/review-agent-production-readiness.png"
-  default_prompt: "Use $review-agent-production-readiness to review this Agents SDK design for production risks, eval coverage, and operational readiness."
+  default_prompt: "Use $review-agent-production-readiness to produce an evidence-backed review of this Agents SDK system's launch risks, eval gaps, and operational readiness."

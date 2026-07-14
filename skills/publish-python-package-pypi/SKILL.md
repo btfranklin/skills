@@ -1,103 +1,48 @@
 ---
 name: publish-python-package-pypi
 description: >-
-  Use when configuring, auditing, migrating, or troubleshooting PyPI publishing for Python package repositories that use PDM and GitHub Actions, especially Trusted Publishing/OIDC, release-triggered publish workflows, draft release notes, and tag-to-release delivery. Do not use for application/service repos that are not published to PyPI, non-Python packages, container deployments, manual Twine token setup unless explicitly requested, or generic CI unrelated to release publishing. Output exact workflow patches plus PyPI/GitHub settings, local build validation, event sanity checks, and any release-path steps that cannot be verified locally.
+  Use when configuring or troubleshooting PyPI publishing for PDM packages with GitHub Actions and Trusted Publishing, including release events, OIDC permissions, builds, and repository/PyPI settings. Do not use for applications, non-Python projects, generic CI, containers, or token uploads unless requested. Return scoped workflow changes, required settings, validation results, and external steps.
 ---
 
-# Publish Python Package Pypi
+# Publish Python Packages to PyPI
 
-## Overview
-
-Implement a consistent release pipeline for Python packages: CI on push/PR, draft release notes on version tags, and PyPI publish on release publication. Follow the workflow patterns captured in `references/workflow-templates.md`.
-
-## Baseline Pattern
-
-For package repos, maintain these workflow files:
-- `.github/workflows/python-package.yml`
-- `.github/workflows/create-draft-release.yml`
-- `.github/workflows/python-publish.yml`
-
-Use `references/workflow-templates.md` for canonical templates and version-pinned actions.
+Build a release path that is minimal, inspectable, and consistent with the package's existing conventions.
 
 ## Workflow
 
-1. Identify repository type.
-- If repo is an app/service (not a PyPI package), do not add `python-publish.yml` by default.
-- If repo is a package/library, continue.
+1. Confirm that the repository produces a distributable Python package and uses PDM.
+2. Inspect `pyproject.toml`, supported Python versions, existing workflows, release conventions, and repository instructions before proposing changes.
+3. Run `pdm build`; inspect the wheel and source distribution when package contents are material to the request.
+4. Configure publishing around PyPI Trusted Publishing:
+   - trigger publication from the repository's approved release event;
+   - grant `id-token: write` only to the publishing job;
+   - keep ordinary repository permissions read-only;
+   - align the workflow filename, GitHub environment, and PyPI publisher mapping exactly.
+5. Keep CI, release-note generation, and package publication separate. Add optional release-note automation only when requested or already established by the repository.
+6. Validate YAML, package builds, permissions, event semantics, and all manual GitHub/PyPI configuration. Do not claim that external settings or a live publication were verified when they were not.
 
-2. Inspect package metadata before workflow changes.
-- Confirm `pyproject.toml` has package metadata suitable for publishing.
-- Confirm build works locally: `pdm build`.
+## Freshness
 
-3. Configure PyPI Trusted Publisher requirements.
-- In PyPI project settings, add a Trusted Publisher for this GitHub repository/workflow.
-- Use environment `release` in workflow and repository environment settings.
-- Do not introduce long-lived PyPI API tokens unless explicitly requested.
+Before changing action references, Python matrices, PDM setup, or Trusted Publishing configuration, check the current primary documentation and upstream releases. Follow repository pinning or SHA policies when present. Otherwise use a current supported action reference verified during the task; never describe a frozen reference as “latest.” Record the relevant versions or verification date in the result when they affect the change.
 
-4. Add or update `.github/workflows/python-publish.yml`.
-- Trigger: `on: release: types: [published]`.
-- Permissions: `contents: read` and job-level `id-token: write`.
-- Steps: checkout (full history), setup python, install pdm, `pdm build`, `pypa/gh-action-pypi-publish`.
-- Keep publish job minimal and deterministic.
+## Guardrails
 
-5. Ensure CI and draft-release workflows exist.
-- `python-package.yml` should test/lint on push and PR.
-- `create-draft-release.yml` should trigger on `v*.*.*` tag pushes.
-- Keep action versions aligned with repo standards.
+- Use PDM for environments, dependency installation, builds, and project commands.
+- Do not introduce a long-lived PyPI token unless the user explicitly requires token-based publishing.
+- Do not create or push tags, publish releases, alter repository settings, or perform a live upload without explicit authorization.
+- Match the project's supported Python versions instead of imposing a global matrix.
+- Preserve existing workflow names and conventions unless changing them is necessary to fix the release path.
 
-6. Validate end-to-end.
-- Validate workflow files: `gh workflow list`.
-- Validate package build: `pdm build`.
-- Validate release path:
-  - Push tag `vX.Y.Z` to trigger release notes draft.
-  - Publish GitHub release to trigger PyPI publish workflow.
-- Check Actions run logs and PyPI project page.
+## Resources
 
-## Required GitHub/PyPI Configuration
+- Read [references/workflow-templates.md](references/workflow-templates.md) when creating or substantially restructuring GitHub Actions workflows. Adapt the patterns after verifying current action references.
 
-1. GitHub Actions secrets:
-- Add repository (or org-level) secret `OPENAI_API_KEY` when using `create-draft-release.yml`.
-- `GITHUB_TOKEN` is provided automatically by Actions and does not need manual creation.
+## Output
 
-2. GitHub environment:
-- Create/configure environment `release` if using environment protections.
-- Ensure the publish job can run in `release` (reviewers/rules must allow it).
+Report:
 
-3. PyPI Trusted Publisher:
-- In PyPI project settings, register the GitHub repository/workflow/environment used by `python-publish.yml`.
-- Do not add `PYPI_API_TOKEN` for trusted publishing unless explicitly requested.
-
-## Repo Conventions
-
-- Use `actions/checkout@v6.0.1`, `actions/setup-python@v6.1.0`, and `pypa/gh-action-pypi-publish@v1.13.0` unless a user asks to change versions.
-- Install tooling with:
-  - `python -m pip install --upgrade pip`
-  - `python -m pip install pdm`
-- Match the publish workflow Python version to project support policy. This can vary (`3.10`, `3.11`, `3.12`, `3.14`), so do not hardcode one global value.
-
-## Troubleshooting
-
-1. `Trusted publishing exchange failure`:
-- Confirm `id-token: write` exists at job level.
-- Confirm PyPI trusted publisher repository/workflow/environment names match exactly.
-- Confirm workflow ran from the expected repository and branch/release context.
-
-2. Workflow did not run:
-- Confirm event type (`release.published`) and that release is published, not draft only.
-- Confirm workflow file exists on default branch.
-
-3. Build artifact problems:
-- Run `pdm build` locally and inspect `dist/`.
-- Confirm package metadata and included files are correct.
-
-### references/
-- `references/workflow-templates.md`: canonical workflow templates and adaptation notes for package repositories.
-
-## Output Expectations
-
-When applying this skill, produce:
-1. A short summary of current workflow coverage and gaps.
-2. Exact workflow file patches.
-3. Any required PyPI/GitHub settings that must be configured manually.
-4. Validation results (`pdm build`, workflow/event sanity, and what was not verifiable locally).
-5. A checklist of required GitHub/PyPI settings (`OPENAI_API_KEY`, `release` environment, trusted publisher mapping).
+1. Existing release coverage and gaps.
+2. Workflow changes and why each permission or event is required.
+3. Manual GitHub and PyPI settings.
+4. Local validation results and anything that remains externally unverifiable.
+5. Authorized next steps, clearly separating configuration from live release actions.

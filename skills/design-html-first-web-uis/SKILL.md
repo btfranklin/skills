@@ -1,12 +1,36 @@
 ---
 name: design-html-first-web-uis
 description: >-
-  Use when the user wants to design or implement a modern web UI with semantic HTML, native browser features, progressive enhancement, server-rendered or server-driven partial updates, and minimal JavaScript. Especially use when replacing SPA-style widgets with dialogs, popovers, forms, details/summary, view transitions, URL-backed state, or lightweight enhancement libraries. Do not use for visual redesign from whole cloth, heavy React/Vue/Svelte app architecture, canvas/WebGL games, Django+DaisyUI integration, or browser-only debugging after a UI already exists. Output an implementation plan or patch that names the native patterns used, accessibility behavior, graceful degradation, testing implications, and any necessary JavaScript.
+  Use when designing or implementing HTML-first web interfaces with native browser features, progressive enhancement, server-rendered updates, and minimal JavaScript. Covers forms, dialogs, popovers, disclosure, URL state, and replacing SPA-style interactions. Excludes visual direction, framework architecture, games, and browser debugging. Produces repo-specific code or a plan with accessibility, fallbacks, and validation.
 ---
 
-- Read references/modern-web-uis-without-frameworks-advanced-html-first-patterns-for-2026_20260110_070702.md first; treat it as the authoritative source of truth for all technical details, tradeoffs, and recommendations.
-- Identify the users requested UI capability and map it to the most relevant reference section(s): HTML-First Development in 2026 (html-first-2026), Modern HTML Features for UI Composition (native-features), Interaction Patterns with Minimal JavaScript (interaction-patterns), Server-Driven UI and Partial Updates (server-driven), Quality, Performance, and Maintainability Considerations (quality).
-- Prefer semantic HTML and native browser behavior; add JavaScript only where the reference indicates it is necessary, and describe any progressive enhancement and graceful degradation behavior explicitly.
-- Provide implementation guidance as HTML-first patterns (forms, links, dialogs/popovers, attribute-driven state, URL-driven state), and use server-driven partial updates where applicable; cite or quote the relevant reference sections by exact title/ID in the response.
-- Validate the proposed solution against accessibility, performance, and maintainability constraints using Quality, Performance, and Maintainability Considerations (quality); call out keyboard/screen reader behavior, payload size implications, and testing considerations as supported by the reference.
-- If information is missing or ambiguous, ask targeted clarifying questions and then re-check the reference file before finalizing the design or code.
+# Design HTML-First Web UIs
+
+## Workflow
+
+1. Inspect the existing stack, templates, routes, form handling, JavaScript, CSS, browser targets, and repository guidance. Preserve established conventions.
+2. Describe the interaction as links, forms, navigation, disclosure, selection, or transient UI before choosing an implementation.
+3. Select the smallest native primitive that preserves server authority and meaningful URLs. Use JavaScript only for enhancement that HTML and CSS cannot express adequately.
+4. Define the baseline behavior without enhancement, then add optional native APIs, server-driven partial updates, or small scripts.
+5. Implement the narrowest complete change. Keep state in URLs, form controls, or server responses when practical; avoid parallel client-side state.
+6. Validate keyboard use, focus, accessible names, error handling, history/navigation, no-JavaScript behavior, and relevant browser support.
+
+## Decisions
+
+- Prefer links for navigation and forms for state-changing requests.
+- Prefer `details`/`summary`, `dialog`, and popover behavior when their semantics match the interaction; do not force a native primitive onto a mismatched design.
+- Use server-rendered pages or fragments for authoritative application state. Keep partial-update endpoints usable and understandable outside the enhancement layer.
+- Preserve normal HTTP behavior: validation errors, redirects, CSRF protection, idempotency expectations, and back/forward navigation.
+- Treat animations and view transitions as optional presentation. Respect reduced-motion preferences and never make them necessary for task completion.
+
+## Freshness
+
+When browser support, API syntax, accessibility behavior, or framework integration affects the result, verify it against current MDN, WHATWG, and relevant framework documentation. Record the checked source and date in plans or reports; do not present a remembered support table as current.
+
+## Resource
+
+Read [references/html-first-patterns.md](references/html-first-patterns.md) when selecting a native primitive, designing progressive enhancement, or preparing the validation matrix. Load it only when those details are needed.
+
+## Output
+
+Return a repo-specific patch or plan that names the semantic baseline, enhancement layer, required JavaScript, fallback behavior, accessibility decisions, and verification performed. Ask a question only when an unresolved product choice would materially change the implementation.

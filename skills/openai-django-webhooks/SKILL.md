@@ -1,15 +1,19 @@
 ---
 name: openai-django-webhooks
 description: >-
-  Use when building, wiring, or debugging OpenAI Responses API async workflows in Django, including background responses, webhook endpoints, svix signature verification, metadata correlation, service-layer handling, and HTMX polling/status updates. Do not use for generic OpenAI API usage, non-Django webhook consumers, synchronous chat completions, Stripe/GitHub webhooks, or frontend-only polling UI without OpenAI response handling. Output Django code or a concrete implementation/debug plan covering endpoint security, response metadata, persistence, polling lifecycle, failure handling, and validation steps.
+  Use when building, wiring, or debugging asynchronous OpenAI Responses API workflows in Django: background requests, signed webhooks, response correlation, persistence, and HTMX status polling. Do not use for generic OpenAI calls, non-Django consumers, unrelated webhook providers, or frontend-only polling. Return scoped Django code or a plan covering security, lifecycle, failures, and validation.
 ---
 
 # OpenAI Django Webhooks
 
-## Quick start
-- Read `references/OPENAI_DJANGO_WEBHOOKS.md` for the recommended service-layer and webhook flow.
-- Follow the signature verification and metadata fallback guidance when wiring endpoints.
-- Use `rg` against the reference for targeted sections (webhooks, polling, svix).
+## Workflow
 
-## Reference map
-- `references/OPENAI_DJANGO_WEBHOOKS.md`
+1. Inspect the existing Django service, models, URLs, views, jobs, templates, and OpenAI client usage. Preserve established project conventions.
+2. Define the lifecycle before coding: local record ID, OpenAI response ID, allowed states, terminal failures, duplicate events, retry policy, and which component owns each transition.
+3. Read [the Django webhook flow reference](references/OPENAI_DJANGO_WEBHOOKS.md) for service, callback, response extraction, and HTMX polling patterns. Treat code snippets as illustrative until checked against current official documentation.
+4. Keep OpenAI calls and state transitions in a service layer. Authenticate the callback, acknowledge it promptly, make processing idempotent, persist failures, and prevent polling after a terminal state.
+5. Validate signature failures, duplicate delivery, out-of-order or unknown events, retrieval failure, terminal response failure, successful completion, and polling termination. Report exact evidence when diagnosing rather than guessing from symptoms.
+
+## Freshness Gate
+
+Verify current OpenAI Responses API fields, webhook event shapes, SDK verification helpers, retry behavior, and supported models in official OpenAI documentation before implementation. Record the documentation URL and access date in a plan or review. Check current Django and HTMX documentation when behavior depends on their versions; do not copy version-sensitive examples blindly.

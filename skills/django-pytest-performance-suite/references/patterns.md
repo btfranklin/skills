@@ -1,164 +1,42 @@
 # Django Performance Suite Patterns
 
-Use this file when implementing or extending a Django performance regression lane and you need the detailed patterns, not just the top-level workflow.
+Use these details while implementing a lane after following the core workflow in `SKILL.md`.
 
-## Separate Lane Pattern
+## Seed Once, Measure Separately
 
-Create a dedicated lane instead of extending the default unit-test path.
+Build expensive scenario data outside benchmark rounds. Use fixed timestamps, UUIDs, slugs, and RNG seeds. Reuse the seeded test database where the repository can do so safely. Disable outbound calls and maintenance triggers; make reachable task execution deterministic.
 
-- Use a dedicated settings module.
-- Require PostgreSQL.
-- Keep commands separate from normal test commands.
-- Prefer manual or on-demand CI, not every-PR by default, unless the suite is already cheap and stable.
+Give each scenario a stable case ID and document the product scale it represents. Include enough rows and relationships to expose ORM behavior hidden by ordinary fixtures.
 
-Why:
+## Protect Builders And Requests
 
-- heavy seeded datasets slow normal feedback loops
-- PostgreSQL-backed tests usually need different setup than unit tests
-- budgets and snapshots require deliberate maintenance
+Benchmark heavy builders or read models to localize regressions. Add a request-level case for the real GET surface when URL resolution, serialization, templates, or middleware contribute meaningful work. Prefer `RequestFactory` when middleware is outside the contract.
 
-## Deterministic Runtime Pattern
+A surface registry is worthwhile when a bounded family of GET routes should not escape coverage. Store route, builder, scenario IDs, and an explicit exemption reason where relevant. Make the structural test's failure explain how to register or exempt a surface.
 
-Keep the performance lane as deterministic as possible.
+## Normalize Correctness
 
-- Fix timestamps and time zones.
-- Fix UUIDs, slugs, and seeded random values.
-- Reuse a seeded database when possible.
-- Force Celery eager mode if task dispatch can be reached.
-- Monkeypatch or block outbound sync, webhook enqueue, or background maintenance triggers.
+Remove unstable values and impose deterministic ordering before comparison. Good artifacts include stable identifiers, counts, labels, ordered summaries, and semantic response flags. Avoid raw HTML when a smaller semantic representation protects the behavior.
 
-Goal:
+Store full normalized JSON when humans can review it. For very large results, store a compact summary and a SHA-256 hash of the complete normalized payload.
 
-- each run measures the same server-side work
-- correctness artifacts stay stable
-- timing noise is reduced enough to make budgets meaningful
+## Capture Queries
 
-## Surface Coverage Pattern
+Measure queries outside timing rounds so instrumentation does not distort the benchmark. Use Django query-capture utilities and assert a case-specific maximum. Prefer caps that should remain constant as scenario size grows; they expose N+1 behavior more clearly than elapsed time.
 
-Cover both of these:
+## Set Timing Contracts
 
-1. heavy builders or read models
-2. thin request-level wrappers for the real GET surfaces
+Key budgets by stable case ID and include target time, tolerance, and runner context. Calibrate them from repeated clean runs on the intended environment. Do not present one machine's numbers as universal performance requirements.
 
-Builder benchmarks help answer where the time is actually spent. Request-level benchmarks protect the real surface that users hit.
+Use median as the primary comparison and report mean and dispersion for diagnosis. If repeated strict runs are unstable, fix the workload or runner before widening tolerances.
 
-For Django pages, maintain a registry of read-only GET views and add a structural test that fails when a new GET surface is unregistered.
+## Report And Maintain
 
-## Correctness-Then-Timing Pattern
+Write JSON for automation and Markdown for review. Include commit, case, runner, database version, sample count, median, mean, dispersion, measured queries, allowed limits, and pass/fail status.
 
-Use this order:
+Keep two deliberate operations:
 
-1. build the result once
-2. normalize it into stable JSON
-3. compare against a checked-in artifact
-4. capture and assert query counts
-5. run the timed benchmark
+- **Refresh snapshots:** accept an intentional output-contract change after review.
+- **Accept baseline:** accept an intentional performance-contract change after correctness and query checks pass.
 
-This prevents meaningless timing passes on a broken or drifting result.
-
-## Snapshot Pattern
-
-Normalize aggressively before snapshotting.
-
-Good snapshot fields:
-
-- counts
-- slugs
-- labels
-- stable IDs
-- stable lists or summaries
-- small semantic booleans for responses
-
-Avoid snapshotting:
-
-- timestamps that change per run
-- unordered structures
-- raw HTML when only structure matters
-- giant payloads that no one will review
-
-For small or medium scenarios, store full normalized snapshots.
-
-For very large scenarios, store:
-
-- a compact summary
-- a SHA-256 of the full normalized payload
-
-This keeps completeness checks without exploding repository size.
-
-## Budget Pattern
-
-Keep one checked-in budget table keyed by case ID.
-
-Each case should usually include:
-
-- `target_ms`
-- `tolerance_pct`
-- `max_queries`
-
-Treat this as the contract for strict mode.
-
-Use two maintenance actions, not one:
-
-- refresh snapshots for intentional output drift
-- accept baseline for intentional timing changes
-
-Do not blur those steps together.
-
-## Reporting Pattern
-
-Always generate artifacts after a timing run.
-
-Useful outputs:
-
-- JSON for automation or later analysis
-- Markdown for humans scanning regressions
-
-The report should show:
-
-- case name
-- median and mean
-- current budget
-- max allowed time
-- query cap
-- pass or fail
-
-## Common Tool Choices
-
-Typical stack:
-
-- `pytest`
-- `pytest-django`
-- `pytest-benchmark`
-- Django `RequestFactory`
-- Django query capture utilities
-
-Helpful options:
-
-- `--reuse-db` for expensive seeded lanes
-- a dedicated marker such as `performance`
-- a dedicated settings module via `--ds=...`
-
-## Common Failure Modes
-
-- Using SQLite and thinking the timings represent production behavior.
-- Mixing perf tests into default CI and then disabling them because they are too slow.
-- Measuring only full requests and having no idea where the cost actually is.
-- Measuring only internal builders and forgetting to protect the real surface.
-- Letting snapshots churn because unstable fields were not normalized away.
-- Updating budgets casually whenever strict mode fails.
-- Missing newly added views because there is no surface registry.
-
-## Implementation Checklist
-
-- Add a dedicated performance settings module.
-- Add a `performance` pytest marker.
-- Add separate local commands.
-- Seed deterministic scenarios.
-- Add builder benchmarks for heavy shaping code.
-- Add request-level benchmarks for real GET surfaces.
-- Normalize results before snapshotting.
-- Assert query caps.
-- Store checked-in timing budgets.
-- Write JSON and Markdown reports.
-- Add a manual CI workflow.
-- Document the maintenance workflow.
+Neither operation should modify the other's artifacts. Never auto-accept a failing result.

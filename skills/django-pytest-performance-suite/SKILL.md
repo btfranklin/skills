@@ -1,94 +1,38 @@
 ---
 name: django-pytest-performance-suite
 description: >-
-  Use when the user needs a repeatable PostgreSQL-backed Django performance regression suite with pytest, pytest-django, RequestFactory, pytest-benchmark, deterministic large datasets, query caps, timing budgets, reports, and registration for read-only GET surfaces. Do not use for one-off profiling, frontend/browser rendering benchmarks, generic unit tests, SQLite-only checks, production APM setup, or non-Django services. Output a separate performance lane with settings, scenarios, correctness snapshots or hashes, query-count guards, benchmark budgets, local/CI commands, and refresh/baseline-accept documentation.
+  Build a PostgreSQL-backed Django performance lane with pytest, deterministic data, correctness guards, query caps, budgets, and reports. Use when read models or read-only GET surfaces need regression protection. Do not use for one-off profiling, browser benchmarks, generic tests, production APM, SQLite-only checks, or non-Django services. Produce local and CI workflows with explicit baseline maintenance.
 ---
 
 # Django Pytest Performance Suite
 
-## Overview
-
-Build trustworthy Django performance regression coverage for server-side surfaces. Prefer this skill when the goal is not a one-off benchmark, but a repeatable lane that can detect correctness drift, query regressions, and timing regressions over time.
-
 ## Workflow
 
-1. Identify the performance surface.
-   - Separate pure builders/read models from thin request/view wrappers.
-   - Prefer benchmarking uncached server-side work first.
-   - For Django UI work, cover read-only GET surfaces before thinking about browser rendering.
-2. Create a separate performance lane.
-   - Keep it out of the default unit-test path.
-   - Use a dedicated settings module.
-   - Require PostgreSQL instead of SQLite.
-   - Use explicit commands such as `perf-test`, `perf-test-strict`, `perf-refresh-snapshots`, and `perf-accept-baseline`.
-3. Make the run deterministic.
-   - Seed fixed timestamps, UUIDs, slugs, and RNG.
-   - Block background dispatch and outbound integration behavior.
-   - Keep Celery eager if task code may be touched indirectly.
-   - Use reusable databases when setup cost is large.
-4. Validate correctness before timing.
-   - Run an untimed pass first.
-   - Normalize the result into stable JSON.
-   - Compare it to a checked-in known-good artifact.
-   - Count queries and assert a cap.
-   - Only then run the benchmark timing pass.
-5. Record and enforce budgets.
-   - Keep checked-in timing budgets per surface and scenario.
-   - Keep checked-in query caps per surface and scenario.
-   - Generate machine-readable and human-readable reports for each run.
-6. Protect coverage from drifting.
-   - Keep a registry of read-only GET surfaces.
-   - Add a structural test that fails when a new GET surface is unregistered.
+1. Inspect the existing Django, database, pytest, command, and CI conventions. Identify the production database and the uncached server-side work worth protecting.
+2. Inventory target builders/read models and thin request wrappers. Start with high-value read-only GET surfaces.
+3. Create a separate performance lane with dedicated settings, marker, commands, and on-demand CI. Do not slow the default unit-test loop.
+4. Seed realistic scenarios deterministically: freeze time, fix identifiers and randomness, and block outbound or background side effects.
+5. Run correctness before timing. Normalize the result, assert a snapshot or summary hash, then assert query count.
+6. Benchmark stable work with `pytest-benchmark`. Cover the internal builder for diagnosis and the request wrapper for user-facing protection when both matter.
+7. Store query caps and timing budgets by case. Generate machine-readable JSON and human-readable Markdown reports.
+8. Keep snapshot refresh and timing-baseline acceptance as separate, explicit maintenance actions.
+9. Register covered GET surfaces and add a structural check when unregistered surfaces would create meaningful drift.
 
-## Design Rules
+Use the repository's package manager and task runner. Preserve existing test conventions unless they prevent an isolated, reproducible lane.
 
-- Measure against PostgreSQL. SQLite timings are not useful for Django performance guardrails.
-- Treat timing and correctness as separate concerns. A fast wrong result is still a regression.
-- Pair query caps with timing budgets. Query counts are often the clearest early-warning signal.
-- Benchmark both layers when possible:
-  - builder/read-model cost for diagnosis
-  - request/view wrapper cost for user-facing surfaces
-- Prefer RequestFactory for request-surface measurements unless middleware behavior is the thing being tested.
-- Keep large datasets realistic enough to trigger ORM and template-shaping costs that small fixtures hide.
-- Store large-case correctness as summaries plus a payload hash instead of enormous snapshots.
-- Keep baseline changes explicit. Refresh snapshots only for intentional output changes. Accept timing baselines only for intentional steady-state changes.
+## Decisions
 
-## Implementation Pattern
+- Benchmark against PostgreSQL because this skill's contract is PostgreSQL-backed behavior; do not treat SQLite timings as representative.
+- Prefer `RequestFactory` unless middleware or full request handling is part of the measured contract.
+- Use full normalized snapshots for reviewable results and compact summaries plus hashes for very large payloads.
+- Treat query caps as deterministic early warnings and timing budgets as environment-sensitive guardrails.
+- Never update budgets automatically after a failure.
 
-When building the suite, create these pieces:
+## Validation
 
-- A dedicated Django settings module for performance runs.
-- A `tests/performance/` package.
-- Deterministic scenario seeders.
-- Result normalizers that remove unstable fields.
-- Snapshot assertions for correctness.
-- Query-count capture helpers.
-- A checked-in budget table.
-- A report writer for latest results.
-- A manual CI workflow that runs the strict lane and uploads artifacts.
+Run the untimed correctness and query checks before the timing lane. Run strict mode twice on the intended runner to expose unstable data or excessive timing noise. Verify that normal tests exclude the performance marker, reports identify each case and budget, and maintenance commands cannot conflate output changes with performance changes.
 
-For a detailed implementation checklist and the non-obvious stability techniques, read [references/patterns.md](references/patterns.md).
+## Resources
 
-For a compact example of the expected plan/report shape, read [examples/performance-suite-plan.md](examples/performance-suite-plan.md).
-
-## What To Avoid
-
-- Do not mix performance tests into the default `pdm run test` or `pytest` path when they require heavy setup.
-- Do not benchmark only tiny fixtures and assume the result generalizes.
-- Do not rely on timing alone when large ORM regressions can be caught deterministically with query caps.
-- Do not keep snapshots of raw HTML or full contexts if they include unstable values that will churn constantly.
-- Do not silently update budgets after every run. That destroys the regression signal.
-- Do not let new GET surfaces appear without performance-suite registration.
-
-## Output Expectations
-
-When the user asks for this kind of work, produce:
-
-- the separate pytest lane
-- deterministic scenarios sized to the product surface
-- snapshot and query-count guards
-- timing budgets and artifact reports
-- run commands for local and CI usage
-- documentation for refresh and baseline-accept workflows
-
-If the repository already has ad hoc benchmarks, prefer folding them into the same lane rather than leaving multiple incompatible performance workflows in place.
+- Read [references/patterns.md](references/patterns.md) when implementing seed stability, snapshots, budgets, reporting, or surface registration.
+- Read [examples/performance-suite-plan.md](examples/performance-suite-plan.md) when preparing a concrete suite plan or handoff.
