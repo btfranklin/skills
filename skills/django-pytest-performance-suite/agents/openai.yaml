@@ -3,4 +3,4 @@ interface:
   short_description: "Build reliable Django performance regression lanes"
   icon_small: "./assets/django-pytest-performance-suite.svg"
   icon_large: "./assets/django-pytest-performance-suite.png"
-  default_prompt: "Use $django-pytest-performance-suite to build a PostgreSQL-backed performance lane with deterministic scenarios, correctness guards, query caps, timing budgets, and explicit baseline maintenance."
+  default_prompt: "Use $django-pytest-performance-suite to build a database-faithful Django performance lane with deterministic scenarios, correctness and query or operation guards, calibrated timing budgets, and explicit baseline maintenance."

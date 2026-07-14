@@ -1,10 +1,18 @@
 # Customer Activity Performance Suite Plan
 
-## Target And Risk
+## Target and risk
 
-Protect the uncached `customer_activity` read model and `GET /customers/<uuid>/activity/` view. Production accounts can contain 50,000 events across 500 projects. The known risks are an N+1 query over event actors, accidental materialization of all events, and output drift in the project summaries.
+Protect the uncached `customer_activity` read model and `GET /customers/<uuid>/activity/` view. Production accounts can contain 50,000 events across 500 projects. The known risks are an N+1 query over event actors, accidental materialization of all events, and output drift in project summaries.
 
-## Lane Layout
+## Database fidelity
+
+The performance settings use the same Django database backend, driver, transaction behavior, and schema options as the deployed application. The lane creates an isolated database through that backend's normal Django test-database lifecycle.
+
+If the deployed database is embedded, each worker receives a disposable local database through the production backend. If it is client-server, CI provisions an isolated service using the production engine family. Managed-network latency is measured separately; this suite protects server-side work and does not claim to reproduce Internet distance.
+
+Every report records the resolved backend, driver, engine version, topology, and relevant options. Replacing the engine with a convenient substitute would require an explicit approximation label and would disqualify its timing results from strict enforcement.
+
+## Lane layout
 
 ```text
 config/settings/performance.py
@@ -17,19 +25,19 @@ tests/performance/
 └── reporting.py
 ```
 
-`performance.py` requires a PostgreSQL test URL, disables email and outbound integrations, makes task dispatch eager, and uses the same timezone and relevant database options as production. Tests carry the `performance` marker and are excluded from the default pytest configuration.
+The settings module disables email and outbound integrations, makes reachable background work deterministic, and preserves production-relevant database and timezone options. Tests carry the `performance` marker and remain outside the default pytest configuration.
 
-## Deterministic Scenarios
+## Deterministic scenarios
 
 | Case | Projects | Events | Purpose |
 |---|---:|---:|---|
 | `activity_small` | 5 | 100 | Fast correctness diagnosis |
 | `activity_medium` | 100 | 10,000 | Normal regression lane |
-| `activity_large` | 500 | 50,000 | Strict capacity boundary |
+| `activity_large` | 500 | 50,000 | Capacity boundary |
 
-Seeders use fixed UUIDs, a fixed UTC clock, and a seeded RNG. Actors are reused in a predictable ratio. The database is seeded once per worker and reused; benchmark rounds do not include fixture construction.
+Seeders use fixed UUIDs, a fixed UTC clock, and a seeded RNG. Actors are reused in a predictable ratio. The database is seeded once per isolated worker and reused; benchmark rounds do not include database creation or fixture construction.
 
-## Correctness And Query Guards
+## Correctness and query guards
 
 Each case first calls the builder outside the benchmark fixture and normalizes:
 
@@ -39,7 +47,7 @@ Each case first calls the builder outside the benchmark fixture and normalizes:
 - first and last event timestamps
 - ordered top-20 activity rows
 
-The small and medium cases compare full normalized JSON. The large case compares the summary plus a SHA-256 hash of the full normalized payload. Request-level checks also assert status 200 and the expected template name.
+Small and medium cases compare full normalized JSON. The large case compares a reviewable summary plus a SHA-256 hash of the complete normalized payload. Request-level checks also assert status 200 and the expected template.
 
 Initial query caps, confirmed from a clean reference run:
 
@@ -51,33 +59,32 @@ Initial query caps, confirmed from a clean reference run:
 }
 ```
 
-The constant caps ensure account size cannot reintroduce per-project or per-actor queries.
+The constant caps ensure account size cannot reintroduce per-project or per-actor queries. If the backend does not expose a query boundary suitable for Django's capture utility, the lane substitutes a documented operation counter rather than silently dropping the guard.
 
-## Timing Budgets
+## Timing budgets
 
-Strict CI uses the median of benchmark rounds on the dedicated runner:
+Strict budgets are created only after repeated independent runs on the stable enforcement runner. Each eligible case records its median, mean, dispersion, maximum observed variation, chosen headroom, and runner/database profile. Unstable or topology-dependent cases remain observation-only.
 
-| Case | Builder target | Request target | Tolerance |
-|---|---:|---:|---:|
-| Small | 35 ms | 50 ms | 25% |
-| Medium | 180 ms | 225 ms | 20% |
-| Large | 650 ms | 750 ms | 20% |
+The JSON and Markdown reports distinguish:
 
-These are starting contracts from the recorded reference runner, not universal hardware claims. Each report records runner identity, commit, database version, median, mean, standard deviation, query count, budget, and result.
+- correctness pass/fail
+- query or operation cap pass/fail
+- timing enforced/observation-only
+- database profile matched/approximated
 
-## Commands And CI
+## Commands and CI
 
 ```bash
 pdm run perf-test
 pdm run perf-test-strict
-pdm run perf-refresh-snapshots
+pdm run perf-refresh-correctness
 pdm run perf-accept-baseline
 ```
 
-`perf-test` runs correctness, queries, and non-gating benchmarks locally. `perf-test-strict` enforces budgets. The manual CI workflow provisions PostgreSQL, runs strict mode twice, and uploads JSON and Markdown reports.
+`perf-test` runs correctness, caps, and non-gating benchmarks locally. `perf-test-strict` enforces only calibrated budgets on the approved runner. CI provisions the database profile defined by the project, runs strict mode repeatedly enough to detect instability, and uploads JSON and Markdown reports.
 
-Snapshot refresh is allowed only when reviewed output intentionally changes. Baseline acceptance requires a successful correctness/query run plus a short reason recorded with the budget change. Neither command updates the other artifact.
+Correctness refresh is allowed only for an intentional output change. Baseline acceptance requires successful correctness and cap checks plus recorded recalibration evidence. Neither command updates the other artifact.
 
-## Coverage Drift
+## Coverage drift
 
-A registry lists the customer activity route, builder, scenario IDs, and owners. A structural test fails if a new read-only customer activity route lacks a registry decision, with a message explaining how to register it or document why it is exempt.
+A registry is added only if customer-activity GET surfaces form a bounded product family. It lists each route, builder, scenario IDs, and owner. A structural test then fails when a new route lacks a registry decision, with a message explaining how to register or exempt it.

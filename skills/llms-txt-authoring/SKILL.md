@@ -10,7 +10,7 @@ description: >-
 
 1. Inspect the live site or repository to identify the canonical documentation, API reference, guides, and examples. Do not invent pages or descriptions.
 2. Read [the format guide](references/llms.txt.md) before authoring or judging structure. Treat `llms.txt` as an emerging proposal, not a crawler-control or guaranteed-discovery standard.
-3. For a new file, adapt [the starter template](templates/llms.txt). Keep the H1, summary, context, categories, links, and descriptions concise; omit empty or low-value sections.
+3. For a new file, adapt [the starter template](templates/llms.txt). Keep the required H1 concise; add the optional summary, context, H2 file lists, and descriptions only when useful.
 4. Validate the exact `/llms.txt` location, Markdown structure, absolute canonical URLs, truthful descriptions, duplicate links, and reachable targets when network access is available.
 5. Return the complete file or severity-ordered findings. Distinguish proposal violations from optional editorial improvements.
 

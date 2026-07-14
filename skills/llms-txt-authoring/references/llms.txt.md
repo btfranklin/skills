@@ -1,79 +1,63 @@
-# Guide for Creating an llms.txt File
+# llms.txt Proposal Guide
 
-## Overview
+Treat `/llms.txt` as an emerging proposal for presenting concise site context and curated resource links to LLMs at inference time. It is not a crawler-control mechanism, a replacement for `robots.txt` or sitemaps, or a guarantee of discovery, indexing, training, ranking, or citation.
 
-An llms.txt file is a curated, markdown-formatted guide placed at the root of a website domain (https://example.com/llms.txt). It helps Large Language Models (LLMs) quickly find your site’s most valuable, inference-friendly content.
+Primary source: [the llms.txt proposal](https://llmstxt.org/). Verify it at execution time before asserting syntax or adoption.
 
-## Purpose
+## Format and order
 
-- Not a replacement or extension of robots.txt. It doesn’t control crawling or indexing.
-- Acts as a curated map highlighting your site’s best content for inference by AI models.
-- Provides direct guidance to AI, increasing the likelihood of your content being cited by AI-driven search results.
+A proposal-aligned file contains these elements in order:
 
-## Ideal Content for Inclusion
+1. An optional byte-order mark.
+2. One H1 naming the project or site. **The H1 is the only required section.**
+3. An optional blockquote containing a short summary.
+4. Optional Markdown paragraphs or lists, but no headings, with details needed to interpret the linked material.
+5. Zero or more H2 sections containing file lists.
 
-- Evergreen, structured, authoritative resources.
-- High-value guides, detailed FAQs, resource hubs, and clearly written blog posts.
-- Content demonstrating expertise, experience, authority, and trustworthiness (E-E-A-T).
-- Pages structured specifically for comprehension by AI.
-
-## Structure of llms.txt (Markdown Format)
-
-- Filename: Must be exactly llms.txt (plural form).
-- Location: Root directory of your domain (e.g., /llms.txt).
-
-### Required Elements
-
-- A single H1 heading (#) naming your site or project.
-- A blockquote (>) summarizing the content that follows.
-
-### Optional Elements (Recommended for clarity)
-
-- Additional context or notes provided in standard Markdown paragraphs or lists.
-- One or more H2 headings (##) categorizing your URLs clearly.
-- Under each category, list URLs in Markdown link format, optionally followed by a colon and brief description:
+Each item in an H2 file list contains a required Markdown link and may add a colon followed by a concise description:
 
 ```markdown
-- [Link Title](https://example.com/url): Short description of content
+- [Link title](https://example.com/path): Optional description.
 ```
 
-### Special Section
+`## Optional` has special meaning: links in that section may be omitted when constructing a shorter context. Use it only for genuinely secondary material.
 
-- You may include an ## OPTIONAL section. URLs in this section can be skipped by AI if a shorter context is required.
+## Authoring decisions
 
-## Formatting Example
+- Inspect the live site or repository and use canonical, absolute URLs.
+- Prefer a small set of authoritative documentation, API, guide, and example pages over an exhaustive sitemap.
+- Use truthful link descriptions grounded in the target page.
+- Put explanatory prose before the first H2; do not create an H2 section containing free prose instead of a file list.
+- Omit empty sections and links that do not materially help a reader understand the site.
+- Keep `robots.txt`, sitemap, SEO, access-control, and indexing claims outside this file.
+
+## Validation
+
+Check:
+
+- exact filename and intended root location;
+- exactly one H1 and correct element ordering;
+- H2 bodies contain Markdown link lists;
+- `## Optional` contains only secondary links;
+- URLs are absolute, canonical, deduplicated, and reachable when network access is available;
+- titles and descriptions match the linked content;
+- the file makes no unsupported claims about how third-party systems will use it.
+
+## Minimal example
 
 ```markdown
-# Example.com: AI Resources and Insights
+# Example Project
 
-> Curated, structured content designed specifically for AI inference and citation.
+> A concise description of the project and intended audience.
 
-This file provides clear access points to authoritative, evergreen information.
+Use the stable API reference for exact contracts; tutorials emphasize learning paths.
 
-## Essential Content
+## Documentation
 
-- [FAQ](https://example.com/faq): Common questions clearly answered
-- [AI Implementation Guide](https://example.com/resources/ai-guide): Detailed business resource for adopting AI
-- [llms.txt Explained](https://example.com/blog/llms-txt-overview): Plain-language introduction to llms.txt usage
+- [Documentation](https://example.com/docs): Canonical product documentation.
+- [API reference](https://example.com/api): Supported endpoints and schemas.
 
-## OPTIONAL
+## Optional
 
-- [Secondary Resource](https://example.com/secondary): Useful, but less critical for immediate AI inference
+- [Examples](https://example.com/examples): Additional worked integrations.
 ```
-
-## Content Formatting Recommendations for Linked Pages
-
-- Short, clear paragraphs.
-- Explicit headings (H1–H3).
-- Bullet points, numbered lists, and tables.
-- Clear semantic signals (e.g., “Step 1”, “Key takeaway”).
-- Minimal distractions (no intrusive pop-ups/modals).
-
-## Homepage Inclusion
-
-- Include homepage only if it provides meaningful, structured content for inference.
-- Typically, prioritize deeper, more content-rich pages over general homepage content.
-
-## Key Takeaway
-
-Treat llms.txt as your AI “treasure map,” directing models straight to your most valuable, inference-ready content, not as a restrictive measure.

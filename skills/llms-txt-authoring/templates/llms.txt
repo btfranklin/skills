@@ -2,6 +2,8 @@
 
 > One-sentence description of the site, product, project, or documentation set.
 
+Brief constraints or context needed to interpret the linked resources, if any.
+
 ## Docs
 
 - [Canonical Documentation](https://example.com/docs): Short description of the primary docs.
@@ -11,7 +13,3 @@
 
 - [Examples](https://example.com/examples): Short description if useful.
 - [Changelog](https://example.com/changelog): Short description if useful.
-
-## Notes
-
-Brief constraints or guidance for LLM use, only if the site has specific caveats.
