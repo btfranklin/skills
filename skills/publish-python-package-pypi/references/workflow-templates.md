@@ -5,7 +5,7 @@ Derived from repeatable package-repository workflow patterns.
 ## Contents
 1. `python-publish.yml` (PyPI publish on release)
 2. `python-package.yml` (CI for package repos)
-3. `draft-release-notes.yml` (tag-triggered release draft)
+3. `create-draft-release.yml` (tag-triggered release draft)
 4. Adaptation checklist
 
 ## 1) python-publish.yml
@@ -91,10 +91,10 @@ Notes:
 - Python matrix varies per repo; align with supported versions in `pyproject.toml`.
 - Some repos call `pdm run lint`/`pdm run test` instead of direct ruff/pytest.
 
-## 3) draft-release-notes.yml
+## 3) create-draft-release.yml
 
 ```yaml
-name: Draft Release Notes
+name: Create Draft Release
 
 on:
   push:
@@ -134,7 +134,7 @@ Notes:
 - Workflow file name
 - Environment name (`release`)
 5. Configure GitHub secrets:
-- `OPENAI_API_KEY` for `draft-release-notes.yml` (if used)
+- `OPENAI_API_KEY` for `create-draft-release.yml` (if used)
 6. Confirm GitHub environment `release` exists if approvals/policies are used.
 7. Test flow:
 - Push `vX.Y.Z` tag (release-notes workflow).

@@ -14,7 +14,7 @@ Implement a consistent release pipeline for Python packages: CI on push/PR, draf
 
 For package repos, maintain these workflow files:
 - `.github/workflows/python-package.yml`
-- `.github/workflows/draft-release-notes.yml`
+- `.github/workflows/create-draft-release.yml`
 - `.github/workflows/python-publish.yml`
 
 Use `references/workflow-templates.md` for canonical templates and version-pinned actions.
@@ -40,9 +40,9 @@ Use `references/workflow-templates.md` for canonical templates and version-pinne
 - Steps: checkout (full history), setup python, install pdm, `pdm build`, `pypa/gh-action-pypi-publish`.
 - Keep publish job minimal and deterministic.
 
-5. Ensure CI and release-note workflows exist.
+5. Ensure CI and draft-release workflows exist.
 - `python-package.yml` should test/lint on push and PR.
-- `draft-release-notes.yml` should trigger on `v*.*.*` tag pushes.
+- `create-draft-release.yml` should trigger on `v*.*.*` tag pushes.
 - Keep action versions aligned with repo standards.
 
 6. Validate end-to-end.
@@ -56,7 +56,7 @@ Use `references/workflow-templates.md` for canonical templates and version-pinne
 ## Required GitHub/PyPI Configuration
 
 1. GitHub Actions secrets:
-- Add repository (or org-level) secret `OPENAI_API_KEY` when using `draft-release-notes.yml`.
+- Add repository (or org-level) secret `OPENAI_API_KEY` when using `create-draft-release.yml`.
 - `GITHUB_TOKEN` is provided automatically by Actions and does not need manual creation.
 
 2. GitHub environment:
