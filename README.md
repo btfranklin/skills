@@ -40,6 +40,13 @@ python3 scripts/check_skill_frontmatter_lengths.py skills
   npx skills add btfranklin/skills --skill design-html-first-web-uis -g
   ```
 
+- `design-ui-style-guide`
+  Explore three distinct UI concepts, select a visual direction, and turn it into a reusable HTML/CSS style guide and representative demo without defaulting to common AI-generated design clichés.
+
+  ```bash
+  npx skills add btfranklin/skills --skill design-ui-style-guide -g
+  ```
+
 - `django-6-upgrade-guide`
   Plan and execute Django 6 upgrades, including breaking changes, compatibility checks, and migration checklists from Django 5.
 

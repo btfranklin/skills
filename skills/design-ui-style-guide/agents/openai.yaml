@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design UI Style Guide"
+  short_description: "Explore and codify a visual UI direction"
+  icon_small: "./assets/design-ui-style-guide.svg"
+  icon_large: "./assets/design-ui-style-guide.png"
+  default_prompt: "Use $design-ui-style-guide to explore three UI concepts, help me choose one, then turn it into an HTML/CSS style guide and demo."
