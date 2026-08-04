@@ -89,8 +89,15 @@ python3 scripts/check_skill_frontmatter_lengths.py skills
   npx skills add btfranklin/skills --skill openai-django-webhooks -g
   ```
 
+- `publish-npm-package`
+  Configure and maintain GitHub Actions workflows for publishing npm packages with Trusted Publishing, verified tarballs, provenance, and coordinated mixed-language releases.
+
+  ```bash
+  npx skills add btfranklin/skills --skill publish-npm-package -g
+  ```
+
 - `publish-python-package-pypi`
-  Configure and maintain GitHub Actions workflows for publishing Python packages to PyPI with PDM and Trusted Publishing.
+  Configure and maintain GitHub Actions workflows for publishing Python packages to PyPI with PDM and Trusted Publishing, including coordinated mixed-language releases.
 
   ```bash
   npx skills add btfranklin/skills --skill publish-python-package-pypi -g

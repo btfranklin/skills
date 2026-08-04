@@ -1,0 +1,6 @@
+interface:
+  display_name: "Publish npm Package"
+  short_description: "npm Trusted Publishing workflows"
+  icon_small: "./assets/publish-npm-package.svg"
+  icon_large: "./assets/publish-npm-package.png"
+  default_prompt: "Use $publish-npm-package to configure and validate Trusted Publishing for this npm package."
