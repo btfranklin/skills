@@ -13,7 +13,11 @@ description: >-
 3. Prefer the provider's native schema-constrained output over prose instructions or manual JSON extraction.
 4. Validate syntax, field constraints, cross-field invariants, and source faithfulness separately.
 5. Retry only failures that another model attempt can plausibly repair. Bound attempts and preserve the final validation error.
-6. Fail closed, return a typed partial result, or request human review according to the cost of a wrong value. Never invent a default for missing source evidence.
+6. Select one failure policy before implementation:
+   - Fail closed when an incomplete or incorrect value can cause an unsafe or irreversible action.
+   - Return a typed partial result only when the downstream consumer explicitly supports missing values and cannot treat them as complete.
+   - Request human review when a person can resolve the ambiguity and the workflow can wait safely.
+   Never invent a default for missing source evidence.
 7. Test representative success, ambiguity, refusal, malformed input, unsupported values, injection attempts, and exhausted retries.
 8. Report the schema contract, data flow, failure policy, observability, and unresolved risks.
 

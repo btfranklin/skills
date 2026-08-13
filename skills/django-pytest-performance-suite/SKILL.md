@@ -15,7 +15,7 @@ description: >-
 5. Seed realistic scenarios deterministically. Fix time, identifiers, randomness, ordering, and external side effects; build expensive data outside benchmark rounds.
 6. Run correctness before timing. Normalize results, compare a snapshot or summary hash, then enforce a query or operation cap appropriate to the measured layer.
 7. Benchmark stable work with `pytest-benchmark`. Exclude setup and instrumentation unless their cost is the explicit subject of the case.
-8. Calibrate timing budgets from repeated clean runs on the intended stable runner. Report machine-readable and human-readable results with environment and database context.
+8. Calibrate timing budgets only from repeated clean runs on a stable, representative runner. If that runner is not available, keep the timing case observation-only. Continue to enforce deterministic correctness checks and query or operation caps. Report the missing runner and each deliberate approximation.
 9. Keep correctness refresh and timing-baseline acceptance as separate, explicit maintenance actions. Add a coverage registry only for a bounded family of surfaces where drift is a real risk.
 
 Use the repository's package manager and task runner. Preserve existing test conventions unless they prevent an isolated, reproducible lane.
@@ -36,7 +36,9 @@ Verify current Django, pytest, pytest-benchmark, database-backend, and driver be
 
 ## Validation
 
-Run untimed correctness and query/operation checks before timing. Repeat strict runs on the intended runner to quantify variance before enforcing a budget. Verify that ordinary tests exclude the performance marker, reports identify every case and environment, and maintenance commands cannot conflate semantic changes with performance changes.
+Run untimed correctness and query or operation checks before timing. Use multiple independent clean processes on the intended runner to measure variance. Enforce a timing budget only when the variance is low enough to identify a product regression. Do not increase a tolerance only to make an unstable case pass.
+
+Verify that ordinary tests exclude the performance marker. Verify that reports identify every case and environment. Keep correctness refresh and timing-budget acceptance as separate maintenance commands.
 
 ## Resources
 

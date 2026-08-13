@@ -38,7 +38,7 @@ Keep deterministic calculations in code. A model may extract quantities and pric
 
 Cover valid, boundary, ambiguous, adversarial, refusal, malformed, partial, and retry-exhaustion cases. Maintain representative golden inputs and assert both typed output and downstream decisions. Measure validation failures, semantic failures, retries, latency, token cost, review rate, and corrections. Redact sensitive inputs and outputs from logs.
 
-Model behavior can change even when the schema does not. Record provider, model identifier, SDK/library versions, schema version, prompt version, and verification date for reproducible comparisons.
+Model behavior can change even when the schema does not. Record the provider, model identifier, SDK or library versions, and verification date for reproducible comparisons. Add schema or prompt version identifiers only when a deployed or persisted compatibility boundary requires them.
 
 ## Primary Documentation
 

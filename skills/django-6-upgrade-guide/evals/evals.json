@@ -1,0 +1,32 @@
+{
+  "skill": "django-6-upgrade-guide",
+  "evals": [
+    {
+      "name": "primary_sources_unavailable",
+      "prompt": "Plan this Django 5.2 to 6.0 upgrade. Network access is not available.",
+      "expect": [
+        "Uses repository evidence that is available",
+        "Reports which current requirements it could not verify",
+        "Does not claim that unverified versions or dependencies are current"
+      ]
+    },
+    {
+      "name": "unexpected_migration",
+      "prompt": "The Django upgrade produced a new migration even though I did not change the models.",
+      "expect": [
+        "Runs or requests the migration check",
+        "Does not accept or regenerate the migration automatically",
+        "Requires an intentional model-state change before it keeps a new migration"
+      ]
+    },
+    {
+      "name": "narrow_non_upgrade_task",
+      "prompt": "Fix this template typo in a Django 6 project.",
+      "expect": [
+        "Does not invoke the Django upgrade workflow",
+        "Does not perform dependency or migration work",
+        "Keeps the change limited to the typo"
+      ]
+    }
+  ]
+}

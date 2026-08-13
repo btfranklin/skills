@@ -1,0 +1,32 @@
+{
+  "skill": "openai-django-webhooks",
+  "evals": [
+    {
+      "name": "endpoint_worker_boundary",
+      "prompt": "Implement an OpenAI Responses webhook in this Django service.",
+      "expect": [
+        "Limits the request endpoint to verification, durable receipt, enqueueing, and prompt acknowledgement",
+        "Retrieves the response in a background worker",
+        "Keeps state transitions idempotent in the service layer"
+      ]
+    },
+    {
+      "name": "duplicate_delivery",
+      "prompt": "The same signed webhook can arrive more than once and worker jobs can also retry.",
+      "expect": [
+        "Deduplicates durable delivery at the request boundary",
+        "Makes worker processing and state transitions idempotent",
+        "Does not let duplicate or out-of-order work regress a terminal state"
+      ]
+    },
+    {
+      "name": "terminal_polling",
+      "prompt": "Add HTMX status polling for success, permanent failure, expiry, and deletion.",
+      "expect": [
+        "Authorizes every status request",
+        "Stops polling for every terminal state",
+        "Handles missing and unauthorized jobs explicitly"
+      ]
+    }
+  ]
+}

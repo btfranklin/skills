@@ -9,9 +9,13 @@ description: >-
 ## Workflow
 
 1. Inspect the existing Django service, models, URLs, views, jobs, templates, and OpenAI client usage. Preserve established project conventions.
-2. Define the lifecycle before coding: local record ID, OpenAI response ID, allowed states, terminal failures, duplicate events, retry policy, and which component owns each transition.
+2. Define the lifecycle before coding. Record the local record ID, OpenAI response ID, allowed states, terminal failures, duplicate-event behavior, and retry policy.
 3. Read [the Django webhook flow reference](references/OPENAI_DJANGO_WEBHOOKS.md) for service, callback, response extraction, and HTMX polling patterns. Treat code snippets as illustrative until checked against current official documentation.
-4. Keep OpenAI calls and state transitions in a service layer. Authenticate the callback, acknowledge it promptly, make processing idempotent, persist failures, and prevent polling after a terminal state.
+4. Assign each action to one component:
+   - The request endpoint verifies the signature, records the delivery durably, enqueues work, and returns a `2xx` response promptly.
+   - The worker retrieves the response and handles retryable processing failures.
+   - The service layer owns idempotent state transitions and output persistence.
+   - The status view authorizes each request and stops polling after every terminal state.
 5. Validate signature failures, duplicate delivery, out-of-order or unknown events, retrieval failure, terminal response failure, successful completion, and polling termination. Report exact evidence when diagnosing rather than guessing from symptoms.
 
 ## Freshness Gate

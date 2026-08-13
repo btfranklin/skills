@@ -1,0 +1,32 @@
+{
+  "skill": "publish-python-package-pypi",
+  "evals": [
+    {
+      "name": "configuration_is_not_publication_approval",
+      "prompt": "Set up PyPI Trusted Publishing for this PDM package.",
+      "expect": [
+        "Configures and validates the release path",
+        "Does not treat configuration approval as approval for a live release",
+        "Reports the exact live action that still needs authorization"
+      ]
+    },
+    {
+      "name": "multi_registry_preflight",
+      "prompt": "Publish the Python and npm packages from one coordinated release.",
+      "expect": [
+        "Uses the publishing workflow for each registry",
+        "Derives versions from one approved release identity",
+        "Completes preflight for every artifact before any publisher runs"
+      ]
+    },
+    {
+      "name": "partial_registry_failure",
+      "prompt": "PyPI accepted the release, but npm failed.",
+      "expect": [
+        "Preserves the successful immutable PyPI release",
+        "Retries only the failed publisher with the exact preflight artifact",
+        "Does not rebuild or republish the successful version"
+      ]
+    }
+  ]
+}

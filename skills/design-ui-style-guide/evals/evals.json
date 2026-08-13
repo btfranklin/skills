@@ -1,0 +1,32 @@
+{
+  "skill": "design-ui-style-guide",
+  "evals": [
+    {
+      "name": "missing_companion_skill",
+      "prompt": "Create a visual direction for this new dashboard. The companion HTML skill is not installed.",
+      "expect": [
+        "Identifies the required installation scope",
+        "Requests approval for that exact installation before it changes project or global state",
+        "Continues with the local semantic and accessibility rules if installation is not approved"
+      ]
+    },
+    {
+      "name": "image_generation_unavailable",
+      "prompt": "Design a landing page, but this environment has no image-generation capability.",
+      "expect": [
+        "States that image generation is not available",
+        "Provides prompt-ready concept briefs without claiming that it generated images",
+        "Requests confirmation before it continues with text-only planning"
+      ]
+    },
+    {
+      "name": "approved_direction_boundary",
+      "prompt": "I already supplied and approved the design. Implement this small component change.",
+      "expect": [
+        "Does not restart three-concept visual exploration",
+        "Treats the approved design as the source of truth",
+        "Keeps the work proportional to the requested component change"
+      ]
+    }
+  ]
+}

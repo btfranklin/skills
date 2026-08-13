@@ -8,12 +8,14 @@ description: >-
 
 ## Workflow
 
-1. Inspect the repository's Django version, package managers, template layout, static-file pipeline, deployment build, CSS and JavaScript entrypoints, component conventions, CSP, and existing Tailwind or DaisyUI configuration.
-2. Verify current installation and configuration guidance in official Tailwind CSS and DaisyUI documentation. Follow the project's existing toolchain when it is viable; do not introduce a second asset pipeline casually.
-3. Choose one CSS entrypoint and one deterministic build command. Ensure template files are included in content detection and generated assets flow through Django's established static-file handling.
-4. Define ownership: Django templates hold semantics and server data, the CSS entrypoint holds framework imports and intentional overrides, reusable template components hold repeated markup, and scripts hold behavior that native HTML cannot provide.
-5. Define semantic theme tokens before component-specific styling. Add theme switching only when requested, with an explicit default, persistence policy, and no-script behavior.
-6. Migrate incrementally, removing superseded assets and configuration outright. Validate development, CI, production build, collected assets, accessibility, and representative rendered pages.
+1. Inspect the Django version, package managers, template layout, and component conventions. Inspect the static-file pipeline, deployment build, CSS and JavaScript entrypoints, CSP, and existing Tailwind or DaisyUI configuration.
+2. Verify current installation and configuration guidance in the official Tailwind CSS and DaisyUI documentation.
+3. Use the existing asset pipeline when it supports the required Tailwind CSS and DaisyUI configuration. If it does not support the required configuration, identify the exact limitation before you replace it. Do not add a second asset pipeline.
+4. Choose one CSS entrypoint and one deterministic build command. Include all template sources in content detection. Send generated assets through Django's established static-file handling.
+5. Define file ownership. Django templates hold semantics and server data. The CSS entrypoint holds framework imports and intentional overrides. Reusable template components hold repeated markup. Scripts hold only behavior that native HTML cannot provide.
+6. Define semantic theme tokens before component-specific styles. Add theme switching only when the user requests it. Define the default theme, persistence policy, and no-script behavior.
+7. Migrate one representative page before broad migration. Verify the new pipeline and component convention. Then migrate the remaining pages. Remove superseded assets and configuration only after their replacements pass the required checks.
+8. Validate the development build, CI build, production build, and collected assets. Check accessibility and representative rendered pages.
 
 ## Decisions
 
@@ -25,7 +27,7 @@ description: >-
 
 ## Freshness
 
-Tailwind CSS and DaisyUI installation, plugin syntax, content detection, theme configuration, and supported package versions are time-sensitive. Verify them from current official documentation and inspect the resolved packages before editing. Record checked sources, versions, and date in plans or audit reports.
+Tailwind CSS and DaisyUI installation, plugin syntax, content detection, theme configuration, and supported package versions are time-sensitive. Verify this information in current official documentation. Inspect the resolved packages before you edit the configuration. Record the checked sources, versions, and date in the plan or audit report.
 
 ## Resource
 

@@ -19,9 +19,16 @@ Build an npm release path that is minimal, inspectable, and consistent with the 
    - align the npm package, GitHub owner/repository, workflow filename, environment, and allowed publish action exactly;
    - publish the exact validated tarball rather than rebuilding in the publishing job;
    - rely on Trusted Publishing's automatic provenance for eligible public packages unless the repository has a concrete reason to disable it.
-5. Handle a package's first publication as an explicit bootstrap. Determine whether the package already exists and whether npm currently permits its trust relationship to be configured before first publication. If an authenticated bootstrap is required, validate the exact artifact first and obtain authorization for that exact `npm publish` command before proceeding.
-6. If the same release also publishes to another registry, apply that registry's publishing skill and require every release artifact to pass preflight before any publisher runs. Derive all artifact versions from the same approved release identity.
-7. Validate YAML, package metadata, archive contents, permissions, event semantics, and all manual GitHub/npm configuration. After an authorized release, verify registry metadata, provenance when expected, and a clean installation. Do not claim that external settings or a live publication were verified when they were not.
+5. For a first publication, use this bootstrap sequence:
+   - Determine whether the package name already exists.
+   - Determine whether npm permits Trusted Publishing configuration before the first publication.
+   - If an authenticated bootstrap is required, validate the exact tarball.
+   - Obtain authorization for the exact `npm publish` command.
+   - Publish only after the user gives that authorization.
+6. For a release to multiple registries, apply the publishing skill for each registry. Derive all artifact versions from one approved release identity. Complete preflight for every artifact before any publisher runs.
+7. Before publication, validate YAML, package metadata, archive contents, permissions, event semantics, and all manual GitHub and npm settings.
+8. If one registry accepts the release and another registry fails, preserve the successful immutable release. Retry only the failed publisher with the exact preflight artifact. Do not rebuild the artifact or publish the successful version again.
+9. After an authorized release, verify registry metadata, expected provenance, and a clean installation. Identify each external setting or publication result that you could not verify.
 
 ## Freshness
 

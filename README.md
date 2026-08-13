@@ -1,118 +1,68 @@
 # Public Skills
 
-This repository contains a public set of useful AI agent skills designed to be reused across projects.
+This repository contains reusable skills for AI agents. Each skill is in
+`skills/<skill-name>/`.
 
-The skills live under `skills/` and are intended to be installable from a public GitHub repository via tools such as `npx skills`.
+## Install a skill
 
-Before publishing skill metadata changes, verify discovery-safe frontmatter lengths:
+Replace `<skill-name>` with a name from the catalog:
 
 ```bash
-python3 scripts/check_skill_frontmatter_lengths.py skills
+npx skills add btfranklin/skills --skill <skill-name> -g
 ```
 
-## Skills
+Omit `-g` to install the skill only in the current project.
 
-- `review-agent-production-readiness`
-  Review and harden OpenAI Agents SDK systems for production readiness, including architecture risk, tool safety, eval coverage, tracing, monitoring, rollout, cost/latency, privacy, compliance, and human oversight.
+## Skill catalog
 
-  ```bash
-  npx skills add btfranklin/skills --skill review-agent-production-readiness -g
-  ```
+The `description` field in each `SKILL.md` is the source of truth for the
+skill's trigger, scope, exclusions, and output.
 
-- `deep-codebase-review`
-  Perform a comprehensive structural sub-agent council review of a codebase or substantial PR by default, focused on cruft, duplication, clean code shape, weak boundaries, lifecycle risks, testing gaps, and design drift.
+| Skill |
+| --- |
+| [`deep-code-elegance-and-beauty-review`](skills/deep-code-elegance-and-beauty-review/SKILL.md) |
+| [`deep-codebase-review`](skills/deep-codebase-review/SKILL.md) |
+| [`design-html-first-web-uis`](skills/design-html-first-web-uis/SKILL.md) |
+| [`design-ui-style-guide`](skills/design-ui-style-guide/SKILL.md) |
+| [`django-6-upgrade-guide`](skills/django-6-upgrade-guide/SKILL.md) |
+| [`django-pytest-performance-suite`](skills/django-pytest-performance-suite/SKILL.md) |
+| [`integrate-daisyui-into-django`](skills/integrate-daisyui-into-django/SKILL.md) |
+| [`llms-txt-authoring`](skills/llms-txt-authoring/SKILL.md) |
+| [`make-repo-agent-legible`](skills/make-repo-agent-legible/SKILL.md) |
+| [`openai-django-webhooks`](skills/openai-django-webhooks/SKILL.md) |
+| [`publish-npm-package`](skills/publish-npm-package/SKILL.md) |
+| [`publish-python-package-pypi`](skills/publish-python-package-pypi/SKILL.md) |
+| [`review-agent-production-readiness`](skills/review-agent-production-readiness/SKILL.md) |
+| [`skill-icon-workflow`](skills/skill-icon-workflow/SKILL.md) |
+| [`structured-llm-output`](skills/structured-llm-output/SKILL.md) |
 
-  ```bash
-  npx skills add btfranklin/skills --skill deep-codebase-review -g
-  ```
+## Repository workflow
 
-- `deep-code-elegance-and-beauty-review`
-  Review one code project as an artifact of thought, craft, and maintenance experience, focusing on cognitive clarity, design elegance, developer joy, naming, locality, and what should be protected.
+Use these files for each skill:
 
-  ```bash
-  npx skills add btfranklin/skills --skill deep-code-elegance-and-beauty-review -g
-  ```
+- `SKILL.md` is required. Its frontmatter name must match the skill directory.
+  Its description is the authoritative trigger and scope.
+- `agents/openai.yaml` is required in this repository. It contains the display
+  name, short description, default prompt, and icon paths.
+- `assets/` must contain the SVG and PNG files named in `agents/openai.yaml`.
+- `LICENSE.txt` is required so that the skill directory can be distributed by
+  itself.
+- `references/`, `examples/`, and `templates/` are optional. Add them only when
+  the skill needs progressive disclosure or reusable material.
+- `evals/evals.json` is optional for a simple skill. Add it when trigger
+  boundaries, approval gates, fallbacks, or failure behavior need regression
+  coverage.
 
-- `design-html-first-web-uis`
-  Design modern interactive web interfaces with HTML-first patterns, native browser features, progressive enhancement, and minimal JavaScript.
+Keep detailed behavior in one authoritative file. Link to that file instead of
+copying its content into the README or another skill file.
 
-  ```bash
-  npx skills add btfranklin/skills --skill design-html-first-web-uis -g
-  ```
+Before you publish a change, run:
 
-- `design-ui-style-guide`
-  Explore three distinct UI concepts, select a visual direction, and turn it into a reusable HTML/CSS style guide and representative demo without defaulting to common AI-generated design clichés.
+```bash
+python3 scripts/validate_repository.py
+```
 
-  ```bash
-  npx skills add btfranklin/skills --skill design-ui-style-guide -g
-  ```
-
-- `django-6-upgrade-guide`
-  Plan and execute Django 6 upgrades, including breaking changes, compatibility checks, and migration checklists from Django 5.
-
-  ```bash
-  npx skills add btfranklin/skills --skill django-6-upgrade-guide -g
-  ```
-
-- `django-pytest-performance-suite`
-  Build Postgres-backed Django performance regression suites with pytest, pytest-django, RequestFactory, timing budgets, query caps, and reproducible artifact reports.
-
-  ```bash
-  npx skills add btfranklin/skills --skill django-pytest-performance-suite -g
-  ```
-
-- `integrate-daisyui-into-django`
-  Build and maintain a Django + Tailwind/DaisyUI setup with clear separation of concerns, reusable template patterns, and sustainable theming decisions.
-
-  ```bash
-  npx skills add btfranklin/skills --skill integrate-daisyui-into-django -g
-  ```
-
-- `llms-txt-authoring`
-  Create or review `llms.txt` files for a site root, including structure, content, and recommended conventions.
-
-  ```bash
-  npx skills add btfranklin/skills --skill llms-txt-authoring -g
-  ```
-
-- `make-repo-agent-legible`
-  Improve a repository's legibility for coding agents by moving implicit knowledge into discoverable in-repo artifacts, tightening `AGENTS.md`, and making constraints mechanically enforceable.
-
-  ```bash
-  npx skills add btfranklin/skills --skill make-repo-agent-legible -g
-  ```
-
-- `openai-django-webhooks`
-  Implement OpenAI Responses API async workflows in Django, including background jobs, webhook verification, HTMX polling, and metadata fallback handling.
-
-  ```bash
-  npx skills add btfranklin/skills --skill openai-django-webhooks -g
-  ```
-
-- `publish-npm-package`
-  Configure and maintain GitHub Actions workflows for publishing npm packages with Trusted Publishing, verified tarballs, provenance, and coordinated mixed-language releases.
-
-  ```bash
-  npx skills add btfranklin/skills --skill publish-npm-package -g
-  ```
-
-- `publish-python-package-pypi`
-  Configure and maintain GitHub Actions workflows for publishing Python packages to PyPI with PDM and Trusted Publishing, including coordinated mixed-language releases.
-
-  ```bash
-  npx skills add btfranklin/skills --skill publish-python-package-pypi -g
-  ```
-
-- `skill-icon-workflow`
-  Create or update skill icon assets and wire `icon_small` and `icon_large` correctly in `agents/openai.yaml`, especially when icon generation is part of skill creation.
-
-  ```bash
-  npx skills add btfranklin/skills --skill skill-icon-workflow -g
-  ```
-
-- `structured-llm-output`
-  Design structured LLM output workflows using schema-driven validation patterns with tools such as Pydantic, PydanticAI, and Instructor.
-
-  ```bash
-  npx skills add btfranklin/skills --skill structured-llm-output -g
-  ```
+The validator checks repository structure, frontmatter, metadata, icon paths,
+local Markdown links, eval JSON, and the README catalog. It validates the eval
+file structure, but it does not execute behavioral evals. Run behavioral evals
+in the agent harness that will use the skill.

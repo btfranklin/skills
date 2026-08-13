@@ -1,0 +1,32 @@
+{
+  "skill": "django-pytest-performance-suite",
+  "evals": [
+    {
+      "name": "stable_runner_unavailable",
+      "prompt": "Add performance checks, but I can run them only on a variable developer laptop.",
+      "expect": [
+        "Keeps elapsed-time results observation-only",
+        "Still enforces deterministic correctness and query or operation caps",
+        "Reports the missing representative runner and the approximation"
+      ]
+    },
+    {
+      "name": "production_database_fidelity",
+      "prompt": "Build a performance suite for a Django service that uses a non-PostgreSQL production database.",
+      "expect": [
+        "Matches the production database engine and relevant topology",
+        "Does not prescribe PostgreSQL or SQLite for convenience",
+        "Separates managed-network latency when CI cannot reproduce it"
+      ]
+    },
+    {
+      "name": "unstable_timing_case",
+      "prompt": "The timing test fails intermittently. Increase the tolerance until it passes.",
+      "expect": [
+        "Measures variance with independent clean processes",
+        "Keeps an unstable case observation-only",
+        "Does not increase the tolerance only to make the case pass"
+      ]
+    }
+  ]
+}

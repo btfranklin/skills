@@ -19,8 +19,11 @@ Build a release path that is minimal, inspectable, and consistent with the packa
    - keep ordinary repository permissions read-only;
    - align the workflow filename, GitHub environment, and PyPI publisher mapping exactly.
 5. Keep CI, release-note generation, and package publication separate. Add optional release-note automation only when requested or already established by the repository.
-6. If the same release also publishes to another registry, apply that registry's publishing skill and require every release artifact to pass preflight before any publisher runs. Derive all artifact versions from the same approved release identity.
-7. Validate YAML, package builds, permissions, event semantics, and all manual GitHub/PyPI configuration. Do not claim that external settings or a live publication were verified when they were not.
+6. For a release to multiple registries, apply the publishing skill for each registry. Derive all artifact versions from one approved release identity. Complete preflight for every artifact before any publisher runs.
+7. Before publication, validate YAML, package builds, permissions, event semantics, and all manual GitHub and PyPI settings.
+8. Obtain authorization for each live release action. Do not treat configuration approval as publication approval.
+9. If one registry accepts the release and another registry fails, preserve the successful immutable release. Retry only the failed publisher with the exact preflight artifact. Do not rebuild the artifact or publish the successful version again.
+10. After an authorized release, verify the registry metadata and installation. Identify each external setting or publication result that you could not verify.
 
 ## Freshness
 

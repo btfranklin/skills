@@ -1,0 +1,32 @@
+{
+  "skill": "integrate-daisyui-into-django",
+  "evals": [
+    {
+      "name": "existing_pipeline_supported",
+      "prompt": "Add DaisyUI to this Django project. Its current asset pipeline supports the required configuration.",
+      "expect": [
+        "Uses the existing asset pipeline",
+        "Chooses one CSS entrypoint and one deterministic build command",
+        "Does not add a second pipeline"
+      ]
+    },
+    {
+      "name": "existing_pipeline_not_supported",
+      "prompt": "Integrate DaisyUI, but the current asset pipeline cannot process the required Tailwind configuration.",
+      "expect": [
+        "Identifies the exact limitation before replacing the pipeline",
+        "Migrates a representative page before broad migration",
+        "Removes old assets only after their replacements pass validation"
+      ]
+    },
+    {
+      "name": "isolated_template_edit",
+      "prompt": "Change one button label in this Django template.",
+      "expect": [
+        "Does not invoke the DaisyUI integration workflow",
+        "Does not change the asset pipeline or theme system",
+        "Keeps the edit limited to the template copy"
+      ]
+    }
+  ]
+}

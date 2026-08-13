@@ -9,11 +9,11 @@ description: >-
 ## Workflow
 
 1. Inspect the repository's Django and Python constraints, dependency manager, settings modules, databases, deployment images, CI matrix, third-party packages, and release process.
-2. Verify current supported Python versions, the current Django 5.2 and 6.0 patch releases, relevant security notices, and third-party compatibility from primary sources.
+2. Verify supported Python versions, current Django 5.2 and 6.0 patch releases, relevant security notices, and third-party compatibility from primary sources. If a required source is not available, report the verification gap. Do not claim that an unverified version or dependency is current.
 3. Establish a clean baseline on the latest compatible Django 5.2 patch. Run the full test suite, Django system checks, migrations check, and representative production commands.
 4. Run tests with deprecation warnings visible. Remove project-owned deprecated usage before changing the major version; distinguish dependency warnings from application warnings.
 5. Update Python and dependencies in an order that keeps failures attributable. Follow the repository's package-management policy and inspect lockfile changes.
-6. Upgrade Django, regenerate no migrations blindly, and review settings, middleware, templates, URLs, forms, authentication, storage, database behavior, and deployment startup.
+6. Upgrade Django. Run the migration check. Create a migration only for an intentional model-state change, and review each new migration. Then review settings, middleware, templates, URLs, forms, authentication, storage, database behavior, and deployment startup.
 7. Validate locally and in CI, then define staging checks, observability, rollout order, and rollback constraints. Adopt new Django 6 features only after compatibility is established.
 
 ## Evidence and decisions
@@ -25,7 +25,7 @@ description: >-
 
 ## Freshness
 
-Do not freeze “latest,” Python support, security status, or third-party compatibility in the skill. Verify them during each upgrade and include the checked versions, sources, and date in the output.
+Do not freeze “latest,” Python support, security status, or third-party compatibility in the skill. Verify this information during each upgrade. Include the checked versions, sources, and date in the output. If verification is not possible, identify the missing evidence.
 
 ## Resource
 

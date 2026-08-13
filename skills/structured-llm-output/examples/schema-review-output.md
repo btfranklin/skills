@@ -90,4 +90,4 @@ class InvoiceExtraction(BaseModel):
 
 ## Production Notes
 
-Track schema-validation failures, semantic mismatches, retry count, review rate, and corrections made by reviewers. Version the schema and prompt together. Re-run the golden invoice corpus before changing provider, model snapshot, prompt, OCR engine, or schema.
+Track schema-validation failures, semantic mismatches, retry count, review rate, and corrections made by reviewers. Add schema and prompt version identifiers only when a deployed or persisted comparison boundary requires them. Re-run the golden invoice corpus before changing the provider, model snapshot, prompt, OCR engine, or schema.

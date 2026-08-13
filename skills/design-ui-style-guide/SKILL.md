@@ -19,17 +19,17 @@ Own the concept and style-guide artifact contract. Do not expand into full produ
 - Do not replace available image generation with prose, SVG mockups, or CSS sketches.
 - During the artifact phase, use the companion skill `design-html-first-web-uis` when it is installed. It supplies semantic HTML, native browser behavior, progressive enhancement, accessibility, and minimal-JavaScript guidance.
 
-If `design-html-first-web-uis` is missing, offer to install it from the same public package and match the current skill's project or global scope. After the user authorizes a global installation, run:
+If `design-html-first-web-uis` is missing, identify the required installation scope. Ask the user to approve that exact installation. For an approved global installation, run:
 
 ```bash
 npx skills add btfranklin/skills --skill design-html-first-web-uis -g
 ```
 
-For a project-scoped installation, omit `-g`.
+For an approved project installation, omit `-g`.
 
-Do not block the workflow if installing it is unsupported or declined; apply the semantic and accessibility requirements in this skill directly.
+If installation is not supported or the user does not approve it, continue. Apply the semantic HTML and accessibility requirements in this skill directly.
 
-If image generation is unavailable, state that limitation, provide prompt-ready concept briefs, and ask whether to continue with text-only planning; do not imply that images were generated. Outside Codex, do not require a particular image skill, plugin, model, or vendor.
+If image generation is not available, state this limitation. Provide prompt-ready concept briefs. Ask whether to continue with text-only planning. Do not state or imply that you generated images. Outside Codex, do not require a specific image skill, plugin, model, or vendor.
 
 ## Workflow
 

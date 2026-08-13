@@ -1,0 +1,32 @@
+{
+  "skill": "structured-llm-output",
+  "evals": [
+    {
+      "name": "unsafe_consumer_fails_closed",
+      "prompt": "Extract payment instructions. A wrong or incomplete value can send money to the wrong account.",
+      "expect": [
+        "Selects a fail-closed policy",
+        "Does not invent defaults for missing evidence",
+        "Preserves the validation failure for diagnosis"
+      ]
+    },
+    {
+      "name": "typed_partial_contract",
+      "prompt": "Extract optional profile facts for a consumer that supports explicit missing values.",
+      "expect": [
+        "Returns a typed partial result only because the consumer supports it",
+        "Distinguishes optional, nullable, unknown, and unavailable values",
+        "Prevents the consumer from treating a partial result as complete"
+      ]
+    },
+    {
+      "name": "no_routine_versioning",
+      "prompt": "Add structured output to this local unpublished script. It has no persisted or external compatibility boundary.",
+      "expect": [
+        "Does not add schema or prompt version identifiers by default",
+        "Records provider and library evidence needed for reproduction",
+        "Adds version identifiers only if a real compatibility boundary is found"
+      ]
+    }
+  ]
+}

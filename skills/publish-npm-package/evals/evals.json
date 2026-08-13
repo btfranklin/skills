@@ -1,0 +1,32 @@
+{
+  "skill": "publish-npm-package",
+  "evals": [
+    {
+      "name": "first_publication_bootstrap",
+      "prompt": "Configure Trusted Publishing and publish this new npm package for the first time.",
+      "expect": [
+        "Checks whether the package exists and whether trust can be configured before first publication",
+        "Validates the exact tarball before bootstrap publication",
+        "Requests authorization for the exact live publish command"
+      ]
+    },
+    {
+      "name": "multi_registry_preflight",
+      "prompt": "Release the JavaScript and Python packages from this repository together.",
+      "expect": [
+        "Uses the publishing workflow for each registry",
+        "Derives versions from one approved release identity",
+        "Completes preflight for every artifact before any publisher runs"
+      ]
+    },
+    {
+      "name": "partial_registry_failure",
+      "prompt": "npm accepted the release, but the second registry failed.",
+      "expect": [
+        "Preserves the successful immutable npm release",
+        "Retries only the failed publisher with the exact preflight artifact",
+        "Does not rebuild or republish the successful version"
+      ]
+    }
+  ]
+}
