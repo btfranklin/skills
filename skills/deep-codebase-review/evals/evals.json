@@ -7,6 +7,7 @@
       "expect": [
         "Uses deep-codebase-review and bounds the repository-wide scope",
         "Uses a small council when available and consolidates one evidence-backed report",
+        "Limits maintainability observations to concrete change costs or structural pressure points rather than general aesthetic preferences",
         "Separates concrete findings from structural pressure points"
       ]
     },

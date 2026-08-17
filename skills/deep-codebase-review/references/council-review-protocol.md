@@ -16,7 +16,7 @@ Use this protocol for a broad review that benefits from distinct specialist pass
 - `Correctness and Lifecycle Reviewer`: Review behavior, state transitions, persistence, cleanup, retries, idempotency, concurrency, and async continuation.
 - `Architecture and Boundary Reviewer`: Review ownership, coupling, module shape, adapter leakage, stale abstractions, and incomplete refactors.
 - `Tests and Contract Reviewer`: Review risk-heavy scenarios, architectural contracts, implementation overfitting, and misleading coverage.
-- `Code Aesthetics and Maintainability Reviewer`: Review naming, local simplicity, repeated ceremony, noisy plumbing, needless wrappers, and whether the next change has an obvious home.
+- `Maintainability and Change-Cost Reviewer`: Review whether behavior is difficult to trace, changes cross unnecessary boundaries, duplication can drift, ceremony hides ownership or control flow, and future changes lack a clear location. Report only concrete maintenance hazards or structural pressure points. Defer general aesthetic preferences, language idiom, developer joy, beauty, and naming preferences without a specific maintenance cost to a dedicated elegance review.
 
 ## Optional Roles
 
