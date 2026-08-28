@@ -34,6 +34,10 @@ Review how a system is bending, not merely whether isolated code works. Prioriti
 - Cite exact files and lines whenever possible. Explain the failure or debt mechanism and label assumptions.
 - Identify the duplicated pattern and likely extraction seam before recommending reuse.
 
+## Model Guidance
+
+When the harness lets you choose a model, use a model that has high code-analysis capability. Use high reasoning effort. The model must trace behavior, find evidence, check claims, and identify causes. If the harness does not have a reasoning setting, tell each reviewer to do detailed checks and resolve important uncertainty.
+
 ## Council Mode
 
 Use a small sub-agent council by default for whole-codebase reviews and substantial PR or branch reviews when sub-agents are available. Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating.

@@ -37,6 +37,7 @@ You are the [ROLE] for a deep code elegance and beauty review.
 Scope:
 - Review only [PROJECT / FILES / MODULES].
 - Focus on [ROLE-SPECIFIC AESTHETIC CONCERNS].
+- Record your provisional first impression after initial orientation and before detailed verification. Keep it distinct when later evidence qualifies it.
 - Do not turn this into a normal bug hunt.
 - Do not edit files.
 

@@ -6,6 +6,7 @@
       "prompt": "Give this project a contemplative review for code beauty, cognitive clarity, and developer joy.",
       "expect": [
         "Invokes deep-code-elegance-and-beauty-review from the natural-language request",
+        "Records a provisional first impression before detailed verification and preserves later qualifications",
         "Grounds subjective observations in concrete project artifacts",
         "Separates beauty, disturbances, and taste preferences"
       ]
@@ -26,6 +27,17 @@
         "Discloses the unavailable council and continues solo",
         "Runs the relevant lenses without asking permission",
         "Uses Lens Synthesis rather than implying that a council ran"
+      ]
+    },
+    {
+      "name": "model_guidance",
+      "prompt": "This harness can select a model and its reasoning effort. Choose a suitable model profile for an elegance and beauty review.",
+      "expect": [
+        "Uses a capable model with good code understanding",
+        "Uses low or medium reasoning effort",
+        "Does not select a low-capability model only because it is fast or inexpensive",
+        "Does not depend on a vendor or model name",
+        "Keeps the first impression visible and does not turn the review into a correctness audit"
       ]
     },
     {

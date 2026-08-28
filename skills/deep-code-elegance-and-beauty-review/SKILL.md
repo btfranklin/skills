@@ -15,6 +15,7 @@ Review one project as an artifact of thought, craft, and maintenance experience.
 - Use the active project when it is unambiguous; otherwise ask which single project to enter.
 - Read repo-local instructions and the relevant README, architecture, roadmap, and package documents.
 - Scan the tree, identify the apparent center of gravity, and infer the intended shape before judging it.
+- Record a provisional first impression after this initial orientation and before detailed verification. Preserve it as the project's immediate felt shape; later evidence can qualify it but must not silently replace it.
 
 ### 2. Wander with purpose
 
@@ -28,6 +29,10 @@ Review one project as an artifact of thought, craft, and maintenance experience.
 - Separate beauty, genuine disturbance, and personal taste. Do not turn preferences into defects.
 - Prefer small reductions, clearer names, better locality, or deletion over grand rewrites.
 - Briefly surface any obvious critical correctness, security, privacy, or data-loss hazard, then recommend a dedicated review without turning this report into a bug audit.
+
+## Model Guidance
+
+When the harness lets you choose a model, use a capable model that has good code understanding. Use low or medium reasoning effort. Do not use a low-capability model only because it is fast or inexpensive. The model must record its first impression before it does detailed checks. Later evidence can change or limit that impression, but the impression must remain visible. The model must not change the review into a correctness audit. If the harness does not have a reasoning setting, put these behavior rules in each reviewer's instructions.
 
 ## Aesthetic Council
 

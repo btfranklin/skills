@@ -39,6 +39,16 @@
       ]
     },
     {
+      "name": "model_guidance",
+      "prompt": "This harness can select a model and its reasoning effort. Choose a suitable model profile for a deep codebase review.",
+      "expect": [
+        "Uses a model with high code-analysis capability",
+        "Uses high reasoning effort",
+        "Does not depend on a vendor or model name",
+        "Uses detailed checks and resolves important uncertainty when the harness has no reasoning setting"
+      ]
+    },
+    {
       "name": "combined_aesthetic_review",
       "prompt": "Combine a deep structural audit with an explicit code elegance and beauty review.",
       "expect": [
