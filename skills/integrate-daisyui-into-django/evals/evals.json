@@ -15,8 +15,8 @@
       "prompt": "Integrate DaisyUI, but the current asset pipeline cannot process the required Tailwind configuration.",
       "expect": [
         "Identifies the exact limitation before replacing the pipeline",
-        "Migrates a representative page before broad migration",
-        "Removes old assets only after their replacements pass validation"
+        "Migrates a representative page before it migrates all pages",
+        "Removes old assets only after the new assets pass validation"
       ]
     },
     {

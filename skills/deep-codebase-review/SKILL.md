@@ -1,63 +1,70 @@
 ---
 name: deep-codebase-review
 description: >-
-  Use when reviewing an entire codebase, architecture, technical debt, structural quality, cleanup opportunities, or a substantial PR or branch. Produce evidence-backed findings about boundaries, lifecycle and concurrency, duplication, tests, plans, and maintainability. Do not use for small diffs, narrow bug fixes, frontend visual QA, repo-onboarding documentation, or OpenAI Agents SDK production-readiness review.
+  Review an entire repository, its architecture, technical debt, or a substantial branch. Produce findings about boundaries, lifecycle, concurrency, duplication, tests, plans, and maintenance. Do not use this skill for small changes, narrow defects, or visual UI review. Do not use it for repository guidance or an OpenAI Agents SDK production review.
 ---
 
 # Deep Codebase Review
 
-Review how a system is bending, not merely whether isolated code works. Prioritize concrete structural and behavioral risks, then identify pressure points that will become expensive if left alone.
+Review the system structure and behavior. Do not review only isolated code. First, report specific risks. Then report structural conditions that can increase the cost of future changes.
 
 ## Workflow
 
 ### 1. Bound the review
 
-- Identify whether the target is a whole repository, merge-base diff, branch, or named set of modules.
-- For a PR or branch, inspect the diff first. Expand only into dependencies, contracts, tests, and design documents needed to judge the change.
-- State material scope exclusions and coverage limits in the report.
+- Identify the target. The target can be a whole repository, a merge-base diff, a branch, or a named set of modules.
+- For a pull request or branch, inspect the diff first.
+- Inspect dependencies, contracts, tests, and design documents only when they help you assess the change.
+- State important scope exclusions and coverage limits in the report.
 
 ### 2. Establish intent
 
-- Read repo-local instructions and the architecture, planning, roadmap, and package documents relevant to the bounded scope.
-- Infer the intended shape from the implementation when explicit design guidance is absent, and label the inference.
+- Read repository instructions and the documents that apply to the scope. These documents can describe architecture, plans, roadmaps, or packages.
+- When design guidance is absent, infer the intended structure from the implementation.
+- Identify each inference.
 
-### 3. Build breadth before depth
+### 3. Review All Major Areas Before Detailed Inspection
 
-- Scan the relevant tree and sample every major layer within scope before drilling into suspicious areas.
-- Load [references/review-lenses.md](references/review-lenses.md) and select the lenses that fit the system.
-- Include tests and forward-looking plans when they define or contradict the intended contract.
+- Scan the relevant tree. Sample each major layer in scope before you inspect a possible problem in detail.
+- Load [references/review-lenses.md](references/review-lenses.md) and select the review areas that apply to the system.
+- Include tests and future plans when they define the intended contract.
+- Include them when they conflict with that contract.
 
 ### 4. Classify and verify
 
-- Promote an observation to a finding only when it has a concrete downside: correctness risk, data-integrity risk, maintainability hazard, design contradiction, or likely regression path.
-- Classify plausible future fragility without present harm as a pressure point.
-- Cite exact files and lines whenever possible. Explain the failure or debt mechanism and label assumptions.
-- Identify the duplicated pattern and likely extraction seam before recommending reuse.
+- Report an observation as a finding only when it has a specific harmful result. Examples include incorrect behavior, loss of data integrity, high maintenance cost, a design conflict, or a likely regression.
+- Classify a possible future weakness without current harm as a future risk.
+- Cite exact files and lines when possible.
+- Explain how the defect or maintenance cost occurs.
+- Identify assumptions.
+- Before you recommend reuse, identify the repeated pattern and the boundary for a shared implementation.
 
 ## Model Guidance
 
-When the harness lets you choose a model, use a model that has high code-analysis capability. Use high reasoning effort. The model must trace behavior, find evidence, check claims, and identify causes. If the harness does not have a reasoning setting, tell each reviewer to do detailed checks and resolve important uncertainty.
+When the harness lets you choose a model, use a model that has high code-analysis capability. Use high reasoning effort. The model must trace behavior. It must find evidence, check claims, and identify causes. If the harness does not have a reasoning setting, tell each reviewer to do detailed checks. Tell each reviewer to resolve important uncertainty.
 
 ## Council Mode
 
-Use a small sub-agent council by default for whole-codebase reviews and substantial PR or branch reviews when sub-agents are available. Load [references/council-review-protocol.md](references/council-review-protocol.md) before delegating.
+Use a small group of sub-agents by default for whole-repository reviews. Also use the group for substantial pull request or branch reviews. Use the group only when sub-agents are available. Load [references/council-review-protocol.md](references/council-review-protocol.md) before you delegate work.
 
-If sub-agents are unavailable, disclose the limitation and continue with the same role-based passes solo. Stop for confirmation only when the user explicitly required a council. Never paste raw specialist reports; verify and consolidate their evidence into one judgment.
+If sub-agents are not available, state this limit. Continue with the same role-based reviews. Stop for confirmation only when the user required a council. Do not paste the specialist reports. Verify their evidence and combine it into one assessment.
 
 ## Output
 
 Present:
 
 1. Findings ordered by severity.
-2. Structural pressure points and likely refactors.
+2. Structural future risks and likely refactors.
 3. Roadmap or design alignment.
 4. Open questions and residual risk.
-5. Highest-leverage follow-through.
+5. Follow-up actions with the highest verified benefit.
 
-Say explicitly when there are no concrete findings. Keep testing gaps and pressure points visible without inflating them into defects. For a concrete report model, read [examples/review-output.md](examples/review-output.md).
+State when there are no specific findings. Report test gaps and future risks as separate items. Do not classify them as defects. For a report example, read [examples/review-output.md](examples/review-output.md).
 
 ## Follow-Through
 
-- Prefer a few high-signal corrections over broad cleanup or speculative redesign.
-- When the user requests fixes, update a planning document only if it already serves as the authoritative forward-looking record, the accepted change alters future work, and documentation edits are within the requested scope.
+- Prefer a small number of corrections that have clear evidence. Avoid broad cleanup and redesign without evidence.
+- When the user requests fixes, update a planning document only if it is the authoritative future plan.
+- Update that document only when the accepted change affects future work.
+- Update it only when documentation changes are in scope.
 - Keep forward-looking plans distinct from changelogs.

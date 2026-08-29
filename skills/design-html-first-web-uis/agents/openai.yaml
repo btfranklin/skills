@@ -1,6 +1,6 @@
 interface:
   display_name: "Design HTML-First Web UIs"
-  short_description: "Build semantic UIs with progressive enhancement"
+  short_description: "Build semantic interfaces with progressive enhancement"
   icon_small: "./assets/design-html-first-web-uis.svg"
   icon_large: "./assets/design-html-first-web-uis.png"
-  default_prompt: "Use $design-html-first-web-uis to implement this interaction with semantic HTML, a resilient baseline, and only the JavaScript it needs."
+  default_prompt: "Use $design-html-first-web-uis to implement this interaction with semantic HTML, a functional baseline, and only the required JavaScript."

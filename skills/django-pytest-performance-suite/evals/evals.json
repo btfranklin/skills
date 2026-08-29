@@ -6,7 +6,7 @@
       "prompt": "Add performance checks, but I can run them only on a variable developer laptop.",
       "expect": [
         "Keeps elapsed-time results observation-only",
-        "Still enforces deterministic correctness and query or operation caps",
+        "Still enforces deterministic correctness and query or operation limits",
         "Reports the missing representative runner and the approximation"
       ]
     },

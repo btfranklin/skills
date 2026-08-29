@@ -1,6 +1,6 @@
 # PyPI Workflow Patterns
 
-Use these as structural patterns, not copy-paste version locks. Before implementation, verify current action references in the official repositories and apply the target repository's action-pinning policy.
+Use these examples as structural patterns. Do not copy their version references without verification. Before implementation, verify current action references in the official repositories. Apply the target repository's action-pinning policy.
 
 Primary sources:
 
@@ -11,7 +11,7 @@ Primary sources:
 
 ## Publish on an approved release event
 
-Replace every `<verified-...-ref>` after checking the current upstream release and repository policy.
+Replace every `<verified-...-ref>` after you check the current upstream release and repository policy.
 
 ```yaml
 name: Upload Python Package
@@ -38,7 +38,7 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@<verified-publish-ref>
 ```
 
-Keep `id-token: write` at job scope. Add `fetch-depth: 0` only when the build genuinely requires repository history.
+Keep `id-token: write` at job scope. Add `fetch-depth: 0` only when the build requires repository history.
 
 ## Package CI
 
@@ -78,7 +78,7 @@ Do not assume Ruff, pytest, a `src/` layout, or a particular default branch unle
 
 ## Optional release-note automation
 
-Treat release-note generation as independent from publication. If requested, use the repository's established release tool and grant only the permissions it needs. Document any required secret, but never make an AI service credential a prerequisite for Trusted Publishing itself.
+Keep release-note generation separate from publication. If the user requests release-note generation, use the repository's established release tool. Grant only the permissions that the tool requires. Document each required secret. Do not make an AI service credential a prerequisite for Trusted Publishing.
 
 ## Adaptation checklist
 

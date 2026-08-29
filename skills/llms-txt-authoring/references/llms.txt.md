@@ -1,8 +1,8 @@
 # llms.txt Proposal Guide
 
-Treat `/llms.txt` as an emerging proposal for presenting concise site context and curated resource links to LLMs at inference time. It is not a crawler-control mechanism, a replacement for `robots.txt` or sitemaps, or a guarantee of discovery, indexing, training, ranking, or citation.
+Treat `/llms.txt` as an emerging proposal. It presents site context and a selected set of resource links to LLMs at inference time. It does not control crawlers. It does not replace `robots.txt` or sitemaps. It does not guarantee discovery, indexing, training, ranking, or citation.
 
-Primary source: [the llms.txt proposal](https://llmstxt.org/). Verify it at execution time before asserting syntax or adoption.
+Primary source: [the llms.txt proposal](https://llmstxt.org/). Verify it when you do the task. Do this before you state syntax or adoption.
 
 ## Format and order
 
@@ -11,36 +11,38 @@ A proposal-aligned file contains these elements in order:
 1. An optional byte-order mark.
 2. One H1 naming the project or site. **The H1 is the only required section.**
 3. An optional blockquote containing a short summary.
-4. Optional Markdown paragraphs or lists, but no headings, with details needed to interpret the linked material.
+4. Optional Markdown paragraphs or lists that help a reader interpret the linked material. Do not use headings in this content.
 5. Zero or more H2 sections containing file lists.
 
-Each item in an H2 file list contains a required Markdown link and may add a colon followed by a concise description:
+Each item in an H2 file list must contain a Markdown link. You can add a colon and a short description:
 
 ```markdown
 - [Link title](https://example.com/path): Optional description.
 ```
 
-`## Optional` has special meaning: links in that section may be omitted when constructing a shorter context. Use it only for genuinely secondary material.
+`## Optional` has a special meaning. A system can omit links in this section when it creates a shorter context. Use this section only for secondary material.
 
 ## Authoring decisions
 
 - Inspect the live site or repository and use canonical, absolute URLs.
-- Prefer a small set of authoritative documentation, API, guide, and example pages over an exhaustive sitemap.
+- Select a small set of authoritative documentation, API, guide, and example pages. Do not reproduce the complete sitemap.
 - Use truthful link descriptions grounded in the target page.
-- Put explanatory prose before the first H2; do not create an H2 section containing free prose instead of a file list.
-- Omit empty sections and links that do not materially help a reader understand the site.
+- Put explanatory prose before the first H2. Do not put free prose in an H2 section that must contain a file list.
+- Omit empty sections. Omit links that do not help a reader understand the site.
 - Keep `robots.txt`, sitemap, SEO, access-control, and indexing claims outside this file.
 
 ## Validation
 
 Check:
 
-- exact filename and intended root location;
-- exactly one H1 and correct element ordering;
-- H2 bodies contain Markdown link lists;
-- `## Optional` contains only secondary links;
-- URLs are absolute, canonical, deduplicated, and reachable when network access is available;
-- titles and descriptions match the linked content;
+- Exact filename and intended root location.
+- Exactly one H1 and correct element order.
+- H2 bodies that contain Markdown link lists.
+- An `## Optional` section that contains only secondary links.
+- Absolute and canonical URLs.
+- No URL occurs more than once.
+- Reachable URLs when network access is available.
+- Titles and descriptions that match the linked content.
 - the file makes no unsupported claims about how third-party systems will use it.
 
 ## Minimal example
@@ -48,9 +50,9 @@ Check:
 ```markdown
 # Example Project
 
-> A concise description of the project and intended audience.
+> A short description of the project and its intended audience.
 
-Use the stable API reference for exact contracts; tutorials emphasize learning paths.
+Use the stable API reference for exact contracts. Use the tutorials for guided learning.
 
 ## Documentation
 

@@ -1,6 +1,6 @@
 # Django and DaisyUI Integration Patterns
 
-Use this reference after inspecting the repository. Installation syntax and supported versions change; verify them from primary documentation before implementation.
+Use this reference after you inspect the repository. Installation syntax and supported versions can change. Verify them in primary documentation before implementation.
 
 ## Primary sources
 
@@ -10,11 +10,11 @@ Use this reference after inspecting the repository. Installation syntax and supp
 - [Django static-files documentation](https://docs.djangoproject.com/en/6.0/howto/static-files/)
 - Official documentation for the repository's existing bundler, component library, and deployment platform
 
-Do not copy an installation snippet from this reference. Use the current official syntax that matches the versions actually resolved by the project.
+Do not copy an installation example from this reference. Use the current official syntax that matches the versions resolved by the project.
 
 ## Pipeline selection
 
-Prefer the smallest option compatible with the existing repository:
+Use the smallest option that is compatible with the existing repository:
 
 1. Extend an existing Node/Tailwind pipeline when one already builds production assets.
 2. Use the repository's established Django-integrated Tailwind package when it is maintained and compatible.
@@ -23,44 +23,44 @@ Prefer the smallest option compatible with the existing repository:
 Define:
 
 - Source CSS entrypoint and configuration ownership
-- Template/content paths used to discover classes
+- Template and content paths that the build uses to discover classes
 - Development watch command
 - Reproducible production build command
 - Generated output path under Django static assets
 - Whether generated output is committed or built in CI/deployment
 - `collectstatic` order and deployment cache behavior
 
-Avoid CDN delivery for a production application unless the user explicitly accepts its customization, CSP, availability, and reproducibility tradeoffs.
+Do not use CDN delivery for a production application unless the user accepts its limits. These limits affect customization, Content Security Policy, availability, and reproducibility.
 
 ## File ownership
 
 - **Django templates:** semantic structure, server-rendered data, validation, permissions, and component composition
-- **CSS entrypoint:** current Tailwind/DaisyUI setup, custom theme declarations, base rules, and narrowly scoped overrides
+- **CSS entrypoint:** current Tailwind and DaisyUI setup, custom theme declarations, base rules, and limited overrides
 - **Template components/includes:** repeated interface patterns with documented context and variants
 - **Scripts:** behavior that cannot be expressed with native HTML or the project's existing enhancement layer
-- **Generated CSS:** build output only; never hand-edit it
+- **Generated CSS:** Treat this as build output only. Never edit it by hand.
 
 Keep source and generated directories visually distinct. Remove replaced pipelines rather than leaving two competing build paths.
 
 ## Components
 
-Start with repeated, stable interface patterns such as buttons, form fields, alerts, cards, navigation, dialogs, and tables. Preserve semantic elements regardless of DaisyUI classes.
+Start with repeated, stable interface patterns. These patterns can include buttons, form fields, alerts, cards, navigation, dialogs, and tables. Preserve semantic elements regardless of DaisyUI classes.
 
 For each reusable template component, define:
 
 - Required and optional context
 - Allowed visual variants
 - Accessible name and description behavior
-- Error, disabled, loading, and empty states where relevant
+- Error, disabled, loading, and empty states when the component requires them
 - Whether callers provide content through context, includes, or the repository's existing component mechanism
 
 Do not abstract a one-off fragment or expose arbitrary class strings as an undocumented component API.
 
 ## Themes
 
-Map product semantics—primary action, surface, text, success, warning, and error—to DaisyUI's current theme mechanism. Verify current theme declaration syntax before editing.
+Map each product meaning to the current DaisyUI theme mechanism. These meanings include primary action, surface, text, success, warning, and error. Verify the current theme declaration syntax before you edit it.
 
-If theme switching is required, define:
+If the application needs theme switching, define:
 
 - Server or client ownership of the selected theme
 - Default and system-preference behavior
@@ -68,7 +68,7 @@ If theme switching is required, define:
 - First-render behavior that avoids an unintended flash
 - Keyboard-accessible control and a usable no-script default
 
-Check contrast and state visibility in every supported theme; theme names alone do not establish accessibility.
+Check contrast and state visibility in every supported theme. A theme name does not prove accessibility.
 
 ## Migration and validation
 

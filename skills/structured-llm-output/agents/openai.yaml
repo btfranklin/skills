@@ -3,4 +3,4 @@ interface:
   short_description: "Design reliable typed LLM output pipelines"
   icon_small: "./assets/structured-llm-output.svg"
   icon_large: "./assets/structured-llm-output.png"
-  default_prompt: "Use $structured-llm-output to design a source-faithful schema, validation flow, bounded retry policy, and failure handling for this structured-output task."
+  default_prompt: "Use $structured-llm-output to design a schema that matches the source. Define validation, limited retries, and failure handling for this structured-output task."

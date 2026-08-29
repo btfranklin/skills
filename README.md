@@ -15,8 +15,8 @@ Omit `-g` to install the skill only in the current project.
 
 ## Skill catalog
 
-The `description` field in each `SKILL.md` is the source of truth for the
-skill's trigger, scope, exclusions, and output.
+The `description` field in each `SKILL.md` is the authoritative source for the
+skill trigger, scope, exclusions, and output.
 
 | Skill |
 | --- |
@@ -40,13 +40,13 @@ skill's trigger, scope, exclusions, and output.
 
 Use these files for each skill:
 
-- `SKILL.md` is required. Its frontmatter name must match the skill directory.
-  Its description is the authoritative trigger and scope.
-- `agents/openai.yaml` is required in this repository. It contains the display
-  name, short description, default prompt, and icon paths.
+- Each skill must contain `SKILL.md`. Its frontmatter name must match the skill
+  directory. Its description is the authoritative trigger and scope.
+- Each skill in this repository must contain `agents/openai.yaml`. This file
+  contains the display name, short description, default prompt, and icon paths.
 - `assets/` must contain the SVG and PNG files named in `agents/openai.yaml`.
-- `LICENSE.txt` is required so that the skill directory can be distributed by
-  itself.
+- Each skill must contain `LICENSE.txt`. This file permits separate
+  distribution of the skill directory.
 - `references/`, `examples/`, and `templates/` are optional. Add them only when
   the skill needs progressive disclosure or reusable material.
 - `evals/evals.json` is optional for a simple skill. Add it when trigger
@@ -55,6 +55,12 @@ Use these files for each skill:
 
 Keep detailed behavior in one authoritative file. Link to that file instead of
 copying its content into the README or another skill file.
+
+## Writing standard
+
+Use ASD-STE100 Simplified Technical English for all technical prose. Follow the
+rules in [`AGENTS.md`](AGENTS.md). Review the language during normal editing and
+review. The repository validator does not enforce this writing standard.
 
 Before you publish a change, run:
 

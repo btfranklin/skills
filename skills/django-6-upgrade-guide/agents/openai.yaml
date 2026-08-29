@@ -1,6 +1,6 @@
 interface:
   display_name: "Django 6 Upgrade Guide"
-  short_description: "Plan and validate a safe Django 6 upgrade"
+  short_description: "Plan and validate a Django 6 upgrade"
   icon_small: "./assets/django-6-upgrade-guide.svg"
   icon_large: "./assets/django-6-upgrade-guide.png"
-  default_prompt: "Use $django-6-upgrade-guide to audit this repository and produce a verified, staged Django 6 upgrade plan."
+  default_prompt: "Use $django-6-upgrade-guide to audit this repository. Produce a verified Django 6 upgrade plan with separate stages."

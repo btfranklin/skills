@@ -1,24 +1,24 @@
 # Deep Code Elegance and Beauty Review Example
 
-This fictional example demonstrates grounded aesthetic judgment. Adapt its shape, not its conclusions.
+This fictional example shows an aesthetic assessment that uses specific evidence. Adapt its structure. Do not reuse its conclusions.
 
 ## First Impression
 
-The project feels like a small language with one calm center: `pipeline.py` names the stages in the same vocabulary used by the CLI and tests. The edges are less settled; provider setup introduces ceremony that the core pipeline otherwise avoids.
+The project first appears to have a clear primary module. `pipeline.py` names the stages with the vocabulary that the CLI and tests use. Provider setup is less clear because it adds process that the core pipeline does not use.
 
 ## What Is Beautiful
 
-- `pipeline.py`: `collect`, `shape`, and `publish` read as the actual domain story. Each stage returns an explicit value instead of mutating shared state, so a maintainer can understand the flow without holding hidden lifecycle rules in mind.
-- `tests/test_pipeline.py`: scenario names use the same vocabulary and keep fixtures below the assertion. The tests teach the project instead of exposing its scaffolding first.
+- `pipeline.py`: `collect`, `shape`, and `publish` describe the domain sequence. Each stage returns an explicit value instead of changing shared state. A maintainer can understand the sequence without hidden lifecycle rules.
+- `tests/test_pipeline.py`: Scenario names use the same vocabulary and keep fixtures below the assertion. The tests explain the project behavior before they show test setup.
 
-## What Disturbs The Peace
+## What Causes Maintenance Difficulty
 
-- `providers/bootstrap.py`: three provider branches repeat credential lookup, client creation, and error translation with slightly different names. The repetition is not merely long; it makes the maintainer compare branches to discover whether the differences matter.
-- `utils.py`: `normalize()` handles filenames, provider identifiers, and display labels. The generic name erases three distinct concepts and makes new callers feel unsafe without rereading the implementation.
+- `providers/bootstrap.py`: Three provider branches repeat credential lookup, client creation, and error translation with different names. A maintainer must compare the branches to learn whether the differences are necessary.
+- `utils.py`: `normalize()` handles filenames, provider identifiers, and display labels. The generic name hides three different concepts. A maintainer must read the implementation before adding a caller.
 
-## Lens Synthesis
+## Review-Area Summary
 
-Cognitive clarity is strongest in the pipeline and weakest at provider setup. The Python is idiomatic and restrained, but the generic utility vocabulary works against that restraint. Developer experience is generous in tests and commands; composition would improve if provider construction expressed its shared ritual once while retaining explicit provider differences.
+Cognitive clarity is strongest in the pipeline and weakest in provider setup. The Python follows normal conventions and avoids unnecessary features. The generic utility vocabulary reduces that clarity. Tests and commands provide a good developer experience. Provider construction can use one shared implementation while it preserves explicit provider differences.
 
 ## What To Protect
 
@@ -27,6 +27,6 @@ Cognitive clarity is strongest in the pipeline and weakest at provider setup. Th
 
 ## Guidance
 
-1. Replace the provider branches with one small construction helper plus explicit provider configuration. The goal is to remove comparison work, not to invent a provider framework.
+1. Replace the provider branches with one small construction helper and explicit provider configuration. This change must reduce comparison work. It must not add a provider framework.
 2. Split `normalize()` into domain-named functions near their callers. More names will create less ambiguity here.
-3. Keep the pipeline untouched while improving its edges; it is already the project's orienting center.
+3. Do not change the pipeline while you improve provider setup. The pipeline already gives the project a clear primary structure.

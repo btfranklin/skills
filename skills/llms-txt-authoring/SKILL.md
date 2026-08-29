@@ -1,19 +1,19 @@
 ---
 name: llms-txt-authoring
 description: >-
-  Use when creating, updating, validating, or reviewing a site-root `llms.txt` file as a concise map to canonical, LLM-friendly content. Trigger only when `llms.txt` is explicitly in scope, not for robots.txt, sitemaps, SEO metadata, READMEs, OpenAPI documentation, or AGENTS.md. Return a proposal-aligned file or evidence-backed review with useful links and validation notes.
+  Create, update, validate, or review a site-root `llms.txt` file. Use this skill only when the request includes `llms.txt`. Do not use it for robots.txt, sitemaps, SEO metadata, READMEs, OpenAPI documentation, or AGENTS.md.
 ---
 
 # llms.txt Authoring
 
 ## Workflow
 
-1. Inspect the live site or repository to identify the canonical documentation, API reference, guides, and examples. Do not invent pages or descriptions.
-2. Read [the format guide](references/llms.txt.md) before authoring or judging structure. Treat `llms.txt` as an emerging proposal, not a crawler-control or guaranteed-discovery standard.
-3. For a new file, adapt [the starter template](templates/llms.txt). Keep the required H1 concise; add the optional summary, context, H2 file lists, and descriptions only when useful.
-4. Validate the exact `/llms.txt` location, Markdown structure, absolute canonical URLs, truthful descriptions, duplicate links, and reachable targets when network access is available.
+1. Inspect the live site or repository. Identify the canonical documentation, API reference, guides, and examples. Do not invent pages or descriptions.
+2. Read [the format guide](references/llms.txt.md) before you write or assess the structure. Treat `llms.txt` as an emerging proposal. Do not treat it as a crawler-control standard or as a guarantee of discovery.
+3. For a new file, adapt [the starter template](templates/llms.txt). Keep the required H1 concise. Add optional content only when it helps a reader understand the linked resources.
+4. Validate the exact `/llms.txt` location and the Markdown structure. Validate each absolute canonical URL and description. Check for duplicate links. When network access is available, confirm that each target is reachable.
 5. Return the complete file or severity-ordered findings. Distinguish proposal violations from optional editorial improvements.
 
-## Freshness Gate
+## Verify Current Information
 
-Before asserting required syntax, special section semantics, adoption, or ecosystem behavior, verify the current proposal at `https://llmstxt.org/` and prefer its linked primary materials. Record the source URL and access date in review notes. Never promise indexing, training, ranking, citation, or crawler behavior from publishing the file.
+Verify the current proposal at `https://llmstxt.org/` before you state syntax, special section meanings, adoption, or system behavior. Prefer the primary materials that the proposal links to. Record the source URL and access date in the review notes. Do not promise indexing, training, ranking, citation, or crawler behavior after publication.

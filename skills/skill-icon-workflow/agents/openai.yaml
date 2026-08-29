@@ -1,6 +1,6 @@
 interface:
   display_name: "Skill Icon Workflow"
-  short_description: "Create, wire, and validate Codex skill icons"
+  short_description: "Create, set, and validate Codex skill icons"
   icon_small: "./assets/skill-icon-workflow.svg"
   icon_large: "./assets/skill-icon-workflow.png"
-  default_prompt: "Use $skill-icon-workflow to create and validate this skill's SVG, PNG, and icon metadata."
+  default_prompt: "Use $skill-icon-workflow to create and validate the SVG, PNG, and icon metadata for this skill."

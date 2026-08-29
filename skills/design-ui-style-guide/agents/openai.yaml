@@ -1,6 +1,6 @@
 interface:
   display_name: "Design UI Style Guide"
-  short_description: "Explore and codify a visual UI direction"
+  short_description: "Create and document an approved interface concept"
   icon_small: "./assets/design-ui-style-guide.svg"
   icon_large: "./assets/design-ui-style-guide.png"
-  default_prompt: "Use $design-ui-style-guide to explore three UI concepts, help me choose one, then turn it into an HTML/CSS style guide and demo."
+  default_prompt: "Use $design-ui-style-guide to create three interface concepts. Help me approve one concept. Then create an HTML and CSS style guide with a demo."

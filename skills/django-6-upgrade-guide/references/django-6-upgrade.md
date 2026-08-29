@@ -12,13 +12,13 @@ Use this checklist after inspecting the target repository. Verify every version-
 - [Supported versions](https://www.djangoproject.com/download/#supported-versions)
 - Package maintainers' release notes and compatibility classifiers for each direct dependency
 
-Use the current patch release documentation, not only the initial major-release page. Check security advisories separately.
+Use the documentation for the current patch release. Do not use only the initial major-release page. Check security advisories separately.
 
 ## Baseline inventory
 
 Capture:
 
-- Python and Django constraints in project metadata and lockfiles
+- Python and Django limits in project metadata and lockfiles
 - Runtime and CI Python versions, base images, buildpacks, and deployment platform
 - Installed direct dependencies and Django integration packages
 - Databases, drivers, routers, caches, storage backends, email, authentication, and middleware
@@ -42,11 +42,11 @@ Capture:
 - Check every Django-facing direct dependency from its maintainer's current documentation.
 - Review database backend support and database-version requirements.
 - Read all applicable Django 6 backwards-incompatible changes and removed deprecations.
-- Decide whether dependency replacement or removal is required; do not add compatibility shims.
+- Decide whether the upgrade requires dependency replacement or removal. Do not add compatibility shims.
 
 ### Upgrade and review
 
-- Update constraints through the repository's package manager and inspect the resolved dependency diff.
+- Update dependency limits through the repository's package manager. Inspect the resolved dependency changes.
 - Run checks before creating migrations. Any new migration must correspond to an intentional model-state change.
 - Inspect settings defaults, request/response behavior, URL routing, forms, templates, authentication, storage, serialization, admin, and localization used by the application.
 - Exercise database-specific behavior and all deployed process types.
@@ -55,9 +55,9 @@ Capture:
 
 - Run the full CI-equivalent suite on the supported Python/database matrix.
 - Test migration forward behavior on a production-like copy or representative fixture.
-- Perform staging smoke tests for critical user journeys, admin operations, static/media handling, background work, and deployment startup.
+- Perform basic staging tests for critical user tasks, admin operations, static and media handling, background work, and deployment startup.
 - Compare logs, error rate, latency, database queries, task failures, and resource use with the baseline.
-- Document code rollback, schema rollback or forward-fix strategy, deploy ordering, and the point after which rollback is unsafe.
+- Document the code rollback procedure. Document the schema rollback or forward-fix procedure. Record the deployment order and the point after which rollback is not safe.
 
 ## Django 6 features
 

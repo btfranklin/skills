@@ -1,6 +1,6 @@
 # HTML-First Patterns
 
-Use this reference to choose an interaction primitive and define its enhancement boundary. Verify version-sensitive behavior against the linked primary documentation at execution time.
+Use this reference to choose an interaction element and define the limits of its enhancement. Verify version-sensitive behavior in the linked primary documentation when you do the work.
 
 ## Source hierarchy
 
@@ -23,25 +23,26 @@ Use native semantics before ARIA. Treat compatibility tables and framework APIs 
 | Choose one value | Radio buttons or `select` | Styled picker | Labels, selected state, form submission |
 | Update authoritative state | Full server response | Server-rendered fragment | Direct endpoint behavior, stale responses, history |
 
-Do not choose a primitive solely because it is new. The semantic task, baseline behavior, and project browser policy decide.
+Do not choose an element only because it is new. Use the semantic task, baseline behavior, and project browser policy to make the decision.
 
 ## Progressive enhancement contract
 
 Define three layers explicitly:
 
-1. **Semantic baseline:** complete the task with links, forms, server responses, and understandable document structure.
-2. **Native enhancement:** add browser features whose absence leaves the baseline intact.
-3. **Scripted enhancement:** add the smallest event handling needed for orchestration, partial updates, or presentation.
+1. **Semantic baseline:** Complete the task with links, forms, server responses, and an understandable document structure.
+2. **Native enhancement:** Add browser features only when the baseline continues to work without them.
+3. **Scripted enhancement:** Add the minimum event handling for coordination, partial updates, or presentation.
 
-Avoid maintaining the same domain state independently in HTML, JavaScript, and the server. Prefer the server response and URL as shared truth.
+Do not keep separate copies of the same domain state in HTML, JavaScript, and the server. Use the server response and URL as the authoritative state.
 
 ## Server-driven updates
 
-- Return meaningful full pages or clearly scoped fragments according to the framework's established conventions.
+- Return meaningful full pages or clearly limited fragments. Follow the established framework conventions.
 - Preserve validation messages, focus, loading feedback, and error recovery.
 - Decide whether an update creates, replaces, or preserves a history entry.
-- Make polling and streaming lifecycle-aware; stop work when the containing UI is removed or the terminal state is reached.
-- Ensure an unavailable enhancement library degrades to navigation or form submission rather than a dead control.
+- Stop polling or streaming after removal of the containing interface.
+- Also stop after the process reaches its final state.
+- If an enhancement library is unavailable, use navigation or form submission. Do not leave a control that does not work.
 
 ## Validation matrix
 

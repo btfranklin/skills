@@ -1,25 +1,25 @@
 ---
 name: design-ui-style-guide
 description: >-
-  Preferred first-step workflow for creating a UI from whole cloth. Use when asked to create, design, build, prototype, mock up, or redesign a website, web app, dashboard, landing page, product screen, internal tool, or application UI without an approved visual direction. Generates exactly three image concepts, stops for selection or iteration, then converts the approved direction into a reusable HTML/CSS style guide and representative demo. Use before frontend implementation unless the user supplies an existing design, requests a narrow edit, or explicitly skips visual exploration.
+  Create a visual system for a new or redesigned user interface. Generate exactly three image concepts and stop for user approval. After approval, create an HTML and CSS style guide with a representative demo. Do not use when the user supplies an approved design, requests a small edit, or skips visual exploration.
 ---
 
 # Design UI Style Guide
 
-Turn a UI idea into an approved visual direction and a reusable HTML-centric source of truth. Keep two explicit checkpoints: concept selection, then style-guide delivery.
+Turn a user-interface idea into an approved concept and a reusable HTML style guide. Use two explicit checkpoints. First, get approval for one concept. Then deliver the style guide.
 
-Own the concept and style-guide artifact contract. Do not expand into full product implementation unless the user separately asks for it after the guide exists.
+Control the requirements for the concepts and style-guide files. Do not implement the full product unless the user makes a separate request after the guide exists.
 
 ## Required Capabilities
 
-- Resolve image generation in this order:
+- Select an image-generation method in this order:
   1. In Codex, use `$imagegen` when it is available and follow that skill's generation and image-editing workflow.
-  2. In another agent or harness, use its native image-generation skill or tool when one is available.
+  2. In another agent or harness, use its image-generation skill or tool when one is available.
   3. If no image-generation capability exists, use the text-only fallback below.
 - Do not replace available image generation with prose, SVG mockups, or CSS sketches.
-- During the artifact phase, use the companion skill `design-html-first-web-uis` when it is installed. It supplies semantic HTML, native browser behavior, progressive enhancement, accessibility, and minimal-JavaScript guidance.
+- During the file-creation phase, use `design-html-first-web-uis` when available. It supplies instructions for semantic HTML, native browser behavior, progressive enhancement, accessibility, and minimal JavaScript.
 
-If `design-html-first-web-uis` is missing, identify the required installation scope. Ask the user to approve that exact installation. For an approved global installation, run:
+If `design-html-first-web-uis` is missing, identify the required installation location. Ask the user to approve that exact installation. For an approved global installation, run:
 
 ```bash
 npx skills add btfranklin/skills --skill design-html-first-web-uis -g
@@ -33,35 +33,35 @@ If image generation is not available, state this limitation. Provide prompt-read
 
 ## Workflow
 
-1. Inspect the brief and any existing repository guidance, content, brand assets, screenshots, and technical constraints.
-2. Establish the audience, product purpose, primary screen or workflow, required content, device priority, brand constraints, and forbidden directions. Infer low-risk defaults; ask only when an unresolved choice would materially change the concepts.
-3. Write a one-sentence visual thesis for each direction, describing its composition, material character, typography, and energy.
+1. Inspect the brief. Inspect existing repository guidance, content, brand assets, screenshots, and technical limits.
+2. Identify the audience, product purpose, primary screen or workflow, required content, device priority, brand limits, and prohibited designs. Infer defaults that have low risk. Ask only when an unresolved choice will change the concepts.
+3. Write one sentence that defines each concept. Describe the composition, surface treatment, typography, and visual tone.
 4. Read [references/concept-prompt-patterns.md](references/concept-prompt-patterns.md) and [references/visual-quality-and-ai-tells.md](references/visual-quality-and-ai-tells.md).
-5. Generate exactly three concept images using the fixed lanes: Traditional, Futuristic/Advanced, and High-concept/Strange. Give each lane its own prompt and image.
-6. Audit the concepts against the visual-quality reference. Regenerate any direction that is generic, repetitive, unreadable, off-brief, incomplete for the requested surface, or impractical to translate into HTML/CSS.
+5. Generate exactly three concept images. Use these categories: Traditional, Futuristic/Advanced, and High-concept/Strange. Give each concept its own prompt and image.
+6. Review the concepts against the visual-quality reference. Regenerate a generic, repetitive, or unreadable concept. Also regenerate a concept that is outside the brief, incomplete, or difficult to implement in HTML and CSS.
 7. Present all three images with the exact prompt and a short rationale for each.
 8. Stop at the selection checkpoint. Ask the user to choose one, request another batch, or give targeted iteration guidance.
-9. If iterating, preserve the three-lane structure unless the user explicitly requests variants of one direction or a blend.
-10. After approval, read [references/style-guide-contract.md](references/style-guide-contract.md). Treat the selected image and user-supplied content as the visual and editorial source of truth.
-11. If a critical region is too small, ambiguous, or cropped to extract reliably, generate a focused detail concept in the approved visual system before inventing the missing design.
+9. For a new set, preserve the three categories. The user can instead request variants of one concept or a combination of concepts.
+10. After approval, read [references/style-guide-contract.md](references/style-guide-contract.md). Use the approved concept and user-supplied content as the authoritative visual and editorial references.
+11. If an important region is too small, unclear, or cropped, generate a detailed concept for that region. Use the approved visual system. Do not invent the missing design without this detail.
 12. Create the output under `ui-style-guide/` in the current project or workspace:
     - `style-guide.html`
     - `style-guide.css`
     - `demo.html`
     - `assets/selected-concept.*` when the image is project-bound
-13. Match the approved direction closely. Replace impossible, brittle, or inaccessible details with maintainable HTML/CSS equivalents and record material compromises.
-14. Verify the guide and demo structurally and visually, then report the selected direction, artifact paths, checks performed, and intentional deviations.
+13. Match the approved concept closely. Replace details that are impossible, fragile, or inaccessible with maintainable HTML and CSS. Record important compromises.
+14. Verify the structure and appearance of the guide and demo. Report the approved concept, file paths, completed checks, and intentional differences.
 
-## Guardrails
+## Constraints
 
 - Do not generate the style guide before the user approves a concept.
 - Do not implement the full product in the default workflow. Deliver a style guide plus one representative screen.
-- Do not invent product claims, company names, testimonials, metrics, or fake precision. Clearly label sample data when realistic examples are needed.
+- Do not invent product claims, company names, testimonials, metrics, or precise values without evidence. Clearly label sample data when examples are necessary.
 - Keep visible copy specific, purposeful, and consistent with the product context. Preserve exact supplied copy.
 - Keep interactive UI text and controls in HTML. Use generated imagery for visual assets, not as a substitute for working UI.
 - Use CSS custom properties for tokens. Make `demo.html` depend on `style-guide.css` so the demo proves the guide is reusable.
 - Prefer native HTML controls and accessible state styling. Add JavaScript only for small interactions that cannot be represented declaratively.
-- Treat the anti-tell reference as a bias correction, not a substitute for judgment. A discouraged pattern is acceptable when the brief, brand, domain, or approved concept gives it a real purpose.
+- Use the undesired-pattern reference to identify common model defaults. Apply judgment to each pattern. Keep an undesired pattern when the brief, brand, domain, or approved concept gives it a clear purpose.
 
 ## Handoff
 
@@ -73,8 +73,8 @@ After concept generation, provide:
 
 After style-guide delivery, provide:
 
-- The selected concept lane and saved image path when applicable
+- The approved concept category and saved image path when applicable
 - Paths for `style-guide.html`, `style-guide.css`, and `demo.html`
 - A concise description of the extracted visual system
 - Structural and visual verification performed
-- Any fidelity compromises or intentionally retained discouraged patterns
+- Any fidelity compromises or intentionally retained undesired patterns

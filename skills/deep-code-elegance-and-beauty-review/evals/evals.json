@@ -8,7 +8,7 @@
         "Invokes deep-code-elegance-and-beauty-review from the natural-language request",
         "Records a provisional first impression before detailed verification and preserves later qualifications",
         "Grounds subjective observations in concrete project artifacts",
-        "Separates beauty, disturbances, and taste preferences"
+        "Separates beauty, maintenance difficulty, and personal preferences"
       ]
     },
     {
@@ -25,8 +25,8 @@
       "prompt": "Review this substantial project for elegance; sub-agents are unavailable.",
       "expect": [
         "Discloses the unavailable council and continues solo",
-        "Runs the relevant lenses without asking permission",
-        "Uses Lens Synthesis rather than implying that a council ran"
+        "Runs the relevant review areas without asking permission",
+        "Uses Review-Area Summary rather than implying that a council ran"
       ]
     },
     {
@@ -63,8 +63,8 @@
       "prompt": "Use both deep-codebase-review and deep-code-elegance-and-beauty-review on this repository.",
       "expect": [
         "Honors the explicit combination",
-        "Keeps formal findings separate from aesthetic disturbances and preferences",
-        "Names what should be protected before recommending changes"
+        "Keeps formal findings separate from aesthetic assessments and preferences",
+        "Names the items to protect before recommending changes"
       ]
     }
   ]

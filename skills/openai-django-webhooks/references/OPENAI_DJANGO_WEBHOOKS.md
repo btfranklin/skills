@@ -1,6 +1,6 @@
 # OpenAI Responses Webhooks in Django
 
-Use this pattern after inspecting the application's models, queue, service layer, and HTMX conventions. Verify current API and SDK details from primary documentation before implementation.
+Inspect the application's models, queue, service layer, and HTMX conventions before you use this pattern. Verify current API and SDK details in primary documentation before implementation.
 
 ## Primary sources
 
@@ -14,11 +14,11 @@ Use this pattern after inspecting the application's models, queue, service layer
 
 1. Create a local job record before requesting a background response.
 2. Call the official SDK with `client.responses.create(..., background=True)` and store the returned response ID on that job.
-3. Treat the local response-ID mapping as the durable correlation mechanism. Request metadata may be useful after retrieval, but the webhook event itself should not be assumed to contain the full response or its metadata.
-4. On a terminal webhook event, obtain the response ID from `event.data.id`, retrieve the response with `client.responses.retrieve(response_id)`, and apply the transition idempotently.
-5. Persist terminal failures and diagnostic identifiers. Stop polling after every terminal state, not only success.
+3. Use the local response-ID mapping as the durable correlation mechanism. Request metadata can help after retrieval. Do not assume that the webhook event contains the full response or its metadata.
+4. On a terminal webhook event, get the response ID from `event.data.id`. Retrieve the response with `client.responses.retrieve(response_id)`. Apply the transition idempotently.
+5. Persist terminal failures and diagnostic identifiers. Stop polling after every terminal state, including success and failure.
 
-Keep prompts and reusable instructions in external Markdown files. Select models from current project configuration or verified official guidance rather than copying a model identifier from this reference.
+Keep prompts and reusable instructions in external Markdown files. Select models from the current project configuration or from verified official guidance. Do not copy a model identifier from this reference.
 
 ## Verify and acknowledge the webhook
 
@@ -64,35 +64,35 @@ def openai_webhook(request):
     return HttpResponse(status=200)
 ```
 
-Adapt the model and queue call to the repository. Give `webhook_id` a unique database constraint. Store only the event fields needed for processing and diagnostics; do not retain sensitive payloads by default.
+Adapt the model and queue call to the repository. Give `webhook_id` a unique database constraint. Store only the event fields that processing and diagnostics require. Do not retain sensitive payloads by default.
 
-The endpoint should perform signature verification, durable deduplication, and enqueueing only. Return a successful `2xx` within a few seconds. Offload response retrieval and other non-trivial work to the application's background worker.
+The endpoint must perform only signature verification, durable deduplication, and enqueueing. Return a successful `2xx` within a few seconds. Use the application's background worker for response retrieval and other work that can delay the response.
 
 ## Process the delivery idempotently
 
-The worker should:
+The worker must:
 
 1. Lock or atomically claim the delivery record.
 2. Exit successfully if that delivery is already complete.
 3. Resolve the local job by the stored OpenAI response ID.
 4. Retrieve the full response for events that require response data.
-5. Persist output through the project's normal service layer. The SDK's `response.output_text` is the simplest text accessor when text is the expected result.
+5. Persist output through the project's service layer. Use the SDK's `response.output_text` when the expected result is text.
 6. Apply state transitions with compare-and-set or row locking so duplicate or out-of-order work cannot regress a terminal job.
-7. Record retryable processing failures for the application's worker retry policy and mark permanent failures explicitly.
+7. Record retryable processing failures for the application's worker retry policy. Mark permanent failures explicitly.
 
-Unknown event types should normally be logged and acknowledged rather than retried forever. Verify the subscribed event types and their current schemas in the webhook event reference before coding terminal-state rules.
+Prefer to log and acknowledge unknown event types. Do not retry them without a defined stop condition. Before you write terminal-state rules, verify the subscribed event types and their current schemas in the webhook event reference.
 
 ## Delivery failures and duplicates
 
-- OpenAI retries webhook deliveries that do not receive a successful `2xx`, using exponential backoff for up to 72 hours.
-- Redirects are treated as failures; configure the final endpoint URL directly.
-- Duplicate deliveries can occur. Deduplicate with the `webhook-id` header and still make the worker idempotent.
+- OpenAI retries webhook deliveries that do not receive a successful `2xx`. It uses exponential backoff for up to 72 hours.
+- The service treats redirects as failures. Configure the final endpoint URL directly.
+- Duplicate deliveries can occur. Use the `webhook-id` header to remove duplicates. Also make the worker idempotent.
 - Once the endpoint has acknowledged an event, processing retries belong to the application's queue. Do not rely on OpenAI to redeliver successfully acknowledged work.
 - If signature verification or durable receipt fails, return a non-`2xx` response so the delivery can be retried.
 
 ## HTMX polling
 
-Return the initial job fragment immediately after the background response is created. While the local job is non-terminal, the fragment may poll a status endpoint:
+Return the initial job fragment immediately after the application creates the background response. While the local job is not terminal, the fragment can poll a status endpoint:
 
 ```html
 <section
@@ -105,7 +105,7 @@ Return the initial job fragment immediately after the background response is cre
 </section>
 ```
 
-The status view should authorize access to the job on every request. Return a pending fragment that retains polling while work continues. Return a final success or failure fragment without `hx-trigger` when the job reaches a terminal state. Handle missing, expired, and unauthorized jobs explicitly.
+The status view must authorize access to the job on every request. Return a pending fragment that continues polling while work continues. When the job reaches a terminal state, return a final success or failure fragment without `hx-trigger`. Handle missing, expired, and unauthorized jobs explicitly.
 
 ## Validation matrix
 

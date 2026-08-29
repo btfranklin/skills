@@ -1,31 +1,31 @@
 ---
 name: django-6-upgrade-guide
 description: >-
-  Use when planning, auditing, or executing a Django 5.x to Django 6 upgrade. Covers runtime and dependency compatibility, deprecations, settings, databases, migrations, tests, deployment, and feature adoption. Excludes generic Django work, earlier upgrades, frontend styling, and unrelated maintenance. Produces a repo-grounded checklist, risk report, or patch with verified requirements, staged validation, and rollback guidance.
+  Plan, audit, or complete an upgrade from Django 5.x to Django 6. Verify runtime and dependency compatibility, deprecations, settings, databases, migrations, tests, and deployment. Do not use for general Django work, earlier upgrades, frontend styles, or unrelated maintenance.
 ---
 
 # Django 6 Upgrade Guide
 
 ## Workflow
 
-1. Inspect the repository's Django and Python constraints, dependency manager, settings modules, databases, deployment images, CI matrix, third-party packages, and release process.
-2. Verify supported Python versions, current Django 5.2 and 6.0 patch releases, relevant security notices, and third-party compatibility from primary sources. If a required source is not available, report the verification gap. Do not claim that an unverified version or dependency is current.
+1. Inspect the Django and Python constraints. Inspect the dependency manager, settings modules, databases, and deployment images. Inspect the CI matrix, third-party packages, and release process.
+2. Use primary sources to verify supported Python versions and current Django 5.2 and 6.0 patch releases. Verify relevant security notices and third-party compatibility. If a required source is not available, report the missing verification. Do not claim that an unverified version or dependency is current.
 3. Establish a clean baseline on the latest compatible Django 5.2 patch. Run the full test suite, Django system checks, migrations check, and representative production commands.
-4. Run tests with deprecation warnings visible. Remove project-owned deprecated usage before changing the major version; distinguish dependency warnings from application warnings.
+4. Run tests with deprecation warnings visible. Remove deprecated use that the project owns before you change the major version. Separate dependency warnings from application warnings.
 5. Update Python and dependencies in an order that keeps failures attributable. Follow the repository's package-management policy and inspect lockfile changes.
-6. Upgrade Django. Run the migration check. Create a migration only for an intentional model-state change, and review each new migration. Then review settings, middleware, templates, URLs, forms, authentication, storage, database behavior, and deployment startup.
-7. Validate locally and in CI, then define staging checks, observability, rollout order, and rollback constraints. Adopt new Django 6 features only after compatibility is established.
+6. Upgrade Django. Run the migration check. Create a migration only for an intentional model-state change. Review each new migration. Then review settings, middleware, templates, URLs, forms, authentication, storage, database behavior, and deployment startup.
+7. Validate the upgrade locally and in CI. Define staging checks, monitoring, deployment order, and rollback limits. Adopt new Django 6 features only after you confirm compatibility.
 
 ## Evidence and decisions
 
-- Record the discovered baseline, verified target patch, documentation date, incompatible dependencies, warning inventory, migration impact, and unresolved risks.
+- Record the discovered baseline and verified target patch. Record the documentation date, incompatible dependencies, warning list, migration effects, and unresolved risks.
 - Prefer official Django release notes, topic guides, deployment checklists, and package maintainers' compatibility declarations.
 - Never infer production safety from import success or a passing unit subset. Exercise migrations, static assets, background work, management commands, and database-specific paths used by the service.
-- Treat schema reversibility and application rollback separately; a deploy may require a forward fix even when code rollback is possible.
+- Evaluate schema reversal and application rollback separately. A deployment can require a forward fix even when you can roll back the code.
 
-## Freshness
+## Verify Current Information
 
-Do not freeze “latest,” Python support, security status, or third-party compatibility in the skill. Verify this information during each upgrade. Include the checked versions, sources, and date in the output. If verification is not possible, identify the missing evidence.
+Do not store current patch versions, Python support, security status, or third-party compatibility in this skill. Verify this information during each upgrade. Include the checked versions, sources, and date in the output. If verification is not possible, identify the missing evidence.
 
 ## Resource
 
@@ -33,4 +33,4 @@ Read [references/django-6-upgrade.md](references/django-6-upgrade.md) when build
 
 ## Output
 
-Return the requested patch, upgrade plan, or audit. Separate confirmed blockers, risks requiring validation, and optional Django 6 adoption opportunities. Ask only about choices that cannot be resolved from the repository or current primary documentation.
+Return the requested patch, upgrade plan, or audit. Separate confirmed blockers from risks that require validation. List optional Django 6 features separately. Ask only about choices that the repository or current primary documentation cannot resolve.

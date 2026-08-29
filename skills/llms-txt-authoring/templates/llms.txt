@@ -1,15 +1,15 @@
 # Project or Site Name
 
-> One-sentence description of the site, product, project, or documentation set.
+> One sentence that describes the site, product, project, or documentation set.
 
-Brief constraints or context needed to interpret the linked resources, if any.
+Add short constraints or context only when a reader needs them to interpret the linked resources.
 
 ## Docs
 
-- [Canonical Documentation](https://example.com/docs): Short description of the primary docs.
-- [API Reference](https://example.com/api): Short description if applicable.
+- [Canonical Documentation](https://example.com/docs): Short description of the primary documentation.
+- [API Reference](https://example.com/api): Short description, when applicable.
 
 ## Optional
 
-- [Examples](https://example.com/examples): Short description if useful.
-- [Changelog](https://example.com/changelog): Short description if useful.
+- [Examples](https://example.com/examples): Short description when examples help the reader.
+- [Changelog](https://example.com/changelog): Short description when release history helps the reader.

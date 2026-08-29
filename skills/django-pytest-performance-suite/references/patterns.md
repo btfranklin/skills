@@ -4,59 +4,59 @@ Use these patterns after identifying the target workloads and production databas
 
 ## Preserve database fidelity
 
-Record the production-relevant database profile before designing the lane:
+Record the applicable production database profile before you design the performance tests:
 
 - Django backend and database driver
 - engine and extension versions
 - embedded, in-memory, local service, remote service, replica, or managed topology
-- transaction and isolation behavior
+- transaction behavior and isolation behavior
 - connection, pooling, journal, cache, and durability options that affect the workload
 - schema, indexes, constraints, and representative data distribution
 
-The test target should preserve the behaviors the benchmark claims to protect. An embedded database should normally run through the real backend and driver against a disposable local database. A client-server database should use an isolated service rather than a substitute engine. If CI cannot reproduce a managed or remote topology, keep deterministic correctness and query checks there, calibrate timing on a stable representative runner, and label local timing as an approximation.
+The test target must preserve the behaviors that the benchmark claims to protect. Run an embedded database through the real backend and driver. Use a disposable local database unless the production contract requires a different mode. Use an isolated service for a client-server database. Do not use a substitute engine. If CI cannot reproduce a managed or remote topology, keep deterministic correctness and query checks in CI. Calibrate time limits on a stable representative runner. Label local time measurements as an approximation.
 
-Do not include database creation, migrations, network setup, or fixture seeding in a timing round unless lifecycle or setup cost is the named workload.
+Do not include database creation or migrations in a timing round. Do not include network setup or fixture seeding. Include these operations only when lifecycle or setup cost is the named workload.
 
 ## Seed once, measure separately
 
-Build expensive scenario data outside benchmark rounds. Use fixed timestamps, identifiers, slugs, and RNG seeds. Reuse a seeded test database only when isolation remains trustworthy. Disable outbound calls and maintenance triggers; make reachable task execution deterministic.
+Build expensive scenario data outside benchmark rounds. Use fixed timestamps, identifiers, slugs, and random number generator seeds. Reuse a seeded test database only when tests preserve isolation. Disable outbound calls and maintenance triggers. Make reachable task execution deterministic.
 
-Give each scenario a stable case ID and document the product scale it represents. Include enough rows, relationships, indexes, and value distributions to expose behavior hidden by ordinary fixtures.
+Give each scenario a stable case ID. Document the product scale that it represents. Include enough rows, relationships, indexes, and value distributions to expose behavior that ordinary fixtures do not expose.
 
 ## Choose the measured layer
 
 - Benchmark builders, read models, or ORM services to localize application regressions.
 - Add request-level cases when routing, serialization, templates, or middleware contribute meaningful work.
-- Benchmark schema, transaction, connection, or backend operations directly when those are the product surface.
+- Benchmark schema, transaction, connection, or backend operations directly when the product exposes those operations.
 - Prefer `RequestFactory` only for request cases whose contract excludes middleware.
 
-A registry is worthwhile only when a bounded family of routes or workloads should not escape coverage. Store the target, scenario IDs, owner, and any explicit exemption reason. Make structural-test failures explain how to register or exempt a surface.
+Use a registry only for a limited family of routes or workloads that requires complete coverage. Store the target, scenario IDs, owner, and each explicit exemption reason. Make structural-test failures explain how to register or exempt an interface.
 
 ## Normalize correctness
 
 Remove unstable values and impose deterministic ordering before comparison. Good artifacts include stable identifiers, counts, labels, ordered summaries, schema state, transaction outcomes, and semantic response flags. Avoid raw HTML when a smaller representation protects the behavior.
 
-Store full normalized JSON when humans can review it. For very large results, store a compact summary and a SHA-256 hash of the complete normalized payload.
+Store full normalized JSON when a person can review it. For very large results, store a compact summary and a SHA-256 hash of the complete normalized payload.
 
 ## Capture queries or operations
 
-Measure queries outside timing rounds so instrumentation does not distort results. Use Django query-capture utilities when they observe the relevant layer. For driver, connection, migration, or lifecycle work that query capture cannot represent faithfully, define an explicit operation counter with a documented boundary.
+Measure queries outside timing rounds so instrumentation does not distort results. Use Django query-capture utilities when they observe the relevant layer. Define an explicit operation counter when query capture cannot represent the work accurately. Document the boundary for driver, connection, migration, or lifecycle work.
 
-Assert case-specific caps. Prefer caps that should remain constant as scenario size grows; they expose N+1 and repeated-operation behavior more deterministically than elapsed time.
+Enforce a limit for each case. Prefer limits that must remain constant as the scenario size grows. These limits identify N+1 queries and repeated operations more reliably than elapsed time.
 
 ## Set timing contracts
 
-Key budgets by stable case ID and record target time, tolerance, runner, operating system, Python, Django, database backend/driver, engine version, and topology. Calibrate from multiple independent clean processes on the environment that will enforce the budget.
+Key time limits by stable case ID. Record the target time, tolerance, runner, operating system, Python, Django, database backend and driver, engine version, and topology. Calibrate the limit with multiple independent clean processes in the environment that will enforce it.
 
-Use median as the primary comparison and report mean and dispersion for diagnosis. Gate only workloads whose cross-run variance is low enough to distinguish a product regression from environmental noise. Leave unstable cases observation-only instead of widening tolerances until every run passes.
+Use the median as the primary comparison. Report the mean and dispersion for diagnosis. Enforce time limits only for workloads with low variation between runs. The variation must be low enough to distinguish a product regression from environmental changes. Record unstable cases without enforcement. Do not increase tolerances until every run passes.
 
 ## Report and maintain
 
-Write JSON for automation and Markdown for review. Include commit, case, scenario scale, database profile, runner, sample count, median, mean, dispersion, measured query/operation count, allowed limits, correctness status, and timing status.
+Write JSON for automation and Markdown for review. Include the commit, case, scenario scale, database profile, runner, and sample count. Include the median, mean, dispersion, measured query or operation count, allowed limits, correctness status, and timing status.
 
 Keep two deliberate operations:
 
-- **Refresh correctness:** accept an intentional output-contract change after reviewing the normalized result.
-- **Accept timing baseline:** accept an intentional steady-state performance change after correctness and query/operation checks pass and timing is recalibrated.
+- **Update correctness reference:** Accept an intentional output-contract change after you review the normalized result.
+- **Accept time baseline:** Accept an intentional stable performance change after correctness and query or operation checks pass. Recalibrate the time limit first.
 
-Neither operation should modify the other's artifacts. Never auto-accept a failing result.
+Neither operation must modify the files of the other operation. Never accept a failing result automatically.

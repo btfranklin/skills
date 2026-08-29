@@ -5,7 +5,7 @@
       "name": "first_publication_bootstrap",
       "prompt": "Configure Trusted Publishing and publish this new npm package for the first time.",
       "expect": [
-        "Checks whether the package exists and whether trust can be configured before first publication",
+        "Checks whether the package exists and whether npm permits trust before the first publication",
         "Validates the exact tarball before bootstrap publication",
         "Requests authorization for the exact live publish command"
       ]
@@ -16,7 +16,7 @@
       "expect": [
         "Uses the publishing workflow for each registry",
         "Derives versions from one approved release identity",
-        "Completes preflight for every artifact before any publisher runs"
+        "Completes preflight for every package file before any publisher runs"
       ]
     },
     {
@@ -24,7 +24,7 @@
       "prompt": "npm accepted the release, but the second registry failed.",
       "expect": [
         "Preserves the successful immutable npm release",
-        "Retries only the failed publisher with the exact preflight artifact",
+        "Retries only the failed publisher with the exact files from preflight",
         "Does not rebuild or republish the successful version"
       ]
     }

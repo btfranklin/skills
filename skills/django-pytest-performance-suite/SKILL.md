@@ -1,7 +1,7 @@
 ---
 name: django-pytest-performance-suite
 description: >-
-  Use when building Django performance regression coverage with pytest-benchmark for ORM, views, schema, transactions, or backend behavior. Match the project's production database engine and topology; never prescribe one. Excludes one-off profiling, browser rendering, APM, and non-Django services. Return deterministic scenarios, correctness and query/operation guards, calibrated budgets, reports, and baseline maintenance.
+  Build Django performance regression tests with pytest-benchmark. Use for ORM, views, schema, transactions, or database backend behavior. Match the production database engine and topology. Do not use for one-time profiling, browser rendering, application performance monitoring, or non-Django services.
 ---
 
 # Django Pytest Performance Suite
@@ -9,38 +9,39 @@ description: >-
 ## Workflow
 
 1. Inspect the existing Django, database, pytest, command, and CI conventions. Record the production backend, driver, engine version, topology, relevant options, and workload scale.
-2. Choose high-value uncached work: ORM queries, builders/read models, request wrappers, serializers, admin paths, migrations, schema operations, transactions, or database-backend behavior.
-3. Define the database-fidelity contract before implementing tests. Reproduce the production-relevant engine and access mode; document any deliberate approximation and forbid production latency claims from it.
-4. Create a separate performance lane with dedicated settings, marker, commands, and on-demand CI. Keep it out of the default unit-test loop.
-5. Seed realistic scenarios deterministically. Fix time, identifiers, randomness, ordering, and external side effects; build expensive data outside benchmark rounds.
-6. Run correctness before timing. Normalize results, compare a snapshot or summary hash, then enforce a query or operation cap appropriate to the measured layer.
+2. Choose important uncached work. It can include ORM queries, builders, read models, request wrappers, and serializers. It can also include admin paths, migrations, schema operations, transactions, or database backend behavior.
+3. Define the database-fidelity contract before you implement tests. Reproduce the applicable production engine and access mode. Document each deliberate approximation. Do not use an approximation to make claims about production latency.
+4. Create a separate performance test group. Give it dedicated settings, a marker, commands, and on-demand CI. Keep it out of the default unit-test run.
+5. Seed realistic scenarios in a deterministic way. Fix time, identifiers, random values, ordering, and external side effects. Build expensive data outside benchmark rounds.
+6. Check correctness before you measure time. Normalize results and compare a snapshot or summary hash. Then enforce a query or operation limit for the measured layer.
 7. Benchmark stable work with `pytest-benchmark`. Exclude setup and instrumentation unless their cost is the explicit subject of the case.
-8. Calibrate timing budgets only from repeated clean runs on a stable, representative runner. If that runner is not available, keep the timing case observation-only. Continue to enforce deterministic correctness checks and query or operation caps. Report the missing runner and each deliberate approximation.
-9. Keep correctness refresh and timing-baseline acceptance as separate, explicit maintenance actions. Add a coverage registry only for a bounded family of surfaces where drift is a real risk.
+8. Calibrate time limits only from repeated clean runs on a stable, representative runner. If that runner is not available, record timing results without enforcement. Continue to enforce deterministic correctness checks and query or operation limits. Report the unavailable runner and each deliberate approximation.
+9. Keep correctness updates and time-baseline acceptance as separate maintenance actions. Add a coverage registry only for a limited family of interfaces where missing coverage is a known risk.
 
-Use the repository's package manager and task runner. Preserve existing test conventions unless they prevent an isolated, reproducible lane.
+Use the repository's package manager and task runner. Preserve existing test conventions unless they prevent an isolated, reproducible performance test group.
 
 ## Decisions
 
-- Never choose PostgreSQL, Turso, SQLite, or another database merely because the skill prefers it. Follow the target project's production contract.
-- For embedded production databases, benchmark through the real Django backend and driver against an isolated local file or memory mode only when that mode matches the contract.
+- Never choose PostgreSQL, Turso, SQLite, or another database because this skill prefers it. Follow the target project's production contract.
+- For an embedded production database, use the real Django backend and driver. Use an isolated local file or memory mode only when that mode matches the contract.
 - For client-server or remote databases, preserve the relevant protocol and topology. Measure managed-network latency separately when CI cannot reproduce it faithfully.
-- Prefer `RequestFactory` only when a request surface is under test and middleware is outside the measured contract.
-- Use full normalized snapshots for reviewable results and summaries plus hashes for very large payloads.
-- Treat query or operation caps as deterministic early warnings and timing budgets as runner-specific guardrails.
+- Prefer `RequestFactory` only when the test measures a request interface and excludes middleware from the contract.
+- Use full normalized snapshots when a person can review the results. Use summaries and hashes for very large payloads.
+- Use query or operation limits to identify regressions early. Use runner-specific time limits for time measurements.
 - Never update snapshots or budgets automatically after a failure.
 
-## Freshness
+## Verify Current Information
 
-Verify current Django, pytest, pytest-benchmark, database-backend, and driver behavior from the target repository and primary documentation when it affects instrumentation or configuration. Record the checked versions in reports; do not freeze a package or database version in this skill.
+When instrumentation or configuration depends on version-specific behavior, verify that behavior. Use the target repository and primary documentation. Record the checked Django, pytest, pytest-benchmark, database backend, and driver versions in reports. Do not store current package or database versions in this skill.
 
 ## Validation
 
-Run untimed correctness and query or operation checks before timing. Use multiple independent clean processes on the intended runner to measure variance. Enforce a timing budget only when the variance is low enough to identify a product regression. Do not increase a tolerance only to make an unstable case pass.
+Run correctness and query or operation checks before you measure time. Use multiple independent clean processes on the intended runner to measure variation. Enforce a time limit only when the variation is low enough to identify a product regression. Do not increase a tolerance only to make an unstable case pass.
 
-Verify that ordinary tests exclude the performance marker. Verify that reports identify every case and environment. Keep correctness refresh and timing-budget acceptance as separate maintenance commands.
+Verify that ordinary tests exclude the performance marker. Verify that reports identify every case and environment. Keep correctness updates and time-limit acceptance as separate maintenance commands.
 
 ## Resources
 
-- Read [references/patterns.md](references/patterns.md) when implementing database fidelity, deterministic data, snapshots, caps, budgets, reporting, or optional coverage registration.
+- Read [references/patterns.md](references/patterns.md) when you implement database fidelity, deterministic data, snapshots, limits, or reports.
+- Also read it when you implement optional coverage registration.
 - Read [examples/performance-suite-plan.md](examples/performance-suite-plan.md) when preparing a concrete suite plan or handoff.

@@ -3,4 +3,4 @@ interface:
   short_description: "Review Agents SDK production readiness"
   icon_small: "./assets/review-agent-production-readiness.svg"
   icon_large: "./assets/review-agent-production-readiness.png"
-  default_prompt: "Use $review-agent-production-readiness to produce an evidence-backed review of this Agents SDK system's launch risks, eval gaps, and operational readiness."
+  default_prompt: "Use $review-agent-production-readiness to review this Agents SDK system. Report launch risks, evaluation gaps, and operations readiness with evidence."

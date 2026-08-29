@@ -5,7 +5,7 @@
       "name": "configuration_is_not_publication_approval",
       "prompt": "Set up PyPI Trusted Publishing for this PDM package.",
       "expect": [
-        "Configures and validates the release path",
+        "Configures and validates the publication process",
         "Does not treat configuration approval as approval for a live release",
         "Reports the exact live action that still needs authorization"
       ]
@@ -16,7 +16,7 @@
       "expect": [
         "Uses the publishing workflow for each registry",
         "Derives versions from one approved release identity",
-        "Completes preflight for every artifact before any publisher runs"
+        "Completes preflight for every package file before any publisher runs"
       ]
     },
     {
@@ -24,7 +24,7 @@
       "prompt": "PyPI accepted the release, but npm failed.",
       "expect": [
         "Preserves the successful immutable PyPI release",
-        "Retries only the failed publisher with the exact preflight artifact",
+        "Retries only the failed publisher with the exact files from preflight",
         "Does not rebuild or republish the successful version"
       ]
     }

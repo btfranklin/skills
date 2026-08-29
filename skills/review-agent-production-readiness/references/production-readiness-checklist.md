@@ -4,10 +4,10 @@ Use this reference to review OpenAI Agents SDK systems for production risk. Appl
 
 ## Architecture Fit
 
-- Prefer a single `Agent` plus explicit orchestration until there is evidence that specialists, handoffs, structured outputs, or sandbox execution are needed.
+- Prefer a single `Agent` with explicit control until evidence supports specialists, handoffs, structured outputs, or sandbox execution.
 - Prefer deterministic code flow for known sequences. Use planner-style agent behavior only when the next step genuinely depends on user context or model judgment.
-- Use multi-agent designs when specialization, parallelism, or routing is valuable enough to justify extra latency, token cost, context-passing risk, and debugging complexity.
-- Use sandbox-backed agents only when the agent must inspect files, run commands, use workspace skills, or create artifacts in an isolated workspace.
+- Use a multi-agent design only when it has a verified net benefit. Assess specialization, parallel work, routing, latency, token cost, context-transfer risk, and debugging cost.
+- Use a sandbox-backed agent only when it requires an isolated workspace. Examples include inspecting files, running commands, using workspace skills, and creating artifacts.
 - Define the contract before judging architecture: goal, inputs, outputs, tools, state, permissions, approval gates, and smoke command.
 
 ## Tools and Side Effects
@@ -15,42 +15,42 @@ Use this reference to review OpenAI Agents SDK systems for production risk. Appl
 - Give each tool a narrow purpose, explicit name, clear docstring, typed arguments, and constrained schemas.
 - Validate tool inputs at the boundary even when SDK schema generation is present.
 - Add timeouts, retry limits, payload limits, and explicit error handling around network, file, database, or shell operations.
-- Make side-effecting tools idempotent where possible. Use idempotency keys, duplicate detection, dry-run modes, or confirmation records for actions like billing, messaging, writes, deletes, deployment, and ticket creation.
-- Separate read-only tools from write tools. Give write tools narrower credentials and more approval friction.
+- Make tools with side effects idempotent when the external system supports it. Use idempotency keys, duplicate detection, simulation modes, or confirmation records for billing, messaging, writes, deletes, deployments, and ticket creation.
+- Separate read-only tools from write tools. Give write tools narrower credentials and more approval requirements.
 - Log tool calls with trace/session correlation, sanitized arguments, result class, duration, and failure reason.
 
-## Guardrails, Approvals, and Escalation
+## Safety Checks, Approvals, and Escalation
 
-- Add input guardrails for prompt injection, unsupported scope, unsafe instructions, sensitive data, and malformed requests.
-- Add output guardrails for policy violations, ungrounded claims, private data disclosure, unsafe action instructions, and schema violations.
+- Add input safety checks for prompt injection, unsupported scope, unsafe instructions, sensitive data, and malformed requests.
+- Add output safety checks for policy violations, unsupported claims, private data disclosure, unsafe action instructions, and schema violations.
 - Require explicit user or operator approval before irreversible, destructive, financial, externally visible, or security-sensitive actions.
-- Define what happens when guardrails trip: block, transform, ask a clarifying question, escalate to a human, or fall back to deterministic code.
+- Define the response when a safety check fails. The system can block, transform, ask a question, escalate to a person, or use deterministic code.
 - Add human escalation paths for low confidence, repeated tool failures, high-risk user intent, policy ambiguity, or max-turn/timeout exhaustion.
 
 ## Evals and Testing
 
 - Test deterministic tools directly with ordinary unit/integration tests before relying on agent-level evals.
-- Exercise the real agent path in local evals. Avoid mocks for the behavior being judged unless the external dependency must be isolated.
-- Include cases for happy paths, missing evidence, ambiguous input, tool failure, forbidden tool use, required tool use, approval gates, guardrail trips, state changes, handoffs, and regressions from observed bugs.
+- Exercise the real agent path in local evaluations. Do not mock the behavior under review. Mock an external dependency only when the test must isolate it.
+- Include successful cases and cases with missing evidence or ambiguous input. Include tool failures, prohibited tool use, required tool use, and approval checks. Include failed safety checks, state changes, handoffs, and regressions from observed defects.
 - Grade durable behavior rather than exact prose unless the wording is contractual.
-- Capture trace IDs, tool calls, structured outputs, guardrail outcomes, state mutations, latency, and cost signals in eval results.
+- Capture trace IDs, tool calls, structured outputs, safety-check results, state changes, latency, and cost signals in evaluation results.
 - Keep a small, fast smoke set for development and a broader regression set for release checks.
 
 ## Observability and Debugging
 
-- Ensure every run has a trace or correlation ID that appears in user-facing logs, tool logs, eval results, and error reports.
-- Track agent-level metrics: task success, tool success/failure, average turns, max-turn hits, timeouts, guardrail trips, handoffs, escalations, retries, latency, and cost.
-- Store enough sanitized context to reproduce failures: user intent class, selected tools, tool inputs/outputs where safe, model/version, prompt/version, and deployment version.
+- Give every run a trace or correlation ID. Include the ID in user-facing logs, tool logs, evaluation results, and error reports.
+- Track agent-level metrics. Include task success, tool results, average turns, maximum-turn events, and timeouts. Also include failed safety checks, handoffs, escalations, retries, latency, and cost.
+- Store enough sanitized context to reproduce failures. Include the user intent class, selected tools, and safe tool input and output data. Include the model, prompt, and deployment versions.
 - Make privacy choices explicit. Do not store raw sensitive data unless there is a defined need, retention policy, and access control.
-- Add alerting for spikes in tool failures, timeouts, guardrail blocks, escalation rate, cost, latency, and unexpected write actions.
+- Add alerts for increases in tool failures, timeouts, safety-check blocks, escalation rate, cost, latency, and unexpected write actions.
 
 ## Deployment and Rollout
 
 - Require a runnable local command and a smoke result before reviewing deployment readiness.
 - For HTTP services, require `PORT` support and a readiness endpoint such as `/health`.
-- Version prompts, tools, eval datasets, and deployment artifacts so regressions can be traced to a concrete change.
-- Use gradual rollout for high-risk workflows. Keep rollback simple and tested.
-- Define owner, on-call path, incident severity, rollback trigger, and customer/support communication path.
+- Record versions for prompts, tools, evaluation datasets, and deployment artifacts. Use these records to trace regressions to a specific change.
+- Use a gradual rollout for high-risk workflows. Keep the rollback process simple and tested.
+- Define the owner, on-call contact procedure, incident severity, rollback trigger, and customer communication procedure.
 - Verify environment variables, credentials, sandbox backend, model access, ports, containers/processes, and generated deployment files before calling a deployment ready.
 
 ## Security, Privacy, and Compliance
@@ -60,14 +60,14 @@ Use this reference to review OpenAI Agents SDK systems for production risk. Appl
 - Restrict file, shell, network, and database access according to the workflow's real needs.
 - Add audit logs for sensitive reads and all writes.
 - Document data retention, deletion, and access-review expectations for conversations, traces, eval datasets, and tool outputs.
-- For regulated or high-stakes domains, require a domain-specific review rather than relying on general-purpose guardrails.
+- For regulated or high-stakes domains, require a domain-specific review. Do not rely only on general-purpose safety checks.
 
 ## Cost, Latency, and Scaling
 
 - Track cost per task or conversation and identify expensive outliers.
-- Bound loops with max turns, timeouts, and fallback behavior.
-- Prefer cheaper or faster paths for simple cases when quality is preserved.
-- Parallelize independent work only when the latency gain is worth the added orchestration and debugging complexity.
+- Limit loops with maximum turns, timeouts, and alternate behavior.
+- Prefer lower-cost or faster paths for simple cases when they preserve quality.
+- Run independent work in parallel only when the latency reduction is greater than the added orchestration and debugging cost.
 - Cache deterministic or stable intermediate results when safe and privacy-compatible.
 - Add rate limits and budget controls for user, tenant, job, or workflow scope.
 
@@ -91,5 +91,5 @@ Use this reference to review OpenAI Agents SDK systems for production risk. Appl
 - What must be true before the agent can act without human approval?
 - How will the team detect a model, prompt, tool, or data-source regression?
 - How can an engineer reproduce a bad run from a user report?
-- What is the rollback path if a new prompt, model, tool, or deployment behaves badly?
+- What is the rollback procedure if a new prompt, model, tool, or deployment behaves incorrectly?
 - Which logs, traces, or eval artifacts contain sensitive data?

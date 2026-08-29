@@ -16,21 +16,21 @@ Confirm current path and metadata conventions in the official skill-authoring gu
 
 ## Design
 
-- Use a square SVG view box, normally `0 0 512 512`.
+- Use a square SVG view box. Use `0 0 512 512` unless the existing design requires a different square view box.
 - Extend intentional backgrounds to every edge to avoid an accidental inset tile.
 - Keep the focal shape readable at 16–32 pixels.
 - Use transparency only when it is part of the design.
-- Treat the SVG as the source of truth; regenerate the PNG after SVG changes.
+- Treat the SVG as the authoritative source. Regenerate the PNG after you change the SVG.
 
 ## Export
 
-Use an available SVG renderer that preserves gradients and alpha. On macOS, Quick Look can produce a preview, but verify the result rather than assuming the conversion succeeded:
+Use an available SVG renderer that preserves gradients and alpha. On macOS, Quick Look can produce a preview. Verify the result before you accept the conversion:
 
 ```bash
 qlmanage -t -s 100 -o /tmp assets/<skill-name>.svg
 ```
 
-Move the generated preview into `assets/<skill-name>.png` only after checking its format and dimensions. Other renderers are acceptable when they produce the same contract.
+Move the generated preview into `assets/<skill-name>.png` only after you check its format and dimensions. You can use another renderer when it meets the same requirements.
 
 ## Deterministic validation
 
@@ -38,11 +38,11 @@ Move the generated preview into `assets/<skill-name>.png` only after checking it
 2. Confirm the SVG view box and full-bleed geometry when a background is expected.
 3. Identify the PNG by file contents and confirm it is exactly 100x100.
 4. Parse `agents/openai.yaml` and resolve both paths from the skill directory.
-5. Render or open both assets and inspect contrast, cropping, gradients, transparency, and small-size legibility.
+5. Render or open both files. Inspect contrast, cropping, gradients, transparency, and legibility at a small size.
 
 ## Troubleshooting
 
 - **Gray or flat PNG:** use a renderer with gradient support and regenerate from the SVG.
 - **Inset border:** extend the background to the full view box before re-exporting.
-- **Soft or cropped subject:** simplify the design or increase internal breathing room, then inspect at actual display size.
+- **Soft or cropped subject:** simplify the design or increase the clear area around the subject. Then inspect the result at its actual display size.
 - **Missing icon:** correct the skill-relative YAML path and confirm exact filename casing.

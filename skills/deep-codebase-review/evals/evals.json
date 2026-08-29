@@ -7,8 +7,8 @@
       "expect": [
         "Uses deep-codebase-review and bounds the repository-wide scope",
         "Uses a small council when available and consolidates one evidence-backed report",
-        "Limits maintainability observations to concrete change costs or structural pressure points rather than general aesthetic preferences",
-        "Separates concrete findings from structural pressure points"
+        "Limits maintenance observations to specific change costs or structural future risks",
+        "Separates concrete findings from structural future risks"
       ]
     },
     {
@@ -17,7 +17,7 @@
       "expect": [
         "Starts from the merge-base diff rather than auditing unrelated repository areas",
         "Expands only into contracts, dependencies, tests, and design documents needed to judge the diff",
-        "States material coverage limits"
+        "States important coverage limits"
       ]
     },
     {
@@ -35,7 +35,7 @@
       "expect": [
         "Discloses that delegation is unavailable",
         "Continues with equivalent solo role-based passes without asking permission",
-        "Does not claim that a council was used"
+        "Does not claim use of a council"
       ]
     },
     {
@@ -53,7 +53,7 @@
       "prompt": "Combine a deep structural audit with an explicit code elegance and beauty review.",
       "expect": [
         "Combines structural findings with grounded aesthetic observations",
-        "Keeps defects, pressure points, disturbances, and taste preferences distinct",
+        "Keeps defects, future risks, and aesthetic preferences separate",
         "Produces one coherent report rather than duplicate sections"
       ]
     },
@@ -62,7 +62,7 @@
       "prompt": "Deeply review this small but complete library; do not invent problems if it is sound.",
       "expect": [
         "Says explicitly when there are no concrete findings",
-        "Reports genuine pressure points or testing gaps without inflating them",
+        "Reports genuine future risks or testing gaps without inflating them",
         "States residual scope risk"
       ]
     }

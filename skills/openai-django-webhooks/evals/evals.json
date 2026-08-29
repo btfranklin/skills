@@ -5,7 +5,7 @@
       "name": "endpoint_worker_boundary",
       "prompt": "Implement an OpenAI Responses webhook in this Django service.",
       "expect": [
-        "Limits the request endpoint to verification, durable receipt, enqueueing, and prompt acknowledgement",
+        "Limits the request endpoint to signature verification, durable receipt, enqueueing, and an immediate acknowledgement",
         "Retrieves the response in a background worker",
         "Keeps state transitions idempotent in the service layer"
       ]
@@ -16,7 +16,7 @@
       "expect": [
         "Deduplicates durable delivery at the request boundary",
         "Makes worker processing and state transitions idempotent",
-        "Does not let duplicate or out-of-order work regress a terminal state"
+        "Prevents duplicate or out-of-order work from changing a terminal state"
       ]
     },
     {

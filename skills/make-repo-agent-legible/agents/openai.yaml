@@ -1,6 +1,6 @@
 interface:
-  display_name: "Make Repo Agent Legible"
-  short_description: "Make repositories navigable and verifiable by agents"
+  display_name: "Make Repository Agent Legible"
+  short_description: "Help agents find and verify repository information"
   icon_small: "./assets/make-repo-agent-legible.svg"
   icon_large: "./assets/make-repo-agent-legible.png"
-  default_prompt: "Use $make-repo-agent-legible to audit this repository, prioritize its highest-leverage discoverability gaps, and recommend proportionate repo-local maps, documentation, or checks."
+  default_prompt: "Use $make-repo-agent-legible to audit this repository. Find its most costly information gaps. Recommend suitable repository maps, documents, or checks."

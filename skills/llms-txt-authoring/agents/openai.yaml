@@ -3,4 +3,4 @@ interface:
   short_description: "Author and validate site-root llms.txt files"
   icon_small: "./assets/llms-txt-authoring.svg"
   icon_large: "./assets/llms-txt-authoring.png"
-  default_prompt: "Use $llms-txt-authoring to create or review a concise, proposal-aligned llms.txt from this site's canonical content."
+  default_prompt: "Use $llms-txt-authoring to create or review an llms.txt file from this site's canonical content. Follow the current proposal."
