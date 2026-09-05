@@ -27,6 +27,35 @@
         "Records provider and library evidence needed for reproduction",
         "Adds version identifiers only if a real compatibility boundary is found"
       ]
+    },
+    {
+      "name": "invoice_missing_evidence",
+      "prompt": "Extract this invoice. Its total is unreadable and its currency is only shown as $.",
+      "expect": [
+        "Returns ReviewRequired without an invented total or currency",
+        "Does not construct a complete invoice from missing evidence",
+        "Does not retry to invent missing source values"
+      ]
+    },
+    {
+      "name": "invoice_arithmetic_and_currency",
+      "prompt": "Review invoice validation. The line sum and subtotal are 100 USD, tax is 10 USD, and total is 110 USD. Also test a CAD unit price, CAD tax, and an incorrect quantity times unit price.",
+      "expect": [
+        "Accepts line sums equal to subtotal before tax",
+        "Compares subtotal plus tax with total",
+        "Checks each quantity times unit price against its line total",
+        "Rejects currency differences in tax and unit prices",
+        "Uses a host-supplied Decimal rounding tolerance"
+      ]
+    },
+    {
+      "name": "invoice_unknown_tax",
+      "prompt": "The invoice tax is unreadable. Can I use null tax and treat it as zero?",
+      "expect": [
+        "Routes unknown tax to human review",
+        "Uses null tax only when the source confirms no separate tax charge",
+        "Prevents import before arithmetic and source checks pass"
+      ]
     }
   ]
 }
