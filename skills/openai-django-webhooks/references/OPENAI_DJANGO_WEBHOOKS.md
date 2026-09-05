@@ -51,20 +51,21 @@ def openai_webhook(request):
     response_id = getattr(event.data, "id", None)
 
     with transaction.atomic():
-        delivery, created = WebhookDelivery.objects.get_or_create(
+        delivery, _ = WebhookDelivery.objects.get_or_create(
             webhook_id=webhook_id,
             defaults={
                 "event_type": event.type,
                 "response_id": response_id,
             },
         )
-        if created:
-            transaction.on_commit(lambda: enqueue_webhook_delivery(delivery.pk))
+        transaction.on_commit(lambda: enqueue_webhook_delivery(delivery.pk))
 
     return HttpResponse(status=200)
 ```
 
 Adapt the model and queue call to the repository. Give `webhook_id` a unique database constraint. Store only the event fields that processing and diagnostics require. Do not retain sensitive payloads by default.
+
+Enqueue the delivery after every verified request, including a duplicate request. A saved receipt does not prove that the queue accepted the work. The queue call must raise if it cannot confirm durable acceptance. Let that failure produce a non-`2xx` response. A repeated request then retries enqueueing with the same delivery ID. If queue acceptance is uncertain, a repeated request can enqueue twice. The worker must safely skip completed deliveries. Use a durable queue with worker retries; an in-process callback alone is not durable.
 
 The endpoint must perform only signature verification, durable deduplication, and enqueueing. Return a successful `2xx` within a few seconds. Use the application's background worker for response retrieval and other work that can delay the response.
 
@@ -116,6 +117,7 @@ The status view must authorize access to the job on every request. Return a pend
 - Response retrieval failure followed by worker retry
 - Successful completion and each supported terminal failure
 - Database failure before durable receipt
-- Queue failure after transaction commit
+- Queue failure after transaction commit, followed by a repeated delivery that enqueues the saved record
+- Uncertain queue acceptance followed by duplicate worker execution
 - Polling termination for success, failure, expiry, and deletion
 - Redaction of secrets and sensitive response content from logs

@@ -27,6 +27,15 @@
         "Stops polling for every terminal state",
         "Handles missing and unauthorized jobs explicitly"
       ]
+    },
+    {
+      "name": "queue_failure_after_receipt",
+      "prompt": "The delivery record commits, but the queue call fails. The provider sends the same webhook again. Recover the work.",
+      "expect": [
+        "Returns a non-success response when queue acceptance fails",
+        "Enqueues the existing delivery record on the repeated request",
+        "Uses the same delivery ID and makes duplicate worker execution safe"
+      ]
     }
   ]
 }
