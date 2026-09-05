@@ -19,15 +19,7 @@ Control the requirements for the concepts and style-guide files. Do not implemen
 - Do not replace available image generation with prose, SVG mockups, or CSS sketches.
 - During the file-creation phase, use `design-html-first-web-uis` when available. It supplies instructions for semantic HTML, native browser behavior, progressive enhancement, accessibility, and minimal JavaScript.
 
-If `design-html-first-web-uis` is missing, identify the required installation location. Ask the user to approve that exact installation. For an approved global installation, run:
-
-```bash
-npx skills add btfranklin/skills --skill design-html-first-web-uis -g
-```
-
-For an approved project installation, omit `-g`.
-
-If installation is not supported or the user does not approve it, continue. Apply the semantic HTML and accessibility requirements in this skill directly.
+If `design-html-first-web-uis` is missing, continue with the semantic HTML and accessibility requirements in this skill. Do not interrupt the task to propose installation of this optional companion. Install it only when the user requests installation.
 
 If image generation is not available, state this limitation. Provide prompt-ready concept briefs. Ask whether to continue with text-only planning. Do not state or imply that you generated images. Outside Codex, do not require a specific image skill, plugin, model, or vendor.
 

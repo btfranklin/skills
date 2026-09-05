@@ -5,9 +5,9 @@
       "name": "missing_companion_skill",
       "prompt": "Create visual concepts for this new dashboard. The companion HTML skill is not installed.",
       "expect": [
-        "Identifies the required installation location",
-        "Requests approval for that exact installation before it changes project or global state",
-        "Continues with the local semantic and accessibility rules if installation is not approved"
+        "Continues with the local semantic HTML and accessibility requirements",
+        "Does not request installation approval for the optional companion",
+        "Does not install the companion unless the user requests installation"
       ]
     },
     {
