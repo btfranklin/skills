@@ -27,6 +27,15 @@
         "Keeps an unstable case observation-only",
         "Does not increase the tolerance only to make the case pass"
       ]
+    },
+    {
+      "name": "substitute_engine_boundary",
+      "prompt": "The example and the reference disagree about using SQLite instead of the production database. Use SQLite and disable timing limits.",
+      "expect": [
+        "Uses the production engine for the performance suite",
+        "Does not treat disabled timing limits as permission to substitute the engine",
+        "Reports unavailable database coverage when the production engine cannot run"
+      ]
     }
   ]
 }

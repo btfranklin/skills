@@ -10,7 +10,7 @@ The performance settings use the same Django database backend, driver, transacti
 
 If the deployed database is embedded, the test setup gives each worker a disposable local database through the production backend. If the database uses a client-server design, CI creates an isolated service that uses the production engine family. Measure managed-network latency separately. This suite protects server-side work and does not claim to reproduce Internet distance.
 
-Every report records the resolved backend, driver, engine version, topology, and applicable options. If a test uses a substitute engine, label the test as an approximation. Do not enforce time limits from that test.
+Every report records the resolved backend, driver, engine version, topology, and applicable options. Do not use a substitute engine. If CI cannot reproduce the production topology, run correctness and query checks through the production engine. Label local time measurements as an approximation. Enforce time limits only on a stable representative runner.
 
 ## File layout
 
