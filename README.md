@@ -72,3 +72,24 @@ The validator checks repository structure, frontmatter, metadata, icon paths,
 local Markdown links, eval JSON, and the README catalog. It validates the eval
 file structure, but it does not execute behavioral evals. Run behavioral evals
 in the agent harness that will use the skill.
+
+Run the deterministic example checks with PDM:
+
+```bash
+pdm sync -G test
+pdm run test
+```
+
+These checks execute the published invoice schema and arithmetic code. They also
+execute the webhook endpoint function with a SQLite receipt store and a controlled
+queue. They cover queue failure after commit, repeated delivery, uncertain queue
+acceptance, missing invoice values, currency conflicts, and arithmetic errors.
+Specific instruction checks protect the database-engine rule and optional-skill
+fallback. These are contract checks, not automated writing-style checks.
+
+CI runs both the repository validator and these checks. The checks do not call a
+model or an external service. They do not replace Django integration tests,
+provider tests, or agent-level evaluations from `evals/evals.json`. Run those
+evaluations in the target agent harness and record the inputs, tool calls,
+results, and unmet expectations. Do not report the deterministic checks as proof
+that an agent followed the instructions.

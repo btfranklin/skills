@@ -14,3 +14,10 @@ jobs:
       - uses: actions/checkout@v7
       - name: Validate the repository
         run: python3 scripts/validate_repository.py
+      - uses: pdm-project/setup-pdm@v4.6
+        with:
+          python-version: '3.11'
+      - name: Install example test dependencies
+        run: pdm sync -G test
+      - name: Test published examples and instruction contracts
+        run: pdm run test
