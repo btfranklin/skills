@@ -34,7 +34,7 @@ Review the design and maintenance experience of one project. Support subjective 
 
 ## Model Guidance
 
-When the harness lets you choose a model, use a capable model that has good code understanding. Use low or medium reasoning effort. Do not use a low-capability model only because it is fast or inexpensive. The model must record its first impression before detailed checks. Later evidence can change or limit that impression. The first impression must remain visible. The model must not change the review into a correctness audit. If the harness does not have a reasoning setting, put these behavior rules in each reviewer's instructions.
+When the harness lets you choose a model, use a capable model that has good code understanding. Use low or medium reasoning effort. Do not use a low-capability model only because it is fast or inexpensive. Include the workflow requirements in each reviewer's instructions, including when the harness has no reasoning setting.
 
 ## Aesthetic Council
 
@@ -44,7 +44,7 @@ If sub-agents are not available, use the same review areas in a solo review. Als
 
 ## Output
 
-Present:
+Keep the report proportional to the scope and observations. Include the first impression. Include other sections only when they apply. Use this order:
 
 1. First impression.
 2. What is beautiful.

@@ -13,7 +13,7 @@ description: >-
 3. Define the database-fidelity contract before you implement tests. Reproduce the applicable production engine and access mode. Document each deliberate approximation. Do not use an approximation to make claims about production latency.
 4. Create a separate performance test group. Give it dedicated settings, a marker, commands, and on-demand CI. Keep it out of the default unit-test run.
 5. Seed realistic scenarios in a deterministic way. Fix time, identifiers, random values, ordering, and external side effects. Build expensive data outside benchmark rounds.
-6. Check correctness before you measure time. Normalize results and compare a snapshot or summary hash. Then enforce a query or operation limit for the measured layer.
+6. Check correctness before you measure time. Use direct assertions, normalized snapshots, or summary hashes to check the required results. Then enforce a query or operation limit for the measured layer.
 7. Benchmark stable work with `pytest-benchmark`. Exclude setup and instrumentation unless their cost is the explicit subject of the case.
 8. Calibrate time limits only from repeated clean runs on a stable, representative runner. If that runner is not available, record timing results without enforcement. Continue to enforce deterministic correctness checks and query or operation limits. Report the unavailable runner and each deliberate approximation.
 9. Keep correctness updates and time-baseline acceptance as separate maintenance actions. Add a coverage registry only for a limited family of interfaces where missing coverage is a known risk.
@@ -26,7 +26,7 @@ Use the repository's package manager and task runner. Preserve existing test con
 - For an embedded production database, use the real Django backend and driver. Use an isolated local file or memory mode only when that mode matches the contract.
 - For client-server or remote databases, preserve the relevant protocol and topology. Measure managed-network latency separately when CI cannot reproduce it faithfully.
 - Prefer `RequestFactory` only when the test measures a request interface and excludes middleware from the contract.
-- Use full normalized snapshots when a person can review the results. Use summaries and hashes for very large payloads.
+- Prefer direct assertions for specific properties. Use normalized snapshots when comparison of the full result helps review. Use summaries and hashes for very large payloads.
 - Use query or operation limits to identify regressions early. Use runner-specific time limits for time measurements.
 - Never update snapshots or budgets automatically after a failure.
 

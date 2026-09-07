@@ -35,7 +35,7 @@ If image generation is not available, state this limitation. Provide prompt-read
 8. Stop at the selection checkpoint. Ask the user to choose one, request another batch, or give targeted iteration guidance.
 9. For a new set, preserve the three categories. The user can instead request variants of one concept or a combination of concepts.
 10. After approval, read [references/style-guide-contract.md](references/style-guide-contract.md). Use the approved concept and user-supplied content as the authoritative visual and editorial references.
-11. If an important region is too small, unclear, or cropped, generate a detailed concept for that region. Use the approved visual system. Do not invent the missing design without this detail.
+11. If an important region is too small, unclear, or cropped, use the approved visual system to complete the detail when its rules are sufficient. Otherwise, generate a detailed concept for that region. Preserve the approved design direction.
 12. Create the output under `ui-style-guide/` in the current project or workspace:
     - `style-guide.html`
     - `style-guide.css`

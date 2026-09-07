@@ -20,6 +20,6 @@ Use the official OpenAI Agents SDK documentation or the official Agents SDK skil
 
 ## Output Format
 
-Start with findings in severity order. Then report architecture suitability, evaluation gaps, operations gaps, and an ordered correction plan. If evidence does not support a launch blocker, state this result. Also identify unknowns.
+Include only applicable sections. Keep the report proportional to the scope and findings. Start with findings in severity order. Then report architecture suitability, evaluation gaps, operations gaps, and an ordered correction plan. If evidence does not support a launch blocker, state this result. Also identify unknowns.
 
 For a full report, read the [worked readiness review](examples/readiness-review-output.md). For a design-only request, adapt its headings into a tailored pre-launch checklist.

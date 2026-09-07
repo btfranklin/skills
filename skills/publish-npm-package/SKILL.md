@@ -24,8 +24,7 @@ Build an npm publication process that follows the package's existing conventions
    - Determine whether the package name already exists.
    - Determine whether npm permits Trusted Publishing configuration before the first publication.
    - If the first publication needs authentication, validate the exact tarball.
-   - Obtain authorization for the exact `npm publish` command.
-   - Publish only after the user gives that authorization.
+   - Apply the authorization rule in Safety Rules before the first publication.
 6. For a release to multiple registries, apply the applicable publishing skill to each registry. Derive all package versions from one approved release identity. Complete preflight for every package file before any publisher runs.
 7. Before publication, validate YAML, package metadata, archive contents, permissions, event semantics, and all manual GitHub and npm settings.
 8. If one registry accepts the release and another registry fails, preserve the successful immutable release. Retry only the failed publisher. Use the files that preflight preserved for that registry. Use the exact tarball for npm. Use the exact wheel and source distribution for PyPI. Do not rebuild the files. Do not publish the successful version again.
@@ -39,11 +38,10 @@ Check current primary documentation before you change action references, Node.js
 
 - Respect the repository's package manager for dependency installation and validation. Use the npm CLI for npm registry operations that require it.
 - Do not introduce a long-lived npm publish token unless the user explicitly requires token-based publishing. Keep any token needed to install private dependencies read-only and separate from publication.
-- Get explicit authorization before you create or push tags. Also get authorization before you publish a release or configure registry trust. Get authorization before you alter repository settings, bootstrap a package, or perform a live upload.
+- Require explicit authorization to create or push tags, publish a release, configure registry trust, alter repository settings, bootstrap a package, or perform a live upload. Use authorization already given in the conversation when it covers the action. Ask only for actions outside that scope. Do not treat configuration approval as publication approval.
 - Treat package names and versions as immutable registry coordinates. Recheck name availability immediately before a first publication. Do not try to overwrite an existing version.
 - Inspect lifecycle scripts and the tarball before publication. `npm pack` and `npm publish` can execute package scripts.
 - Scope workspace commands to the intended package. Do not assume trust-management commands understand npm workspaces.
-- If one registry succeeds and another fails, preserve the successful immutable release. Recover only the failed publisher. Use the files that preflight preserved for that registry. Do not rebuild or republish the successful version.
 - Preserve existing workflow names and release conventions unless changing them is necessary to make the publishing identity correct.
 
 ## Resources
@@ -52,7 +50,7 @@ Check current primary documentation before you change action references, Node.js
 
 ## Output
 
-Report:
+Include only applicable sections. Keep the report proportional to the scope and results. Report:
 
 1. Existing npm release coverage and gaps.
 2. Workflow changes and the reason for each permission or event.

@@ -8,6 +8,8 @@ description: >-
 
 ## Workflow
 
+For a plan or audit, assess these steps without changing project files or deployed services. Identify checks that require implementation. For implementation, perform the applicable steps.
+
 1. Inspect the Django and Python constraints. Inspect the dependency manager, settings modules, databases, and deployment images. Inspect the CI matrix, third-party packages, and release process.
 2. Use primary sources to verify supported Python versions and current Django 5.2 and 6.0 patch releases. Verify relevant security notices and third-party compatibility. If a required source is not available, report the missing verification. Do not claim that an unverified version or dependency is current.
 3. Establish a clean baseline on the latest compatible Django 5.2 patch. Run the full test suite, Django system checks, migrations check, and representative production commands.

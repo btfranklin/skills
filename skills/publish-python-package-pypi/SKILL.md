@@ -21,7 +21,7 @@ Build a PyPI publication process that follows the package's existing conventions
 5. Keep CI, release-note generation, and package publication separate. Add optional release-note automation only when requested or already established by the repository.
 6. For a release to multiple registries, apply the applicable publishing skill to each registry. Derive all package versions from one approved release identity. Complete preflight for every wheel, source distribution, or other package file before any publisher runs.
 7. Before publication, validate YAML, package builds, permissions, event semantics, and all manual GitHub and PyPI settings.
-8. Obtain authorization for each live release action. Do not treat configuration approval as publication approval.
+8. Apply the authorization rule in Safety Rules before a live release action.
 9. If one registry accepts the release and another registry fails, preserve the successful immutable release. Retry only the failed publisher. Use the files that preflight preserved for that registry. Use the exact wheel and source distribution for PyPI. Use the exact tarball for npm. Do not rebuild the files. Do not publish the successful version again.
 10. After an authorized release, verify the registry metadata and installation. Identify each external setting or publication result that you could not verify.
 
@@ -33,10 +33,9 @@ Before you change action references, Python matrices, PDM setup, or Trusted Publ
 
 - Use PDM for environments, dependency installation, builds, and project commands.
 - Do not introduce a long-lived PyPI token unless the user explicitly requires token-based publishing.
-- Do not create or push tags, publish releases, alter repository settings, or perform a live upload without explicit authorization.
+- Require explicit authorization to create or push tags, publish releases, configure registry trust, alter repository settings, or perform a live upload. Use authorization already given in the conversation when it covers the action. Ask only for actions outside that scope. Do not treat configuration approval as publication approval.
 - Match the project's supported Python versions instead of imposing a global matrix.
 - Preserve existing workflow names and conventions unless you must change them to correct the publication process.
-- If one registry succeeds and another fails, preserve the successful immutable release. Recover only the failed publisher. Use the files that preflight preserved for that registry. Do not rebuild or republish the successful version.
 
 ## Resources
 
@@ -44,7 +43,7 @@ Before you change action references, Python matrices, PDM setup, or Trusted Publ
 
 ## Output
 
-Report:
+Include only applicable sections. Keep the report proportional to the scope and results. Report:
 
 1. Existing release coverage and gaps.
 2. Workflow changes and the reason for each permission or event.

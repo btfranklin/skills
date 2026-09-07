@@ -19,7 +19,7 @@ description: >-
 
 - Prefer links for navigation and forms for state-changing requests.
 - Prefer `details` and `summary`, `dialog`, and popover behavior when their semantics match the interaction. Do not use a native element when its semantics do not match the design.
-- Use server-rendered pages or fragments for authoritative application state. Keep partial-update endpoints usable without the enhancement layer.
+- Use server-rendered pages or fragments for authoritative application state. Keep each user workflow usable without the enhancement layer. A full-page route can provide the fallback for a partial-update endpoint.
 - Preserve normal HTTP behavior: validation errors, redirects, CSRF protection, idempotency expectations, and back/forward navigation.
 - Use animations and view transitions only for presentation. Respect reduced-motion preferences. Do not require motion to complete a task.
 

@@ -51,7 +51,7 @@ If sub-agents are not available, state this limit. Continue with the same role-b
 
 ## Output
 
-Present:
+Include only applicable sections. Keep the report proportional to the scope and findings. Use this order:
 
 1. Findings ordered by severity.
 2. Structural future risks and likely refactors.
