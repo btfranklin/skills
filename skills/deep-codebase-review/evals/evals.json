@@ -65,6 +65,72 @@
         "Reports genuine future risks or testing gaps without inflating them",
         "States residual scope risk"
       ]
+    },
+    {
+      "name": "likely_change_without_framework",
+      "prompt": "Review the export architecture of this service. The roadmap names JSON export next month. Today export_csv(query, destination) selects records and streams CSV under one transaction. There is no plugin requirement. Treat these facts as the available evidence and state coverage limits.",
+      "expect": [
+        "Traces where selection and encoding would change for JSON",
+        "Considers a small separation while preserving streaming and transaction lifetime",
+        "Does not invent a registry, plugin discovery, or an implemented JSON feature",
+        "Separates a future risk from current harm and states a condition for deferred work"
+      ]
+    },
+    {
+      "name": "sufficient_design",
+      "prompt": "Review the architecture of this small complete library. Its public write_csv(records, destination) function accepts an iterator and writes CSV. Selection belongs to callers. Tests cover output and write failures. There is no roadmap for another format or runtime extension.",
+      "expect": [
+        "Retains the direct function without inventing a class hierarchy or extension requirement",
+        "Does not report the absence of a registry as a defect",
+        "States the limits of the supplied evidence"
+      ]
+    },
+    {
+      "name": "misleading_name_with_behavioral_harm",
+      "prompt": "Review this TypeScript account boundary. accounts.get(email) inserts and persists an account on a miss. The eligibility endpoint calls it only to check whether an account exists; that endpoint must not create accounts. Registration also uses it.",
+      "expect": [
+        "Identifies the read-only contract violation with a specific mechanism",
+        "Does not treat a rename to getOrCreate as sufficient remediation",
+        "Separates lookup from explicit creation while preserving registration behavior",
+        "Shows a representative corrected call without imposing verb preferences on unrelated framework APIs"
+      ]
+    },
+    {
+      "name": "remove_forwarding_layers",
+      "prompt": "Review this export module for change cost. ExportService.run forwards its arguments to ExportManager.run. That method calls write_csv. Both wrappers have no state, policy, logging, external users, or resource ownership. Signature changes require edits to both wrappers and their forwarding tests. Content and failure tests exercise write_csv.",
+      "expect": [
+        "Considers direct calls and deletion before proposing another abstraction",
+        "Identifies both wrappers and forwarding-only tests as removal candidates",
+        "Preserves content and failure tests",
+        "Explains the reduced maintenance locations rather than only reduced line count"
+      ]
+    },
+    {
+      "name": "preserve_useful_boundaries",
+      "prompt": "Review these two adapters. Each validates a payload then sends it. One implements payments with idempotency and audit retention. The other sends best-effort telemetry and can drop events. Their control-flow syntax is similar. A proposed helper uses flags for retries, auditing, and dropping.",
+      "expect": [
+        "Preserves the distinct policy and lifecycle owners",
+        "Does not recommend a flag-driven helper merely because syntax repeats",
+        "Explains the reasons the implementations change independently"
+      ]
+    },
+    {
+      "name": "derived_state_semantics",
+      "prompt": "Review these batch models. LiveBatch stores items and item_count; three list mutation paths must update the count. InvoiceSnapshot stores issued_item_count from the issue date; current items can change later. Both counts are integers.",
+      "expect": [
+        "Considers deriving the live count and removing synchronization paths",
+        "Preserves the historical snapshot count",
+        "Checks semantic meaning before treating same-shaped fields as redundant"
+      ]
+    },
+    {
+      "name": "naming_preference_boundary",
+      "prompt": "Review this API for structural risk. system.serialize_agent_input(agent, text) uses system-owned encoding configuration. Its callers and tests match the documented behavior. The name is awkward, but no misuse or change cost is demonstrated.",
+      "expect": [
+        "Does not classify awkward wording alone as a defect",
+        "Does not move behavior onto the agent without accounting for system configuration",
+        "Keeps an optional naming preference separate from structural findings"
+      ]
     }
   ]
 }

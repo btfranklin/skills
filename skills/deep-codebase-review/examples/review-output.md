@@ -4,7 +4,7 @@ This fictional example shows report depth and classification. Adapt the format t
 
 ## Review Method
 
-The review covered the `jobs/` merge-base diff, queue adapter, persistence model, and retry tests. The review excluded deployment configuration and unrelated HTTP endpoints. Three specialists reviewed lifecycle, boundaries, and tests. The lead reviewer verified both findings.
+The review covered the `jobs/` merge-base diff, queue adapter, persistence model, and retry tests. The review excluded deployment configuration and unrelated HTTP endpoints. Three specialists reviewed lifecycle, boundaries, and tests. The lead reviewer verified all three findings.
 
 ## Findings
 
@@ -16,9 +16,15 @@ The review covered the `jobs/` merge-base diff, queue adapter, persistence model
 
    `Export.metadata` stores adapter-specific status and destination fields. Core scheduling code reads these fields directly. A new provider now requires provider conditions in the model and scheduler. This requirement conflicts with the adapter boundary in `docs/architecture.md`.
 
+3. `[Low] Forwarding layers repeat signature maintenance` — `exports/service.py:12`
+
+   `exports/service.py`: `ExportService.run` only forwards to `ExportManager.run`, which only calls `write_csv`. Every signature change now crosses both wrappers and their forwarding tests. No caller uses a separate policy or lifecycle at either layer.
+
+   Replace `service.run(records, destination)` with `write_csv(records, destination)` at the workflow boundary. Remove the two forwarding classes and their forwarding-only tests. Preserve output and failure tests. The workflow retains authorization and transaction ownership. This correction removes two maintenance locations without adding a general exporter interface. Retain either layer if further caller inspection reveals an external contract that requires it.
+
 ## Structural Future Risks
 
-- `jobs/export_worker.py`: Reservation, dispatch, retry accounting, and cleanup use one module. Except for the crash interval above, current behavior is correct. The next delivery mode will require edits to unrelated lifecycle branches. Extract the dispatch state transition before you add that mode.
+- `jobs/export_worker.py`: Reservation, dispatch, retry accounting, and cleanup use one module. Except for the crash interval above, current behavior is correct. The next delivery mode will require edits to unrelated lifecycle branches. The delivery-mode requirement is documented in `docs/roadmap.md`. Trace its dispatch edits before implementation. Defer the split until that work starts; current behavior does not require a new framework.
 
 ## Roadmap / Design Alignment
 

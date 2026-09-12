@@ -22,10 +22,8 @@ Select only the review areas that apply to the repository. The goal is to unders
 ## 3. Language and Framework Use
 
 - Does the code use the normal features and conventions of each language?
-- In Python, notice plain functions, context managers, and simple data shapes. Notice useful dataclasses or typed models. Assess whether tests are readable. Use classes only when they clarify ownership.
-- In TypeScript or JavaScript, notice meaningful types and clear asynchronous control flow. Notice framework conventions and object structures that communicate intent.
-- In Swift, Rust, Go, Ruby, SQL, shell, or another language, identify the local conventions from the ecosystem and existing code.
-- Then assess whether the code follows those conventions.
+- Use the Python or TypeScript guide linked from `SKILL.md` for the applicable language.
+- For other languages, state the limits of language-specific assessment and use observed project conventions.
 - Do not use a language feature only to show language knowledge. Use it when it makes an idea clearer, safer, or easier to maintain.
 
 ## 4. Developer Experience and Joy
@@ -38,6 +36,9 @@ Select only the review areas that apply to the repository. The goal is to unders
 
 ## 5. Composition, Naming, and Vocabulary
 
+- Do complete calls make the action, receiver, and argument roles clear?
+- Does the operation belong to its receiver, or does it depend on policy owned elsewhere?
+- Do names distinguish lookup, creation, conversion, mutation, and external effects?
 - Do names carry the right level of abstraction?
 - Does the folder structure clearly show the project organization?
 - Do multiple modules appear to own the same primary behavior?
@@ -49,7 +50,9 @@ Select only the review areas that apply to the repository. The goal is to unders
 
 - Does the project keep related ideas close enough for a maintainer to understand them together?
 - Does repeated setup or infrastructure code increase maintenance work?
-- Can a small helper, table, value object, or clear boundary reduce that work?
+- Can deletion, derivation, consolidation, or an existing capability remove that work?
+- What disappears, what remains, and which behavior or boundary must be preserved?
+- If new code is necessary, can a small helper, table, value object, or clear boundary reduce that work?
 - Does repeated code represent necessary parallel behavior? Does it show an unnamed shared concept?
 - Do wrappers, facades, re-export layers, or adapter code make ownership less obvious?
 
@@ -61,7 +64,17 @@ Select only the review areas that apply to the repository. The goal is to unders
 - Are planning documents forward-looking, or have they become changelogs?
 - Do comments remove effort, or do they add another layer to reconcile?
 
-## 8. Maintenance-Difficulty Checklist
+## 8. Likely Change
+
+- What project evidence supports the next one or two changes?
+- Can a maintainer locate and express each change with existing concepts?
+- Which edits represent normal coordination, and which reveal scattered responsibility?
+- Does a small present adjustment improve clarity without speculative machinery?
+- What remains clear enough to retain? Which concrete condition would justify a later change?
+
+Use `design-judgment.md` for the assessment method. Do not require a future-change finding when evidence is absent.
+
+## 9. Maintenance-Difficulty Checklist
 
 Common causes of maintenance difficulty:
 
@@ -76,7 +89,7 @@ Common causes of maintenance difficulty:
 - compatibility wrappers kept after their current purpose has expired
 - a local abstraction that makes the whole project more difficult to navigate
 
-## 9. Output Discipline
+## 10. Output Discipline
 
 - Ground aesthetic judgments in concrete artifacts.
 - Explain the maintainer experience. State what becomes easier, clearer, more fragile, or more difficult.

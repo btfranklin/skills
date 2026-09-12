@@ -15,7 +15,8 @@ In council mode, use these review areas to assign specialist work. The coordinat
 
 - Are core domain concepts distinct from adapters, UI, transport, or storage details?
 - Do business or domain models contain infrastructure concerns?
-- Do names describe what the code does?
+- Do complete calls describe their ownership and effects accurately?
+- Can misleading names cause a specific misuse or repeated maintenance work?
 - Are multiple layers solving the same problem differently?
 
 ## 3. Ownership and Lifecycle
@@ -45,6 +46,8 @@ In council mode, use these review areas to assign specialist work. The coordinat
 - Is there repeated adapter metadata handling, reservation logic, status updates, or serialization code?
 - Can a shared helper reduce future defects without hiding necessary differences?
 - Is there a clear boundary for a shared implementation?
+- Do the repeated implementations share a policy, or only similar syntax?
+- Can deletion or an existing capability resolve the problem with fewer concepts?
 
 ## 7. Traceability and Change Cost
 
@@ -54,6 +57,9 @@ In council mode, use these review areas to assign specialist work. The coordinat
 - Do abstractions hide ownership, state changes, or control flow?
 - Does each expected future change have a clear implementation location?
 - Can a smaller interface or helper reduce a verified maintenance cost?
+- Which one or two likely changes have project evidence? Where would their edits belong?
+- Does a proposed correction justify its present cost? What concrete condition permits deferral?
+- Can a maintainer reverse the decision without changing unrelated contracts?
 
 ## 8. Module Structure
 

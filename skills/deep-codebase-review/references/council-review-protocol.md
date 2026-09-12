@@ -18,9 +18,9 @@ Use this protocol for a broad review that needs separate specialist reviews. The
 
 - `Coordinator / Lead Reviewer`: Define the scope. Establish intent. Verify important claims. Resolve disagreements. Write the report.
 - `Correctness and Lifecycle Reviewer`: Review behavior, state transitions, persistence, cleanup, retries, idempotency, concurrency, and async continuation.
-- `Architecture and Boundary Reviewer`: Review ownership, coupling, module structure, adapter use, stale abstractions, and incomplete refactors.
+- `Architecture and Boundary Reviewer`: Review ownership, coupling, module structure, adapter use, stale abstractions, and incomplete refactors. Use [design-for-change.md](design-for-change.md) to trace one or two supported likely changes. Assess ownership and the cost of reversing decisions.
 - `Tests and Contract Reviewer`: Review risk-heavy scenarios, architectural contracts, implementation overfitting, and misleading coverage.
-- `Maintainability and Change-Cost Reviewer`: Identify behavior that is difficult to trace. Identify changes that cross unnecessary boundaries. Identify repeated code that can become inconsistent. Identify code that hides ownership or control flow. Identify future changes that do not have a clear location. Report only specific maintenance risks or structural future risks. Exclude aesthetic preferences, language conventions, developer joy, beauty, and naming preferences that do not have a specific maintenance cost.
+- `Maintainability and Change-Cost Reviewer`: Identify behavior that is difficult to trace. Identify changes that cross unnecessary boundaries. Identify repeated code that can become inconsistent. Identify code that hides ownership or control flow. Identify future changes that do not have a clear location. Use [design-for-change.md](design-for-change.md) to test removal before addition. Inspect names for misleading effects or ownership. Report only specific maintenance risks or structural future risks. Exclude aesthetic preferences, language conventions, developer joy, beauty, and naming preferences that do not have a specific maintenance cost.
 
 ## Optional Roles
 
@@ -40,6 +40,9 @@ You are the [ROLE] for a deep codebase review.
 Scope:
 - Review only [FILES / MODULES / DIFF].
 - Focus on [ROLE-SPECIFIC CONCERNS].
+- Read [ASSIGNED REFERENCES]. Apply only the guidance relevant to your role.
+- For structural proposals, identify evidence for likely changes and trace their required edits.
+- For simplification proposals, state what disappears and what required behavior remains. Consider retaining the current design.
 - Do not edit files or expand into a generic review.
 
 Return:
@@ -47,6 +50,8 @@ Return:
 - The mechanism of harm or debt accumulation.
 - Classification as Critical, High, Medium, Low, or Future Risk.
 - Explicit uncertainty and relevant contract gaps.
+- For a design recommendation: the smallest useful change, its present cost, and any condition for deferral.
+- For a naming recommendation: a representative call and its specific harmful effect.
 ```
 
 ## Consolidation
@@ -59,4 +64,5 @@ Record useful claims in a private list. Use the fields `claim`, `evidence`, `mec
 - Change an unresolved conflict to an open question.
 - Discard unsupported claims, vague preferences, and observations without a concrete downside.
 - Keep future risks separate from findings.
+- Reject speculative flexibility, line-count arguments, and consolidation of independently changing policies. Verify that proposed deletions preserve required boundaries and contracts.
 - Produce one report with a consistent writing style. Do not return separate specialist summaries.

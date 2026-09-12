@@ -66,6 +66,85 @@
         "Keeps formal findings separate from aesthetic assessments and preferences",
         "Names the items to protect before recommending changes"
       ]
+    },
+    {
+      "name": "python_call_ownership",
+      "prompt": "Review this Python API for elegance: system.serialize_agent_input(agent, text). The system selects an encoding policy from its tenant settings. The agent is a data object. This internal API has three callers.",
+      "expect": [
+        "Examines complete calls and system policy ownership",
+        "Proposes an explicit argument relationship such as serialize_input_for_agent without moving policy onto the data object",
+        "Shows a before-and-after call and explains the clarity benefit",
+        "Treats the original as valid code rather than a correctness defect"
+      ]
+    },
+    {
+      "name": "typescript_options_and_restraint",
+      "prompt": "Review these TypeScript calls for elegance: sendReport(report, recipient, true, false), where the Booleans mean archive and notify; Math.max(width, height); and framework.on(event, callback), an established framework API.",
+      "expect": [
+        "Suggests named options for the ambiguous Boolean arguments",
+        "Preserves clear numeric operands and framework conventions",
+        "Does not impose options objects or English-like naming on every call"
+      ]
+    },
+    {
+      "name": "likely_change_without_framework",
+      "prompt": "Review an export module for elegance. The roadmap requires JSON export next. exportCsv selects records using shared business rules and writes CSV. There is no plugin requirement. The proposal adds a provider registry, plugin discovery, and a base class.",
+      "expect": [
+        "Uses the roadmap as evidence for the next change",
+        "Traces repeated record selection and separates selection from encoding where useful",
+        "Recommends a small design with plain functions rather than unsupported plugin machinery",
+        "Explains what becomes easier to locate without presenting all future possibilities as requirements"
+      ]
+    },
+    {
+      "name": "retain_clear_direct_solution",
+      "prompt": "Review a mature module for elegance. One provider is constructed in one function. Its setup is clear and tested. There are no plans or existing variants for another provider. A comment suggests adding a registry for future flexibility.",
+      "expect": [
+        "Retains the direct construction",
+        "Does not invent a second-provider requirement",
+        "Can name an evidence-based condition for later reassessment without requiring present scaffolding",
+        "Reports the clear design as something to protect"
+      ]
+    },
+    {
+      "name": "subtraction_preserves_boundaries",
+      "prompt": "Review this internal export flow for elegance: ExportFacade delegates unchanged to ExportService, which delegates unchanged to encodeCsv. Neither wrapper owns state or policy. An outer AuthorizedExport handler checks permissions and records audit events. Tests include output behavior and wrapper-forwarding assertions.",
+      "expect": [
+        "Recommends removing the two forwarding classes and updating their callers",
+        "Preserves the authorization and audit boundary",
+        "Names the encoding behavior tests that remain and forwarding-only tests that disappear",
+        "Explains fewer concepts and tracing steps rather than merely fewer lines"
+      ]
+    },
+    {
+      "name": "independent_rules_and_public_contract",
+      "prompt": "Review for elegance: tax and shipping functions currently use identical arithmetic but have independent policy owners. A published API uses a slightly repetitive method name with documented external callers. A proposed generic helper uses several Boolean policy flags.",
+      "expect": [
+        "Keeps independently changing policies separate",
+        "Rejects the generic helper when it makes callers harder to understand",
+        "Accounts for the published contract before recommending a rename",
+        "Does not introduce a compatibility layer or claim every repeated name requires a change"
+      ]
+    },
+    {
+      "name": "python_effects_and_resource_lifetime",
+      "prompt": "Review Python API clarity: report.contents opens a network connection on every access; SlugFormatter has no state and only format(title); a file handle is opened, used, and closed in one function. A framework model also has a required property named contents that reads cached data.",
+      "expect": [
+        "Distinguishes remote effects from cached property access",
+        "Considers a plain formatting function and a context manager for local file lifetime",
+        "Preserves the framework property contract",
+        "Shows conditional alternatives without turning every class or property into a finding"
+      ]
+    },
+    {
+      "name": "typescript_state_semantics",
+      "prompt": "Review TypeScript data shapes for elegance. Result has loading, optional value, and optional error. The UI keeps a previous value visible while refreshing and shows it with a refresh error. Another operation has exactly three exclusive states: loading, ready with a value, and failed with an error.",
+      "expect": [
+        "Preserves the first result shape or models its actual combined states",
+        "Considers a discriminated union for the exclusive operation",
+        "Does not erase stale-data behavior to obtain a simpler-looking type",
+        "Connects the recommendation to caller comprehension"
+      ]
     }
   ]
 }

@@ -29,6 +29,8 @@ Review the system structure and behavior. Do not review only isolated code. Firs
 - Load [references/review-lenses.md](references/review-lenses.md) and select the review areas that apply to the system.
 - Include tests and future plans when they define the intended contract.
 - Include them when they conflict with that contract.
+- For structural and maintenance assessment, read [references/design-for-change.md](references/design-for-change.md). Test one or two evidence-based likely changes against the current boundaries.
+- Inspect representative calls for misleading ownership or effects. Keep naming preferences separate from specific maintenance risks.
 
 ### 4. Classify and verify
 
@@ -38,6 +40,8 @@ Review the system structure and behavior. Do not review only isolated code. Firs
 - Explain how the defect or maintenance cost occurs.
 - Identify assumptions.
 - Before you recommend reuse, identify the repeated pattern and the boundary for a shared implementation.
+- Test whether deletion, consolidation, derivation, or an existing capability can resolve the issue before proposing new code. Explain what disappears and which behavior remains.
+- Compare present complexity with the benefit for likely changes. Retain a sufficient design when added flexibility has no demonstrated benefit.
 
 ## Model Guidance
 

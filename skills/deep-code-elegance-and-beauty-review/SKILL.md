@@ -23,12 +23,17 @@ Review the design and maintenance experience of one project. Support subjective 
 - Sample core modules, boundaries, commands, configuration, tests, and documentation.
 - Inspect unclear names, wrappers, repetition, extra process, or workflows until you understand the cause.
 - Load [references/aesthetic-review-lenses.md](references/aesthetic-review-lenses.md) and select the review areas that apply to the project.
+- Read [references/design-judgment.md](references/design-judgment.md) for complete-call naming, likely change, and subtraction.
+- For Python, read [references/python-style.md](references/python-style.md). For TypeScript, read [references/typescript-style.md](references/typescript-style.md). These are the supported language guides. Use project evidence for other languages; do not invent a language-specific standard.
 
 ### 3. Ground the experience
 
 - Connect positive and negative assessments to comprehension, confidence, maintenance effort, language suitability, or developer joy.
 - Separate beauty, maintenance difficulty, and personal preference. Do not classify preferences as defects.
-- Prefer small simplifications, clear names, good locality, or deletion. Avoid large rewrites without evidence.
+- Inspect representative callers before judging names or API ownership. Show a before-and-after expression for a meaningful naming recommendation.
+- Trace one or two likely changes from project evidence. Separate documented plans from assumptions. Compare a small adjustment with retaining the current design.
+- Before proposing new code, consider deletion, consolidation, or an existing capability. State what disappears, what remains, and which required behavior must be preserved.
+- Prefer small simplifications, clear names, good locality, or deletion. Avoid large rewrites without evidence. Preserve useful boundaries and clear existing code.
 - Briefly report an obvious critical correctness, security, privacy, or data-loss risk.
 - Recommend a dedicated review for that risk. Do not change this report into a defect audit.
 
@@ -53,7 +58,7 @@ Keep the report proportional to the scope and observations. Include the first im
 5. What to protect.
 6. Guidance.
 
-Use file references when they clarify the assessment. Aesthetic observations do not require formal defect evidence. For a report example, read [examples/elegance-review-output.md](examples/elegance-review-output.md).
+Use file references when they clarify the assessment. Aesthetic observations do not require formal defect evidence. Explain the comprehension benefit of each recommendation. State any public-interface constraint. For deferred changes, name the condition that would justify them. Do not turn these checks into report quotas. For a report example, read [examples/elegance-review-output.md](examples/elegance-review-output.md).
 
 ## Discipline
 
