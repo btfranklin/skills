@@ -1,0 +1,41 @@
+{
+  "skill": "perform-clean-refactors",
+  "evals": [
+    {
+      "name": "complete_removal",
+      "prompt": "Replace old_parser with new_parser. Remove the old interface completely. Backward compatibility is not required.",
+      "expect": [
+        "Removes the old implementation and obsolete callers, exports, configuration, documentation, fixtures, and tests",
+        "Preserves tests for behavior that remains",
+        "Does not add compatibility paths or tests that only prove the old interface is absent",
+        "Runs relevant validation and reports intentional breaking changes"
+      ]
+    },
+    {
+      "name": "explicit_compatibility",
+      "prompt": "Rename parse_record to decode_record, but keep parse_record working for existing callers.",
+      "expect": [
+        "Recognizes the explicit backward compatibility requirement",
+        "Preserves parse_record as requested",
+        "Does not remove the old interface under the direct-removal default"
+      ]
+    },
+    {
+      "name": "repository_policy_conflict",
+      "prompt": "Use $perform-clean-refactors to remove parse_record. The repository policy requires backward compatibility for public functions. I have not decided how to handle that requirement.",
+      "expect": [
+        "Identifies the conflict between removal and repository policy",
+        "Stops before adding a compatibility shim",
+        "Asks the user for direction"
+      ]
+    },
+    {
+      "name": "additive_feature",
+      "prompt": "Add a JSON export option. Keep all current export options.",
+      "expect": [
+        "Does not select this skill for ordinary additive feature work",
+        "Does not remove existing export options"
+      ]
+    }
+  ]
+}

@@ -30,6 +30,7 @@ skill trigger, scope, exclusions, and output.
 | [`llms-txt-authoring`](skills/llms-txt-authoring/SKILL.md) |
 | [`make-repo-agent-legible`](skills/make-repo-agent-legible/SKILL.md) |
 | [`openai-django-webhooks`](skills/openai-django-webhooks/SKILL.md) |
+| [`perform-clean-refactors`](skills/perform-clean-refactors/SKILL.md) |
 | [`publish-npm-package`](skills/publish-npm-package/SKILL.md) |
 | [`publish-python-package-pypi`](skills/publish-python-package-pypi/SKILL.md) |
 | [`review-agent-production-readiness`](skills/review-agent-production-readiness/SKILL.md) |
@@ -67,6 +68,23 @@ Before you publish a change, run:
 ```bash
 python3 scripts/validate_repository.py
 ```
+
+Run all local checks with PDM:
+
+```bash
+pdm run check
+```
+
+This command runs the repository validator, example tests, and the offline
+Perfect Doc check. Install `perfect-doc` before you run it. To run only the
+documentation check, use:
+
+```bash
+perfect-doc check . --offline --no-banner
+```
+
+The repository has no `perfect-doc.toml`. The documentation check uses the
+Perfect Doc defaults.
 
 The validator checks repository structure, frontmatter, metadata, icon paths,
 local Markdown links, eval JSON, and the README catalog. It validates the eval

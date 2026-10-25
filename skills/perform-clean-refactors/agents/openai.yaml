@@ -1,0 +1,6 @@
+interface:
+  display_name: "Perform Clean Refactors"
+  short_description: "Remove obsolete code and simplify refactors"
+  icon_small: "./assets/perform-clean-refactors.svg"
+  icon_large: "./assets/perform-clean-refactors.png"
+  default_prompt: "Use $perform-clean-refactors to remove or replace this code without unrequested compatibility paths."

@@ -12,3 +12,5 @@ distribution = false
 [tool.pdm.scripts]
 test = "python -m unittest discover -s tests -v"
 validate = "python scripts/validate_repository.py"
+docs = "perfect-doc check . --offline --no-banner"
+check = { composite = ["validate", "test", "docs"] }
