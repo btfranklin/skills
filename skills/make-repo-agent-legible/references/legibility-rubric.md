@@ -30,6 +30,11 @@ Can the agent run or reproduce the relevant behavior? Can it inspect logs, state
 
 Does the repository detect obsolete links, obsolete generated artifacts, undocumented interfaces, or structural changes? Does it run these checks at a suitable interval? Prefer one focused check to broad recurring cleanup instructions.
 
+For Markdown, check for a Perfect Doc configuration and an offline command.
+Confirm that installation instructions, the aggregate check, and existing CI
+use that command. Check document selection and project-specific route, fragment,
+and link rules. Report missing or incomplete coverage.
+
 ## Prioritization
 
 Rank findings by repeated search cost, probability of incorrect changes, operational risk, and remedy maintenance cost. Recommend one to three changes with the greatest verified benefit. Report existing strengths. State what must remain unchanged.

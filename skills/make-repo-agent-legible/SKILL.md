@@ -22,6 +22,30 @@ description: >-
 
 For an audit-only request, inspect and report without editing. For implementation, keep changes proportional to the repository and preserve unrelated documentation.
 
+## Documentation Checks
+
+For a repository with Markdown, inspect its Perfect Doc configuration, offline
+command, installation instructions, and aggregate check. Report missing setup
+during an audit. Add the missing setup only when implementation is in scope.
+
+Use the native executable when no suitable Python or npm package is published.
+Verify current installation instructions in the
+[Perfect Doc README](https://github.com/btfranklin/perfect-doc#build-and-install).
+Preserve an existing `perfect-doc.toml`. For new configuration, use
+`perfect-doc init`, then select the intended Markdown files. Preserve dependency
+and build exclusions. Exclude scratch files, worktrees, and generated copies.
+Match the project's dialect, fragments, routes, and link rules.
+
+Document `perfect-doc check . --offline --no-banner`, or the repository's
+equivalent command, in `README.md` and `AGENTS.md`. Include it in the existing
+aggregate check. Verify that existing CI runs the command and installs the
+executable first. Do not create CI unless it is in scope.
+
+Run the check. Confirm its selected document count and result. A missing
+executable or incomplete scan is a failure. Review findings before changing
+documents or rule policies. Keep checks for content, metadata, generated
+references, and application behavior.
+
 ## Decisions
 
 - Prefer a short repository guide to a long instruction document.
