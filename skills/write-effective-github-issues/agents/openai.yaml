@@ -1,0 +1,6 @@
+interface:
+  display_name: "Write Effective GitHub Issues"
+  short_description: "Write clear issues with focused acceptance checks"
+  default_prompt: "Use $write-effective-github-issues to write a GitHub issue with product value, an architectural proposal, and focused acceptance checks."
+  icon_small: "./assets/write-effective-github-issues.svg"
+  icon_large: "./assets/write-effective-github-issues.png"

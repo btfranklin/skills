@@ -1,0 +1,41 @@
+{
+  "skill": "write-effective-github-issues",
+  "evals": [
+    {
+      "name": "draft-issue",
+      "prompt": "Write a GitHub issue for adding saved searches.",
+      "expect": [
+        "Select this skill.",
+        "Explain product value before the architectural and implementation proposals.",
+        "Define observable acceptance cases and a completion rule.",
+        "Return a draft without implementing or publishing it."
+      ]
+    },
+    {
+      "name": "improve-legacy-issue",
+      "prompt": "Improve this issue: Search is slow. Fix it.",
+      "expect": [
+        "Select this skill.",
+        "Inspect available context before asserting a cause or performance target.",
+        "Ask only for missing decisions that affect purpose, scope, or architecture.",
+        "Limit performance checks to the required outcome and identified risks."
+      ]
+    },
+    {
+      "name": "implementation-request",
+      "prompt": "Implement issue #42 using its existing acceptance criteria.",
+      "expect": [
+        "Do not select this skill solely because the request mentions an issue."
+      ]
+    },
+    {
+      "name": "bounded-validation",
+      "prompt": "Draft an issue to correct a button label. The repository requires its documentation check.",
+      "expect": [
+        "Keep the proposal proportional to a label change.",
+        "Use direct verification when sufficient.",
+        "Preserve required checks without adding an exhaustive test matrix."
+      ]
+    }
+  ]
+}

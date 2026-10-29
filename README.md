@@ -36,6 +36,7 @@ skill trigger, scope, exclusions, and output.
 | [`review-agent-production-readiness`](skills/review-agent-production-readiness/SKILL.md) |
 | [`skill-icon-workflow`](skills/skill-icon-workflow/SKILL.md) |
 | [`structured-llm-output`](skills/structured-llm-output/SKILL.md) |
+| [`write-effective-github-issues`](skills/write-effective-github-issues/SKILL.md) |
 
 ## Repository workflow
 
