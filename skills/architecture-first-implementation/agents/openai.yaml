@@ -1,0 +1,6 @@
+interface:
+  display_name: "Architecture-First Implementation"
+  short_description: "Plan the architecture, implement, and verify"
+  default_prompt: "Use $architecture-first-implementation to establish the purpose, architectural approach, and acceptance cases, then implement this change."
+  icon_small: "./assets/architecture-first-implementation.svg"
+  icon_large: "./assets/architecture-first-implementation.png"

@@ -20,6 +20,7 @@ skill trigger, scope, exclusions, and output.
 
 | Skill |
 | --- |
+| [`architecture-first-implementation`](skills/architecture-first-implementation/SKILL.md) |
 | [`deep-code-elegance-and-beauty-review`](skills/deep-code-elegance-and-beauty-review/SKILL.md) |
 | [`deep-codebase-review`](skills/deep-codebase-review/SKILL.md) |
 | [`design-html-first-web-uis`](skills/design-html-first-web-uis/SKILL.md) |

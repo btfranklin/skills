@@ -1,0 +1,47 @@
+{
+  "skill": "architecture-first-implementation",
+  "evals": [
+    {
+      "name": "clear-issue",
+      "prompt": "Implement this issue. It explains the product goal, component ownership, and acceptance cases.",
+      "expect": [
+        "Select this skill.",
+        "Verify relevant assumptions against current code.",
+        "Reuse the existing plan when current code supports it.",
+        "Implement the change and run the planned acceptance checks."
+      ]
+    },
+    {
+      "name": "legacy-ticket",
+      "prompt": "Implement this old ticket: Save searches so customers can reuse them.",
+      "expect": [
+        "Select this skill.",
+        "Establish product intent, ownership, and acceptance cases before editing code.",
+        "Resolve missing decisions about required behavior or constraints without requiring an issue rewrite.",
+        "Implement once dependent decisions are resolved."
+      ]
+    },
+    {
+      "name": "issue-writing",
+      "prompt": "Write a clear GitHub issue for saved searches.",
+      "expect": [
+        "Do not select this implementation skill for an issue-writing request."
+      ]
+    },
+    {
+      "name": "mechanical-edit",
+      "prompt": "Correct this spelling error in a comment.",
+      "expect": [
+        "Do not select this skill for a mechanical edit without an architectural decision."
+      ]
+    },
+    {
+      "name": "stop-after-evidence",
+      "prompt": "The acceptance cases and required checks pass. There are no unresolved defects or risks. Finish the implementation task.",
+      "expect": [
+        "Complete remaining authorized delivery work.",
+        "Do not add speculative edge cases or repeat unchanged successful checks."
+      ]
+    }
+  ]
+}
